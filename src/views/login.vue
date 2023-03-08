@@ -1,65 +1,86 @@
 <template>
-  <div class="container">
-    <div class="main">
-        <!-- 整个注册盒子 -->
-      <div class="loginbox">
-          <!-- 左侧的注册盒子 -->
-          <div class="loginbox-in">
-            <div style="margin-top: 50px;font-size: 25px;font-weight: bold">
-              登&emsp;录
+  <div class="bg-blue-200 bg-repeat-round" style=" position: absolute;width: 99%;height: 98%;">
+    <div class="card ">
+    <div class="surface-card p-4 shadow-2 border-round-left-2xl   box">
+    <div class="text-center mb-5">
+        <div class="text-900 text-3xl font-medium mb-3 font-bold">Welcome Back</div>
+        <span class="text-600 font-medium line-height-3">Don't have an account?</span>
+        <a class="font-medium no-underline ml-2 text-teal-500 cursor-pointer font-bold" @click="register">Create today!</a>
+    </div>
+
+    <div>
+        <label for="email1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">用户名</label>
+        <InputText  v-model="userName" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名'" class="w-full mb-3" maxlength="10"/>
+
+        <label for="password1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">密码</label>
+        <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="15"/>
+
+        <div style="width: 200px;height: 40px;" class="relative">
+
+          <RadioButton value='1'  v-model="role" class="absolute  left-0 "/>
+          <label for="rb1" class="absolute" style="left: 25px;">学生</label>
+          
+          <RadioButton value='2'  v-model="role" class="absolute  left-2"/>
+          <span id="rb2" class="absolute" style="left: 125px;">其他</span>
+          
+    
+        </div>
+      
+
+        <div class="flex align-items-center justify-content-between" style="margin-bottom: 45px;">
+            <div class="flex align-items-center">
+                <Checkbox id="rememberme1" :binary="true" v-model="checked" class="mr-2"></Checkbox>
+                <label for="rememberme1 font-bold">Remember me</label>
             </div>
-          <div class="userbox">
-            <el-icon :size="20" color="#055d0c" ><User /></el-icon>
-           <input   v-model="userName" placeholder="用户名"  maxlength="10">
-           </div>
-          <br>
-          <div class="pwdbox">
-            <el-icon size="20" color="#055d0c"><Lock /></el-icon>
-           <input    v-model="password" type="password"  placeholder="密码" maxlength="15">
-           </div>
-            <br>
-            <el-radio-group v-model="role">
-              <el-radio label="1" style="font-weight: bold">学生</el-radio>
-              <el-radio label="2" style="font-weight: bold">其他</el-radio>
-            </el-radio-group>
-
-           <div style="font-size:10px;width: 155px;margin-left: 55px;text-align: left;height: 70px">
-             <div type="button" style="margin-top: 10px;font-size: 15px">
-               忘记密码？
-             </div>  <br>
-             <div style="width: 155px;">
-               <button   class="login_btn" @click="login">登录</button>
-               <button   class="login_btn" style="margin-left: 15px" @click="register">注册</button>
-             </div>
-           </div>
-
-
-     </div>
- 
-        <!-- 右侧的注册盒子 -->
-         <div class="background">
-           <div class="title">
-             学生学业信息系统
-           </div>
-            <div class="title1">Welcome</div>
+            <a class="font-medium no-underline ml-2 text-teal-500 text-right cursor-pointer font-bold">Forgot password?</a>
         </div>
 
-      </div>
+        <Button label="Sign In" icon="pi pi-user" @click="login" class="w-full"></Button>
+    </div>
+
+    </div>
+
+    <div class="surface-card p-4  shadow-2 border-round-right-2xl box1">
+        <section>
+            <span class="block text-4xl font-bold mb-1">学分证明信用体制</span>
+            <div class="text-1xl text-primary font-bold mb-3">在校学生的课程成绩、学分、项目、科研情况等各种学习数据查询.</div>
+            <p class="mt-0 mb-4 text-500 line-height-3">在校学生的课程成绩、学分、项目、科研情况等各种学习数据先经标注时间戳标签，并分布式存储在学分证明区块链节点中，经授权的第三方机构或用人单位可以在任意区块链节点中查看学生的学习情况，一方面可以保证学生履历的权威性，一方面利用分布式结构可以降低各高校信息化建设成本，同时保障数据的安全性。</p>
+            <br>
+            <br>
+            
+            <Button label="Learn More" type="button" class="mr-3 p-button-raised"></Button>
+            <Button label="Live Demo" type="button" class="p-button-outlined"></Button>
+        </section>
     </div>
   </div>
+  </div>
+  
+
+
 </template>
 
   
 
 <script>
+
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import Password from 'primevue/password';
+import Checkbox from 'primevue/checkbox';
+import RadioButton from 'primevue/radiobutton';
+
 import request from "@/utils/request";
 export default{
   name:'login',
+  components:{
+    Button,InputText,Password,Checkbox,RadioButton,
+  },
   data(){
     return{
       userName:'',
       password :'',
       role:'',
+      checked:'',
       form:{
         userName:'',
         password :'',
@@ -116,129 +137,21 @@ export default{
 </script>
 
 <style scoped>
-.loginbox{
-  display:flex;
-  position:absolute;
-  width:800px;
-  height:400px;
-  top:40%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  box-shadow: 0 12px 16px 0  rgba(0,0,0,0.24), 0 17px 50px 0 #4E655D;
+.card{
+  margin-top:6rem;
+  margin-left: auto;
+  margin-right: auto;
+  width:700px;
 }
-
-
-
-.loginbox-in{
-  background-color:#89AB9E;
-  width:240px;
+.box{
+ 
+  margin-left: 0;
+  width:350px;
+  float: left;
 }
-.userbox{
-  margin-top:50px ;
-  height:30px;
-  width:200px;
-  display: flex;
-  margin-left:25px;
-}
-.pwdbox{
-  height:30px;
-  width:200px;
-  display: flex;
-  margin-left:25px;
-}
-
-.background{
-  width:570px;
-  /*background-image:url('./img/Christmas_Trees.png');*/
-  background-size:cover;
-  font-family: "Arial Black";
-
-
-}
-.title1{
-  margin-top:220px;
-  font-weight:bold;
-  font-size:20px;
-  color:#4E655D;
-
-}
-.title{
-  margin-top:50px;
-  font-weight:bold;
-  font-size:30px;
-  color:#4E655D;
-}
-.title:hover{
-  font-size:40px;
-  transition: all 0.4s ease-in-out;
-  cursor: pointer;
-}
-
-input{
-  outline-style: none ;
-  border: 0;
-  border-bottom:2px solid #ffffff;
-  background-color:transparent;
-  width: 150px;
-  height:20px;
-  font-family: cursive;
-  font-size:17px;
-  color:#445b53;
-  font-weight:bold;
-  margin-left: 10px;
-}
-
-input:focus{
-  border-bottom:2px solid #1d694b;
-  background-color:transparent;
-  transition: all 0.2s ease-in;
-  font-family:cursive;
-  font-size:17px;
-  color:#445b53;
-  font-weight:bold;
-
-}
-input:hover{
-  border-bottom:2px solid #445b53;
-  background-color:transparent;
-  transition: all 0.2s ease-in;
-  font-family:cursive;
-  font-size:17px;
-  color:#445b53;
-  font-weight:bold;
-
-}
-
-input:-webkit-autofill {
-  /* 修改默认背景框的颜色 */
-  box-shadow: 0 0 0px 1000px  #89AB9E inset !important;
-  /* 修改默认字体的颜色 */
-  -webkit-text-fill-color: #445b53;
-}
-
-input:-webkit-autofill::first-line {
-  /* 修改默认字体的大小 */
-  font-size: 15px;
-  /* 修改默认字体的样式 */
-  font-weight:bold;
-}
-.login_btn{
-  background-color: #5f8276; /* #055d0c */
-  border: none;
-  color: #FAFAFA;
-  padding: 7px 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 15px;
-  border-radius: 10px;
-  font-family: cursive;
-  font-weight: bold;
-  /*outline:none;*/
-}
-.login_btn:hover{
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  cursor: pointer;
-  background-color: #0b5137;
-  transition: all 0.2s ease-in;
+.box1{
+  margin-left: 350px;
+  width:350px;
+  height: 485px;
 }
 </style>

@@ -18,17 +18,31 @@ const routes = [
         component:Register
     },
     {
-        path:'/dital/:name',
-        component:() => import('../views/dital')
-    }
-    ,{
-        path:'/new',
-        component:() => import('../views/new')
-    }
-    ,{
         path:'/home',
         component:() => import('../views/home')
     }
+    ,{
+        path:'/student',
+        component:() => import('../views/student')
+    }
+    ,{
+        path:'/organization',
+        component:() => import('../views/organization')
+    }
+    ,{
+        path:'/grade',
+        component:() => import('../views/grade')
+    },{
+        path:'/credits',
+        component:() => import('../views/credits')
+    },{
+        path:'/contest',
+        component:() => import('../views/contest')
+    },{
+        path:'/exercitation',
+        component:() => import('../views/exercitation')
+    }
+
 
 
 ]
