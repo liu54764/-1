@@ -78,6 +78,7 @@
 
     </div>  
 </div>
+
 </template>
 
 <script>
@@ -86,6 +87,7 @@ import top from '../components/top.vue'
 import side from '../components/side.vue'
 import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
+  
 export default {
   components:{
    top,side,Column,DataTable, Chart

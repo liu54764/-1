@@ -3,13 +3,13 @@
 
    
         <Button  label="首页" icon="pi pi-home" class="p-button-text w-12 mt-5 font-bold" @click="this.$router.push('/home')"/>
-        <Button v-if="role" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-2 font-bold" @click="this.$router.push('/student')"/>
-        <Button v-else="role" label="机构信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-2 font-bold" />
-        <Button v-if="role" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-2 font-bold"  @click="this.$router.push('/credits')"/>
-        <Button v-else="role" label="查询" icon="pi pi-search" class="p-button-text w-12 mt-2 font-bold" />
-        <Button v-if="role" label="课程成绩" icon="pi pi-chart-bar" class="p-button-text w-12 mt-2 font-bold"  @click="this.$router.push('/grade')"/>
-        <Button v-if="role" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-2 font-bold"  @click="this.$router.push('/contest')"/>
-        <Button v-if="role" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-2 font-bold"  @click="this.$router.push('/exercitation')"/>
+        <Button v-if="role" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-3 font-bold" @click="this.$router.push('/student')"/>
+        <Button v-else="role" label="机构信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold" />
+        <Button v-if="role" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/credits')"/>
+        <Button v-else="role" label="查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold" />
+        <Button v-if="role" label="课程成绩" icon="pi pi-chart-bar" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/grade')"/>
+        <Button v-if="role" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/contest')"/>
+        <Button v-if="role" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/exercitation')"/>
         <!-- <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" />
         <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" /> -->
         <ConfirmDialog></ConfirmDialog>
@@ -37,6 +37,7 @@ import ConfirmDialog from 'primevue/confirmdialog';
     methods: {
         loginout() {
           setTimeout(()=>{
+        localStorage.removeItem('userinfo')
         this.$router.push('/login');
       },300)
           // this.$confirm.require({

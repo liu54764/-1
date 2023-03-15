@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-200 bg-repeat-round" style=" position: absolute;width: 99%;height: 98%;">
+  <div class="bg-blue-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
     <div class="card ">
     <div class="surface-card p-4 shadow-2 border-round-left-2xl   box">
     <div class="text-center mb-5">
@@ -9,18 +9,18 @@
     </div>
 
     <div>
-        <label for="email1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">用户名</label>
-        <InputText  v-model="userName" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名'" class="w-full mb-3" maxlength="10"/>
+        <label for="email1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">学号/用户名</label>
+        <InputText  v-model="username" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名或学号'" class="w-full mb-3" maxlength="10"/>
 
         <label for="password1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">密码</label>
         <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="15"/>
 
         <div style="width: 200px;height: 40px;" class="relative">
 
-          <RadioButton value='1'  v-model="role" class="absolute  left-0 "/>
+          <RadioButton value='1'  v-model="identity" class="absolute  left-0 "/>
           <label for="rb1" class="absolute" style="left: 25px;">学生</label>
           
-          <RadioButton value='2'  v-model="role" class="absolute  left-2"/>
+          <RadioButton value='2'  v-model="identity" class="absolute  left-2"/>
           <span id="rb2" class="absolute" style="left: 125px;">其他</span>
           
     
@@ -77,16 +77,10 @@ export default{
   },
   data(){
     return{
-      userName:'',
+      username:'',
       password :'',
-      role:'',
+      identity:'',
       checked:'',
-      form:{
-        userName:'',
-        password :'',
-        role:'',
-      }
-
     }
   },
   methods:{
@@ -96,40 +90,40 @@ export default{
       },300)
     },
     login() {
-      // this.$refs['form'].validate((valid) => {
-      //   if (valid) {
-          if (!this.userName||!this.password) {
+          if (!this.username||!this.password) {
             this.$message.error("请填写用户名和密码")
             return
           }
-          if (!this.role) {
+          if (!this.identity) {
             this.$message.error("请填选择角色")
             return
           }
-          setTimeout(()=>{
-                  this.$router.push('/home');
-                },300)
-          // request.post("/user/login", this.form).then(res => {
-          //   if (res.code === 1) {
-          //     this.$message({
-          //       type: "success",
-          //       message: "登录成功"
-          //     })
-          //     localStorage.setItem("userinfo", JSON.stringify(res.data))  // 缓存用户信息
-          //     console.log(res.data)
-          //     setTimeout(()=>{
-          //       this.$router.push('/home');
-          //     },300)
-          //   }
-          //   else {
-          //     this.$message({
-          //       type: "error",
-          //       message: "用户名或密码错误"
-          //     })
-          //   }
-          // })
-      //   }
-      // })
+          // console.log(this.identity)
+          request.post("/user/login",{
+            username:this.username,
+        password :this.password,
+        identity:this.identity,
+          }).then(res => {
+            console.log(res.data.code)
+            if (res.data.code === "0") {
+              this.$message({
+                type: "success",
+                message: "登录成功"
+              })
+              localStorage.setItem("userinfo", JSON.stringify(res.data))  // 缓存用户信息
+              console.log(res.data)
+              setTimeout(()=>{
+                this.$router.push('/home');
+              },300)
+            }
+            else {
+              this.$message({
+                type: "error",
+                message: "用户名或密码错误"
+              })
+            }
+          })
+  
     }
   }
 }

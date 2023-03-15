@@ -1,7 +1,7 @@
 <template>
     <top />
     <side />
-    <Toast />
+    <Toast style="font-weight: 600;"/>
     <div class="card">
     <Toolbar class=" p-toolbar-sm mb-2">
         <template #start>
@@ -47,12 +47,12 @@
 
 
     </div>
-    <div style="float: left;width: 250px;height: 85vh;margin-left: 20px;" class="card bg-blue-100">
-        <!-- <Chart type="pie" :data="chartData" :options="chartOptions"/>
-        <Chart type="doughnut" :data="chartData1" :options="chartOptions"/> -->
+    <div style="float: left;width: 250px;height: 85vh;margin-left: 20px;" class="card">
+        <Chart type="pie" style="padding: 15px;margin-top:20px;" :data="chartData" :options="chartOptions"/>
+        <Chart type="doughnut" style="padding: 15px;margin-top: 40px;" :data="chartData1" :options="chartOptions"/>
     </div>
 
-<Dialog :visible.sync="productDialog" :style="{width: '450px'}" header="Product Details" :modal="true" class="p-fluid">
+<Dialog :visible.sync="productDialog" :style="{width: '450px'}" header="成绩信息" :modal="true" class="p-fluid">
     <img :src="'demo/images/product/' + product.image" :alt="product.image" class="product-image" v-if="product.image" />
     <div class="field">
         <label for="name">Name</label>
@@ -97,30 +97,30 @@
         </div>
     </div>
     <template #footer>
-        <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog"/>
-        <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
+        <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="hideDialog"/>
+        <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="saveProduct" />
     </template>
 </Dialog>
 
-<Dialog :visible.sync="deleteProductDialog" :styles="{width: '450px'}" header="Confirm" :modal="true">
+<Dialog :visible.sync="deleteProductDialog" :styles="{width: '450px'}" header="确认" :modal="true">
     <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="product">Are you sure you want to delete <b>{{product.name}}</b>?</span>
+        <span v-if="product">你 确 认 删 除 <b>{{product.name}} </b> 吗?</span>
     </div>
     <template #footer>
-        <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
-        <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
+        <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
+        <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
     </template>
 </Dialog>
 
-<Dialog :visible.sync="deleteProductsDialog" :styles="{width: '450px'}" header="Confirm" :modal="true">
+<Dialog :visible.sync="deleteProductsDialog" :styles="{width: '450px'}" header="确认" :modal="true">
     <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="product">Are you sure you want to delete the selected products?</span>
+        <span style="font-weight: 500; font-size: large;" v-if="product">你 确 认 删 除  吗?</span>
     </div>
     <template #footer>
-        <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
-        <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
+        <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
+        <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
     </template>
 </Dialog>
 
@@ -128,13 +128,8 @@
 
 
   </template>
-  <!-- app.vue -->
-<script setup>
 
-</script>
- 
 
-	
 
   <script>
   import Toast from 'primevue/toast';
@@ -188,15 +183,15 @@
 					{
 						data: [300, 50, 100,40],
 						backgroundColor: [
-                            "#42A5F5",
                             "#66BB6A",
+                            "#2196f3",
                             "#FFA726",
                             "#F50101"
                             
                         ],
                         hoverBackgroundColor: [
-                            "#64B5F6",
-                            "#81C784",
+                            "#6ebe71",
+                            "#4baaf5",
                             "#FFB74D",
                             "#F65252"
                         ]
@@ -204,7 +199,7 @@
 				]
 			},
             chartData1: {
-                labels: ['在读','已修','未修'],
+                labels: ['通过','重修','未通过'],
                 datasets: [
                     {
                         data: [300, 50, 100],
@@ -222,11 +217,16 @@
                 ]
             },
 			chartOptions: {
-		
+                plugins: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                }
+            }
+        }
 			}
         }
     },
-    productService: null,
     created() {
         // this.productService = new ProductService();
         this.initFilters();
@@ -256,7 +256,7 @@
                 if (this.product.id) {
                     this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value: this.product.inventoryStatus;
                     this.products[this.findIndexById(this.product.id)] = this.product;
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+                    this.$toast.add({severity:'success', summary: '成功', detail: '成绩   更新', life: 3000});
                 }
                 else {
                     this.product.id = this.createId();
@@ -264,7 +264,7 @@
                     this.product.image = 'product-placeholder.svg';
                     this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
                     this.products.push(this.product);
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+                    this.$toast.add({severity:'success', summary: '成功', detail: '成绩   创建', life: 3000});
                 }
 
                 this.productDialog = false;
@@ -283,7 +283,7 @@
             this.products = this.products.filter(val => val.id !== this.product.id);
             this.deleteProductDialog = false;
             this.product = {};
-            this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+            this.$toast.add({severity:'success', summary: '成功', detail: '成绩   删除', life: 3000});
         },
         findIndexById(id) {
             let index = -1;
@@ -314,7 +314,7 @@
             this.products = this.products.filter(val => !this.selectedProducts.includes(val));
             this.deleteProductsDialog = false;
             this.selectedProducts = null;
-            this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+            this.$toast.add({severity:'success', summary: '成功', detail: '成绩   删除', life: 3000});
         },
         initFilters() {
             this.filters = {
@@ -330,7 +330,7 @@
   <style  scoped> 
   .card{
     margin-top: 20px;
-      margin-left: 20px;
+      margin-left: 25px;
       width:1000px;
       height: 85vh;
       float: left;
