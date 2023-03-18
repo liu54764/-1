@@ -4,9 +4,9 @@
    
         <Button  label="首页" icon="pi pi-home" class="p-button-text w-12 mt-5 font-bold" @click="this.$router.push('/home')"/>
         <Button v-if="role" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-3 font-bold" @click="this.$router.push('/student')"/>
-        <Button v-else="role" label="机构信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold" />
+        <Button v-else="role" label="机构信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/organization')"/>
         <Button v-if="role" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/credits')"/>
-        <Button v-else="role" label="查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold" />
+        <Button v-else="role" label="查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/inquiry')"/>
         <Button v-if="role" label="课程成绩" icon="pi pi-chart-bar" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/grade')"/>
         <Button v-if="role" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/contest')"/>
         <Button v-if="role" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/exercitation')"/>
@@ -34,6 +34,9 @@ import ConfirmDialog from 'primevue/confirmdialog';
         role:1,
       }
     },
+    created(){
+     this. GetInformation()
+    },
     methods: {
         loginout() {
           setTimeout(()=>{
@@ -51,8 +54,18 @@ import ConfirmDialog from 'primevue/confirmdialog';
           //           //callback to execute when user rejects the action
           //       }
           //   });
-        }
+        },
+        GetInformation(){
+      let userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      this.role=userinfo.data.indentity
+      if(userinfo.data.identity=="1")
+      {
+        this.role=1
       }
+      else
+        this.role=0
+    },
+    }
   }
   </script>
   

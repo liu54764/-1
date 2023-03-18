@@ -72,7 +72,7 @@
     </div>
 
 
-    <div style="float: left;margin-top: 20px;width: 400px;height: 410px;margin-left: 28px;font-weight: 700;padding: 20px;" class="bg-blue-50 border-round-2xl">
+    <div style="float: left;margin-top: 20px;width: 390px;height: 410px;margin-left: 28px;font-weight: 700;padding: 20px;" class="bg-blue-50 border-round-2xl">
       <el-calendar v-model="value" class="test">
       </el-calendar>
 
@@ -85,8 +85,8 @@
 import Chart from 'primevue/chart';
 import top from '../components/top.vue'
 import side from '../components/side.vue'
-import Column from 'primevue/column';
-  import DataTable from 'primevue/datatable';
+import Column from 'primevue/column'
+import DataTable from 'primevue/datatable'
   
 export default {
   components:{

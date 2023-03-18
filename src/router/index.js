@@ -41,6 +41,9 @@ const routes = [
     },{
         path:'/exercitation',
         component:() => import('../views/exercitation')
+    },{
+        path:'/inquiry',
+        component:() => import('../views/inquiry')
     }
 
 

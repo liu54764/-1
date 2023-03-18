@@ -10,17 +10,17 @@
 
     <div>
         <label for="email1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">学号/用户名</label>
-        <InputText  v-model="username" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名或学号'" class="w-full mb-3" maxlength="10"/>
+        <InputText  v-model="username" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名或学号'" class="w-full mb-3" maxlength="20"/>
 
         <label for="password1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">密码</label>
-        <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="15"/>
+        <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="20"/>
 
         <div style="width: 200px;height: 40px;" class="relative">
 
           <RadioButton value='1'  v-model="identity" class="absolute  left-0 "/>
           <label for="rb1" class="absolute" style="left: 25px;">学生</label>
           
-          <RadioButton value='2'  v-model="identity" class="absolute  left-2"/>
+          <RadioButton value='0'  v-model="identity" class="absolute  left-2"/>
           <span id="rb2" class="absolute" style="left: 125px;">其他</span>
           
     
