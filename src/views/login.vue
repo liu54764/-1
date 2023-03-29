@@ -15,17 +15,23 @@
         <label for="password1" class="block text-900 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">密码</label>
         <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="20"/>
 
-        <div style="width: 200px;height: 40px;" class="relative">
+        <div style="width: 300px;height: 40px;">
+          <div style="width: 260px;height: 40px; float: left;" class="relative" >
 
-          <RadioButton value='1'  v-model="identity" class="absolute  left-0 "/>
-          <label for="rb1" class="absolute" style="left: 25px;">学生</label>
-          
-          <RadioButton value='0'  v-model="identity" class="absolute  left-2"/>
-          <span id="rb2" class="absolute" style="left: 125px;">其他</span>
-          
-    
+            <RadioButton value='1'  v-model="identity" class="absolute  left-0 "/>
+            <label for="rb1" class="absolute" style="left: 25px;">学生</label>
+
+            <RadioButton value='2'  v-model="identity"/>
+            <span id="rb2" class="absolute" style="left: 145px;">老师</span>
+
+            <RadioButton value='3'  v-model="identity" class="absolute right-0"/>
+            </div>
+            <div style="width: 40px;height: 40px;float: left;">
+            <span>机构</span>
+            </div>
+
         </div>
-      
+       
 
         <div class="flex align-items-center justify-content-between" style="margin-bottom: 45px;">
             <div class="flex align-items-center">

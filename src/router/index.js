@@ -44,7 +44,19 @@ const routes = [
     },{
         path:'/inquiry',
         component:() => import('../views/inquiry')
+    },{
+        path:'/StudentManage',
+        component:() => import('../views/StudentManage')
+    },{
+        path:'/GradeRevision',
+        component:() => import('../views/GradeRevision')
+    },{
+        path:'/teacher',
+        component:() => import('../views/teacher')
     }
+
+
+
 
 
 

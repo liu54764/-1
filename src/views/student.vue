@@ -2,51 +2,104 @@
   <top />
   <side />
   <Toast style="font-weight: 600;"/>
-<div class="main  shadow-2 border-round-2xl">
-  <div style="margin-top: 30px;margin-left: 20px;width:50px;font-size: x-large;font-weight: 600;float: left;" class="text-blue-600">
-    简介
-  </div>
- 
-    <Button label="修改" class="p-button-text font-bold p-button-success" style="margin-top: 20px;margin-left: 320px;font-size: large;font-weight: 600;float: left;" @click="editinfo"/>
-    <div class="card" style="">
-      <!-- <div style="height: 60px;width: 100%;">
-        <div style="width: 100px;margin-left: 0px;float: left;">
-        <svg t="1678169263842" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1487" data-spm-anchor-id="a313x.7781069.0.i4" width="70" height="70"><path d="M512 148.5c49.1 0 96.7 9.6 141.5 28.5 43.3 18.3 82.2 44.5 115.6 77.9 33.4 33.4 59.6 72.3 77.9 115.6 18.9 44.8 28.5 92.4 28.5 141.5s-9.6 96.7-28.5 141.5c-18.3 43.3-44.5 82.2-77.9 115.6-33.4 33.4-72.3 59.6-115.6 77.9-44.8 18.9-92.4 28.5-141.5 28.5s-96.7-9.6-141.5-28.5c-43.3-18.3-82.2-44.5-115.6-77.9-33.4-33.4-59.6-72.3-77.9-115.6-18.9-44.8-28.5-92.4-28.5-141.5s9.6-96.7 28.5-141.5c18.3-43.3 44.5-82.2 77.9-115.6s72.3-59.6 115.6-77.9c44.8-18.9 92.4-28.5 141.5-28.5m0-50C283.6 98.5 98.5 283.6 98.5 512S283.6 925.5 512 925.5 925.5 740.4 925.5 512 740.4 98.5 512 98.5z" p-id="1488" fill="#c4dae6"></path><path d="M512 401m-106 0a106 106 0 1 0 212 0 106 106 0 1 0-212 0Z" p-id="1489" fill="#c4dae6"></path><path d="M514.5 540.8c-105.1 0-195 68.8-231.6 166.2 28.2 27.9 60.4 50.1 95.9 65.9 40.2 18 83 27.1 127.1 27.1s86.9-9.1 127.1-27.1c38.9-17.4 73.8-42.3 103.8-74.1 1.4-1.5 2.7-3 4.1-4.4-39.2-90.6-125.8-153.6-226.4-153.6z" p-id="1490" fill="#c4dae6"></path></svg>
+  <div class="p-d-flex p-jc-center p-mt-6">
+    <div class="card p-p-4" style="width: 30rem;">
+      <div class="p-d-flex p-jc-center">
+        <img src="" class="avatar p-mb-4" alt="avatar">
       </div>
-      <div style="float: left;margin-top: 30px;font-weight: 700;font-size:20px ;">
-        学号: {{ info.number }}  <br>
+      <h2 class="p-text-center p-mb-4">Your Name</h2>
+      <div class="p-grid p-justify-center">
+        <div class="p-col-4 p-text-center">
+          <h5>Email</h5>
+          <p>youremail@example.com</p>
+        </div>
+        <div class="p-col-4 p-text-center">
+          <h5>Phone</h5>
+          <p>(123) 456-7890</p>
+        </div>
+        <div class="p-col-4 p-text-center">
+          <h5>Location</h5>
+          <p>City, State</p>
+        </div>
       </div>
+      <hr>
+      <div>
+        <h4>About Me</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies quam vitae risus vestibulum, ac mattis eros sollicitudin. Donec blandit lectus nunc, et tincidunt tortor aliquet sit amet. In hac habitasse platea dictumst.</p>
       </div>
-      <div style="width: 100px;margin-left: 0px;font-size: 18px;font-weight: 500;" class="text-blue-300">
-      <p class="">
-        姓名: {{ info.name }}
-      </p>
-      <p  class="">
-        年龄: {{ info.name }}
-      </p>
-      <p  class="">
-        年级: {{ info.name }}
-      </p>
-      <p  class="">
-        班级: {{ info.name }}
-      </p>
-       <p>
-        联系方式：{{  }}
-       </p>
-       <p>
-        QQ:{{  }}
-       </p>
-       <p>
-        手机：{{  }}
-       </p>
-
-      </div> -->
-   
     </div>
- 
- 
+  </div>
+<!-- <div class="main" style="font-weight: 600;padding: 20px;">
+<div class="surface-section">
+    <div class="font-medium text-3xl text-900 mb-3">Movie Information</div>
+    <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div>
+    <ul class="list-none p-0 m-0">
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Title</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Heat</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <Button  icon="pi pi-pencil" class="p-button-text"></Button>
+            </div>
+        </li>
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Genre</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                <Chip label="Crime" class="mr-2"></Chip>
+                <Chip label="Drama" class="mr-2"></Chip>
+                <Chip label="Thriller"></Chip>
+            </div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <Button  icon="pi pi-pencil" class="p-button-text"></Button>
+            </div>
+        </li>
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Director</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Michael Mann</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <Button  icon="pi pi-pencil" class="p-button-text"></Button>
+            </div>
+        </li>
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Actors</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Robert De Niro, Al Pacino</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <Button  icon="pi pi-pencil" class="p-button-text"></Button>
+            </div>
+        </li>
+        <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Plot</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                A group of professional bank robbers start to feel the heat from police
+                when they unknowingly leave a clue at their latest heist.</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <Button  icon="pi pi-pencil" class="p-button-text"></Button>
+            </div>
+        </li>
+    </ul>
 </div>
-<div class="main" style="width: 750px;"></div>
+ 
+</div> -->
+<!-- <div class="p-d-flex p-flex-column p-jc-center p-ai-center">
+    <Card class="p-card p-mt-5" style="width: 400px">
+      <div class="p-card-header p-d-flex p-ai-center">
+        <Avatar :label="student.name" size="large" class="p-mr-3"></Avatar>
+        <h2 class="p-m-0">{{ student.name }}</h2>
+      </div>
+      <Divider></Divider>
+      <div class="p-card-content">
+        <DataTable :value="[student]" :paginator="false" :rows="10" class="p-datatable-striped">
+          <Column field="age" header="年龄"></Column>
+          <Column field="gender" header="性别"></Column>
+          <Column field="address" header="地址"></Column>
+          <Column field="phone" header="电话"></Column>
+          <Column field="email" header="邮箱"></Column>
+          <Column field="enrollment_date" header="入学时间"></Column>
+          <Column field="graduation_date" header="毕业时间"></Column>
+          <Column field="major" header="专业"></Column>
+        </DataTable>
+      </div>
+    </Card>
+  </div>
 
 <Dialog :visible.sync="infoDialog" :style="{width: '450px'}" header="学生信息" :modal="true" class="p-fluid">
     <div class="field">
@@ -59,7 +112,7 @@
         <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="this.infoDialog=false"/>
         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="saveinfo" />
     </template>
-</Dialog>
+</Dialog> -->
 
 </template>
 
@@ -78,22 +131,32 @@ import InputNumber from 'primevue/inputnumber'
 import InputText  from 'primevue/inputtext';
 import RadioButton from 'primevue/radiobutton';
 import Calendar from 'primevue/calendar'
+import Avatar from 'primevue/avatar'
+import Divider from 'primevue/divider'
+import Chip from 'primevue/chip'
+import { Card } from 'primevue/card';
+
 export default {
   name:'student',
  components:{
-  top,side,mainout,Button,Dialog,InputNumber,InputText,RadioButton,Toast,DataTable,Column,ColumnGroup,Row,Calendar
+  Card,
+    Column,top,side,Avatar,Divider,DataTable
  },
  data() {
-        return {
-         
-          infoDialog:false,
-          info:{
-            number:20070117,
-            name:"null",
-            createtime:null,
-          },
-        };
-    },
+    return {
+      student: {
+        name: '张三',
+        age: 22,
+        gender: '男',
+        address: '北京市海淀区',
+        phone: '18888888888',
+        email: 'zhangsan@example.com',
+        enrollment_date: '2021-09-01',
+        graduation_date: '2025-06-30',
+        major: '计算机科学与技术',
+      },
+    };
+  },
     created() {
         // this.productService = new ProductService();
         // this.initFilters();
@@ -136,5 +199,13 @@ export default {
 .field{
   height: 50px;
   width: 100%;
+}
+.avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 </style>

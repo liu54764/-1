@@ -194,7 +194,7 @@ export default {
   }
   .test /deep/  .el-calendar-table .el-calendar-day{
     width: 20px;
-    height: 45px;
+    height: 38px;
   }
 
 </style>

@@ -1,80 +1,77 @@
 <template>
   <div class="side bg-blue-100 p-4 shadow-2 border-round-2xl ">
 
-   
-        <Button  label="首页" icon="pi pi-home" class="p-button-text w-12 mt-5 font-bold" @click="this.$router.push('/home')"/>
-        <Button v-if="role" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-3 font-bold" @click="this.$router.push('/student')"/>
-        <Button v-else="role" label="机构信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/organization')"/>
-        <Button v-if="role" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/credits')"/>
-        <Button v-else="role" label="查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/inquiry')"/>
-        <Button v-if="role" label="课程成绩" icon="pi pi-chart-bar" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/grade')"/>
-        <Button v-if="role" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/contest')"/>
-        <Button v-if="role" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/exercitation')"/>
-        <!-- <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" />
+
+    <Button label="首页" icon="pi pi-home" class="p-button-text w-12 mt-5 font-bold" @click="this.$router.push('/home')" />
+    <Button v-if="role === '1'" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/student')" />
+    <Button v-if="role === '3'" label="机构信息" icon="pi pi-users" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/organization')" />
+    <Button v-if="role === '1'" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/credits')" />
+    <Button v-if="role === '3'" label="机构查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/inquiry')" />
+    <Button v-if="role === '1'" label="课程成绩" icon="pi pi-chart-bar" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/grade')" />
+    <Button v-if="role === '1'" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/contest')" />
+    <Button v-if="role === '2'" label="老师信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/teacher')" />
+
+    <!-- <Button v-if="role===1" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/exercitation')"/> -->
+    <Button v-if="role === '2'" label="学生管理" icon="pi pi-user-edit" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/StudentManage')" />
+    <Button v-if="role === '2'" label="成绩修改" icon="pi pi-pencil" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/GradeRevision')" />
+
+
+    <!-- <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" />
         <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" /> -->
-        <ConfirmDialog></ConfirmDialog>
-        <Button label="退出" icon="pi pi-upload" iconPos="right" class="p-button-danger p-button-text mt-8 font-bold" @click="loginout()"/>
-        
+    <ConfirmDialog></ConfirmDialog>
+    <Button label="退出" icon="pi pi-upload" iconPos="right" class="p-button-danger p-button-text mt-8 font-bold"
+      style="width: 100px;" @click="loginout()" />
+
 
   </div>
-
 </template>
   
-  <script>
+<script>
 
 import Button from 'primevue/button';
 import ConfirmDialog from 'primevue/confirmdialog';
-  export default {
-    name: "side",
-    components:{
-      Button,ConfirmDialog
-    },
-    data(){
-      return{
-        role:1,
-      }
-    },
-    created(){
-     this. GetInformation()
-    },
-    methods: {
-        loginout() {
-          setTimeout(()=>{
+export default {
+  name: "side",
+  components: {
+    Button, ConfirmDialog
+  },
+  data() {
+    return {
+      role: 1,
+    }
+  },
+  created() {
+    this.GetInformation()
+  },
+  methods: {
+    loginout() {
+      setTimeout(() => {
         localStorage.removeItem('userinfo')
         this.$router.push('/login');
-      },300)
-          // this.$confirm.require({
-          //       message: 'Are you sure you want to proceed?',
-          //       header: 'Confirmation',
-          //       icon: 'pi pi-exclamation-triangle',
-          //       accept: () => {
-          //           this.$router.push('/login');
-          //       },
-          //       reject: () => {
-          //           //callback to execute when user rejects the action
-          //       }
-          //   });
-        },
-        GetInformation(){
-      let userinfo = JSON.parse(localStorage.getItem('userinfo'))
-      this.role=userinfo.data.indentity
-      if(userinfo.data.identity=="1")
-      {
-        this.role=1
-      }
-      else
-        this.role=0
+      }, 300)
     },
-    }
+    GetInformation() {
+      let userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      this.role = userinfo.data.identity
+      console.log(userinfo.data.identity)
+    },
   }
-  </script>
+}
+</script>
   
-  <style scoped>
-  .side{
-    margin-top: 20px;
-    margin-left: 20px;
-    height: 85vh;
-    width: 200px;
-    float: left;
-  }
-  </style>
+<style scoped>.side {
+  margin-top: 20px;
+  margin-left: 20px;
+  height: 85vh;
+  width: 200px;
+  float: left;
+}</style>

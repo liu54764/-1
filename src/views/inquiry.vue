@@ -1,86 +1,80 @@
 <template>
    <top />
    <side />
-    <!-- <div class="body ">     
-        <div class="card">
-            <DataTable :value="customers2" :paginator="true" class="p-datatable-customers" :rows="10"
-                dataKey="id" :filters.sync="filters2" filterDisplay="row"  responsiveLayout="scroll"
-                :globalFilterFields="['name','country.name','representative.name','status']">
-                <template #header>
-                    <div class="flex justify-content-end">
-                        <span class="p-input-icon-left ">
-                            <i class="pi pi-search" />
-                            <InputText v-model="filters2['global'].value" placeholder="Keyword Search" />
-                        </span>
-                    </div>
-                </template>
-                <template #empty>
-                    No customers found.
-                </template>
-                <Column field="name" header="Name" :styles="{'min-width':'12rem'}">
+   <div class="card">
+    <Toolbar class=" p-toolbar-sm mb-2">
+        <template #start>
+            <!-- <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
+            <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" /> -->
+            <div class="table-header flex flex-column md:flex-row md:justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                    <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext"/>
+                </span>
+            </div> 
+        </template>
+
+        <template #end>
+            <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="导入" chooseLabel="导入" class="mr-2 inline-block p-button-sm font-bold" /> -->
+            <Button label="导出" icon="pi pi-upload" class="p-button-help p-button-sm font-bold" @click="exportCSV($event)"  />
+        </template>
+
+    </Toolbar>
+    <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id"
+    class="p-datatable-sm"
+    showGridlines
+        :scrollable="true" scrollHeight="480px"
+        :paginator="true" :rows="8" :filters="filters"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[8,15,20]"
+        currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
+
+        <!-- <Column selectionMode="multiple" headerStyle="width: 3em"></Column> -->
+                <Column field="code" header="学号" :sortable="true" style="width:10% ;" class="text-center"></Column>
+                <Column field="name" header="姓名" style="width:10% ;"></Column>
+                <Column field="category" header="年龄" :sortable="true" style="width:10% ;"></Column>
+                <Column field="category" header="性别" :sortable="true" style="width:5% ;"></Column>
+                <Column field="price" header="总绩点" :sortable="true" style="width:5% ;"></Column>
+                <Column field="quantity" header="总学分" :sortable="true" style="width:5% ;">
                     <template #body="{data}">
-                        {{data.name}}
-                    </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()" class="p-column-filter" :placeholder="`Search by name - ${filterModel.matchMode}`" v-tooltip.top.focus="'Hit enter key to filter'"/>
+                      <Button class="p-button-link"  :label="data.quantity"   @mouseover="toggle" style="width: 50px;"/>
                     </template>
                 </Column>
-                <Column header="Country" filterField="country.name" :styles="{'min-width':'12rem'}">
+                <Column field="description" header="竞赛情况" :sortable="true" style="width:15% ;">
                     <template #body="{data}">
-                        <img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + data.country.code" width="30" />
-                        <span class="image-text">{{data.country.name}}</span>
-                    </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Search by country" v-tooltip.top.focus="'Filter as you type'"/>
+                         <Rating :modelValue="data.description" readonly :cancel="false" @mouseover="toggle" class="p-rating"/>
                     </template>
                 </Column>
-                <Column header="Agent" filterField="representative" :showFilterMenu="false" :styles="{'min-width':'14rem'}">
+                <Column field="description" header="实习情况" :sortable="true" style="width:15% ;">
                     <template #body="{data}">
-                        <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" />
-                        <span class="image-text">{{data.representative.name}}</span>
-                    </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <MultiSelect v-model="filterModel.value" @change="filterCallback()" :options="representatives" optionLabel="name" placeholder="Any" class="p-column-filter">
-                            <template #option="slotProps">
-                                <div class="p-multiselect-representative-option">
-                                    <img :alt="slotProps.option.name" :src="'demo/images/avatar/' + slotProps.option.image" width="32" style="vertical-align: middle" />
-                                    <span class="image-text">{{slotProps.option.name}}</span>
-                                </div>
-                            </template>
-                        </MultiSelect>
+                         <Rating :modelValue="data.description" readonly :cancel="false" @mouseover="toggle" />
                     </template>
                 </Column>
-                <Column field="status" header="Status" :showFilterMenu="false" :styles="{'min-width':'12rem'}">
-                    <template #body="{data}">
-                        <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
-                    </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
-                            <template #value="slotProps">
-                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
-                                <span v-else>{{slotProps.placeholder}}</span>
-                            </template>
-                            <template #option="slotProps">
-                                <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
-                            </template>
-                        </Dropdown>
+                <Column field="status" header="年级状态" style="width:15% ;">
+                    <template #body="{ data }">
+                             <Tag :value="data.status" :severity="getSeverity(data.status)" />
                     </template>
                 </Column>
-                <Column field="verified" header="Verified" dataType="boolean" :styles="{'min-width':'6rem'}">
-                    <template #body="{data}">
-                        <i class="pi" :class="{'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified}"></i>
+                <!-- <Column :exportable="false" :styles="{'min-width':'8rem'}" style="width:100px ;">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteProduct(slotProps.data)" />
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <TriStateCheckbox v-model="filterModel.value" @change="filterCallback()"/>
-                    </template>
-                </Column>
-            </DataTable>
-        </div>
-    </div> -->
+                </Column>  -->
+        </DataTable>
+    </div>
+   
+
+<OverlayPanel ref="op">
+    <img src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg" alt="Bamboo Watch" />
+</OverlayPanel>
+
 </template>
     
 
 <script>
+ import Rating from 'primevue/rating';
+ import Tag from 'primevue/tag';
+ import Toolbar from 'primevue/toolbar';
+import OverlayPanel from 'primevue/overlaypanel';
   import top from '../components/top.vue'
   import side from '../components/side.vue'
   import Dialog from 'primevue/dialog';
@@ -99,8 +93,73 @@
       name: "inqury",
       components:{
     top,side,Dialog,Button,InputNumber,FileUpload,InputText,Column,RadioButton,DataTable,Textarea,FilterMatchMode
-,FilterOperator,Dropdown
+,FilterOperator,Dropdown,OverlayPanel,Toolbar,Tag,Rating
 },
+data() {
+        return {
+            products:  [
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+            {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+
+       {"id": "1000","rating":"5","code": "200101111","name": "李明","description": 5,"status": "unqualified","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+   ],
+            product:null,
+            filters: null,
+            selectedProducts: null,
+            statuses: ['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']
+        };
+    },
+    created(){
+        this.initFilters();
+    },
+    mounted() {
+        // ProductService.getProductsSmall()
+        //     .then((data) => (this.products = data))
+        //     .then(() => (this.selectedProduct = this.products[0]));
+    },
+    methods: {
+        toggle(event) {
+            this.$refs.op.toggle(event);
+        },
+        // onProductSelect(event) {
+        //     this.$refs.op.hide();
+        //     this.$toast.add({ severity: 'info', summary: 'Product Selected', detail: event.data.name, life: 3000 });
+        // }
+        initFilters() {
+            this.filters = {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+                'country.name': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+                representative: { value: null, matchMode: FilterMatchMode.IN },
+                status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] }
+            };
+        },
+        getSeverity(status) {
+            switch (status) {
+                case 'unqualified':
+                    return 'danger';
+
+                case 'qualified':
+                    return 'success';
+
+                case 'new':
+                    return 'info';
+
+                case 'negotiation':
+                    return 'warning';
+
+                case 'renewal':
+                    return null;
+            }
+        },
+        exportCSV() {
+            this.$refs.dt.exportCSV();
+        },
+    }
     }
 </script>
     
@@ -112,4 +171,11 @@
     width: 80%;
     background-color: rgb(29, 27, 24);
 }
+.card{
+    margin-top: 20px;
+    margin-left: 240px;
+    height: 85vh;
+    width: 1280px;
+}
+.p-rating .p-rating-icon {  color: #6f5b1e; /* 更改星星的颜色 */}
 </style>

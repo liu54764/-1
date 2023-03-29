@@ -3,7 +3,7 @@
     <side />
     <div class="main">
       <div class="card">
-        <DataTable v-model:expandedRowGroups="expandedRowGroups" :value="customers" tableStyle="min-width: 50rem"  showGridlines  v-model:editingRows="editingRows" editMode="row" dataKey="id"
+        <DataTable v-model:expandedRowGroups="expandedRowGroups" :value="customers" tableStyle="min-width: 50rem"  showGridlines  v-model:editingRows="editingRows" editMode="row" 
                 @row-edit-save="onRowEditSave"
                 expandableRowGroups rowGroupMode="subheader" groupRowsBy="representative" @rowgroup-expand="onRowGroupExpand" @rowgroup-collapse="onRowGroupCollapse"
                 sortMode="single" sortField="representativ" :sortOrder="1" class="p-datatable-sm">
@@ -18,8 +18,8 @@
                     <InputText v-model="data[field]" style="width: 150px"/>
                 </template>
             </Column>
-            <Column field="credits" header="学分" style="width: 100px" class="text-center text-blue-500"></Column>
-            <Column field="time" header="学时" style="width: 100px" class="text-center"></Column>
+            <Column field="credits" header="学分" style="width: 100px" class="text-center text-blue-500 font-bold"></Column>
+            <Column field="time" header="学时" style="width: 100px" class="text-center font-bold"></Column>
             <Column field="style" header="课程类型" style="width: 100px" class="text-center font-bold text-red-500"></Column>
             <Column field="grade" header="最大成绩" style="width: 100px" class="text-center font-bold text-indigo-500">
             <template #editor="{ data, field }">
@@ -47,6 +47,7 @@
             <template #groupfooter="slotProps">
                 <td colspan="10">
                     <div class="flex justify-content-end font-bold">总共获得学分: {{ calculateCustomerTotal(slotProps.data.representative) }}</div>
+                    <div class="flex justify-content-end font-bold">还需获得学分: {{ 35-calculateCustomerTotal(slotProps.data.representative) }}</div>
                 </td>
             </template>
         </DataTable>
@@ -163,7 +164,7 @@
                     return 'success';
 
                 case '未修':
-                    return 'warning';
+                    return 'secondary';
 
                 case '未通过':
                     return 'danger';
