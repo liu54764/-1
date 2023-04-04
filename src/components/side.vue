@@ -1,12 +1,9 @@
 <template>
-  <div class="side bg-blue-100 p-4 shadow-2 border-round-2xl ">
+  <div class="side bg-gray-100 p-4 shadow-2 border-round-2xl ">
 
 
     <Button label="首页" icon="pi pi-home" class="p-button-text w-12 mt-5 font-bold" @click="this.$router.push('/home')" />
-    <Button v-if="role === '1'" label="学生信息" icon="pi pi-user" class="p-button-text w-12 mt-3 font-bold"
-      @click="this.$router.push('/student')" />
-    <Button v-if="role === '3'" label="机构信息" icon="pi pi-users" class="p-button-text w-12 mt-3 font-bold"
-      @click="this.$router.push('/organization')" />
+
     <Button v-if="role === '1'" label="学分情况" icon="pi pi-check-square" class="p-button-text w-12 mt-3 font-bold"
       @click="this.$router.push('/credits')" />
     <Button v-if="role === '3'" label="机构查询" icon="pi pi-search" class="p-button-text w-12 mt-3 font-bold"
@@ -15,10 +12,10 @@
       @click="this.$router.push('/grade')" />
     <Button v-if="role === '1'" label="科研竞赛" icon="pi pi-chart-line" class="p-button-text w-12 mt-3 font-bold"
       @click="this.$router.push('/contest')" />
-    <Button v-if="role === '2'" label="老师信息" icon="pi pi-user-plus" class="p-button-text w-12 mt-3 font-bold"
-      @click="this.$router.push('/teacher')" />
 
-    <!-- <Button v-if="role===1" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"  @click="this.$router.push('/exercitation')"/> -->
+
+    <Button v-if="role === '1'" label="实习情况" icon="pi pi-flag-fill" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/exercitation')" />
     <Button v-if="role === '2'" label="学生管理" icon="pi pi-user-edit" class="p-button-text w-12 mt-3 font-bold"
       @click="this.$router.push('/StudentManage')" />
     <Button v-if="role === '2'" label="成绩修改" icon="pi pi-pencil" class="p-button-text w-12 mt-3 font-bold"
@@ -68,7 +65,8 @@ export default {
 }
 </script>
   
-<style scoped>.side {
+<style scoped>
+.side {
   margin-top: 20px;
   margin-left: 20px;
   height: 85vh;

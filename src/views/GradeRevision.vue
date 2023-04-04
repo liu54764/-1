@@ -25,33 +25,37 @@
 
       </Toolbar>
 
-      <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id" class="p-datatable-sm"  filterDisplay="menu"
-      showGridlines 
-         :scrollable="true" scrollHeight="480px" :paginator="true" :rows="8" :filters="filters"
+      <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id" class="p-datatable-sm"
+         filterDisplay="menu" showGridlines :scrollable="true" scrollHeight="480px" :paginator="true" :rows="8"
+         v-model:filters="filters" 
          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
          :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
          <Column selectionMode="multiple" headerStyle="min-width: 50px"></Column>
          <Column field="code" header="学号" :sortable="true" sortField="code" style="min-width: 120px;">
             <template #filter="{ filterModel }">
-            <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
-        </template>
+               <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+            </template>
          </Column>
-         <Column field="name" header="姓名"  style="min-width: 120px;"></Column>
-         <Column field="code" header="课程号"  style="min-width: 100px;"></Column>
-         <Column field="name" header="课程"  style="min-width: 140px;"></Column>
-         <Column field="category" header="学分" :sortable="true"  style="min-width: 70px;"></Column>
+         <Column field="name" header="姓名" style="min-width: 120px;">
+            <template #filter="{ filterModel }">
+               <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+            </template>
+         </Column>
+         <Column field="code" header="课程号" style="min-width: 100px;"></Column>
+         <Column field="image" header="课程" style="min-width: 140px;"></Column>
+         <Column field="category" header="学分" :sortable="true" style="min-width: 70px;"></Column>
          <Column field="date" header="考试时间" :sortable="true" filterField="date" dataType="date" style="min-width: 150px;">
             <!-- <template #body="{ data }">
                     {{ formatDate(data.date) }}
                 </template> -->
-                <template #filter="{ filterModel }">
-                    <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />
-                </template>
+            <template #filter="{ filterModel }">
+               <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />
+            </template>
          </Column>
-         <Column field="quantity" header="分数" :sortable="true"  style="min-width: 70px;"></Column>
+         <Column field="quantity" header="分数" :sortable="true" style="min-width: 70px;"></Column>
          <Column field="description" header="绩点" :sortable="true" style="min-width: 70px;"></Column>
-         <Column field="image" header="上传时间"  style="min-width: 140px;"></Column>
+         <Column field="image" header="上传时间" style="min-width: 140px;"></Column>
          <Column :exportable="false" :styles="{ 'min-width': '8rem' }">
             <template #body="slotProps">
                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
@@ -159,18 +163,24 @@ import DataTable from 'primevue/datatable';
 import Textarea from 'primevue/textarea';
 import Calendar from 'primevue/calendar';
 import Chart from 'primevue/chart';
+import { locale } from 'primevue/config';
 export default {
 
    name: 'GradeRevision',
    components: {
       top, side, mainout, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
-      , Toast,FilterOperator,Calendar
+      , Toast, FilterOperator, Calendar,locale
    },
    data() {
       return {
          products: [
-            { "id": "1000", "code": "f2g3", "name": "Bamatch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
-          ],
+            { "id": "1000", "code": "fg3", "name": "Bamatch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "1000", "code": "223", "name": "Btch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "1000", "code": "333", "name": "Bam", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "1000", "code": "23", "name": "am", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+
+            { "id": "1000", "code": "4275", "name": "tch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+         ],
          product: null,
          productDialog: false,
          deleteProductDialog: false,
@@ -275,13 +285,14 @@ export default {
       initFilters() {
          this.filters = {
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-                name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-                representative: { value: null, matchMode: FilterMatchMode.IN },
-                status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] }
-            
+            name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            'country.name': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            representative: { value: null, matchMode: FilterMatchMode.IN },
+            status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] }
+
+
          }
-         
+
       }
    }
 
@@ -289,8 +300,7 @@ export default {
 
 </script>
  
-<style  scoped> 
-.card {
+<style  scoped> .card {
     margin-top: 20px;
     margin-left: 25px;
     width: 1270px;

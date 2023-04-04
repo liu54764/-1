@@ -26,7 +26,7 @@
         </Toolbar>
 
         <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id" class="p-datatable-sm"
-            :scrollable="true" scrollHeight="480px" :paginator="true" :rows="8" :filters="filters"
+            :scrollable="true" scrollHeight="450px" :paginator="true" :rows="8" :filters="filters"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
@@ -40,9 +40,9 @@
             <Column field="image" header="状态"></Column>
             <Column :exportable="false" :styles="{ 'min-width': '8rem' }">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 p-button-sm"
                         @click="editProduct(slotProps.data)" />
-                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm"
                         @click="confirmDeleteProduct(slotProps.data)" />
                 </template>
             </Column>
@@ -50,9 +50,9 @@
 
 
     </div>
-    <div style="float: left;width: 250px;height: 85vh;margin-left: 20px;" class="card">
-        <Chart type="pie" style="padding: 15px;margin-top:20px;" :data="chartData" :options="chartOptions" />
-        <Chart type="doughnut" style="padding: 15px;margin-top: 40px;" :data="chartData1" :options="chartOptions" />
+    <div style="float: left;width: 250px;height: 85vh;margin-left: 20px;margin-top: 20px; background-color: gray;">
+        <!-- <Chart type="pie" style="padding: 15px;margin-top:20px;" :data="chartData" :options="chartOptions" />
+        <Chart type="doughnut" style="padding: 15px;margin-top: 40px;" :data="chartData1" :options="chartOptions" /> -->
     </div>
 
     <Dialog :visible.sync="productDialog" :style="{ width: '450px' }" header="成绩信息" :modal="true" class="p-fluid">
@@ -136,7 +136,6 @@
 import Toast from 'primevue/toast';
 import top from '../components/top.vue'
 import side from '../components/side.vue'
-import mainout from '../components/main.vue'
 import { FilterMatchMode } from 'primevue/api';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
@@ -153,7 +152,7 @@ export default {
 
     name: 'grade',
     components: {
-        top, side, mainout, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
+        top, side, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
         , Toast
     },
     data() {
@@ -236,6 +235,25 @@ export default {
         // this.productService.getProducts().then(data => this.products = data);
     },
     methods: {
+        GetInformation() {
+            let userinfo = JSON.parse(localStorage.getItem('userinfo'))
+            this.id = userinfo.data.id
+        },
+        GetStudent() {
+            let url = "/student/credit" + "?id=" + this.id
+            request.get(url).then(res => {
+                this.gender = res.data.data.gender
+                this.birthday = res.data.data.birthday
+                this.phone = res.data.data.phone
+                this.email = res.data.data.email
+                this.address = res.data.data.address
+                this.admission_date = res.data.data.admission_date
+                this.graduation_date = res.data.data.graduation_date
+                this.major = res.data.data.major
+                this.name = res.data.data.name
+                console.log(res)
+            })
+        },
         formatCurrency(value) {
             if (value)
                 return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -373,4 +391,5 @@ export default {
 
  html {
      font-size: 12px;
- }</style>
+ }
+</style>

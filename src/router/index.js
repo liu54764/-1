@@ -22,10 +22,6 @@ const routes = [
         component:() => import('../views/home')
     }
     ,{
-        path:'/student',
-        component:() => import('../views/student')
-    }
-    ,{
         path:'/organization',
         component:() => import('../views/organization')
     }
@@ -39,9 +35,6 @@ const routes = [
         path:'/contest',
         component:() => import('../views/contest')
     },{
-        path:'/exercitation',
-        component:() => import('../views/exercitation')
-    },{
         path:'/inquiry',
         component:() => import('../views/inquiry')
     },{
@@ -50,14 +43,7 @@ const routes = [
     },{
         path:'/GradeRevision',
         component:() => import('../views/GradeRevision')
-    },{
-        path:'/teacher',
-        component:() => import('../views/teacher')
     }
-
-
-
-
 
 
 ]

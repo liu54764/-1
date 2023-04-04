@@ -30,7 +30,7 @@
        currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
        <Column selectionMode="multiple" headerStyle="min-width: 50px"></Column>
-               <Column field="code" header="学号" :sortable="true" style="min-width: 140px;"></Column>
+               <Column field="code" header="学号" :sortable="true" style="min-width: 140px;" class="text-center "></Column>
                <Column field="name" header="用户名" style="min-width: 140px;"></Column>
                <Column field="category" header="性别" style="min-width: 70px;"></Column>
                <Column field="price" header="专业" style="min-width: 100px;"></Column>

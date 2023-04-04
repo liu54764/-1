@@ -2,8 +2,8 @@
    <top />
    <side />
    <div class="card">
-   <div class="surface-ground px-4 py-4 md:px-4 lg:px-4  border-round-2xl">
-    <div class="grid">
+   <div class=" px-4 py-4 md:px-4 lg:px-4  border-round-2xl  bg-gray-100">
+    <div class="grid ">
         <div class="col-12 md:col-3 lg:col-3">
             <div class="surface-card shadow-2 p-3 border-round">
                 <div class="flex justify-content-between mb-3">
@@ -11,8 +11,8 @@
                         <span class="block text-500 font-medium mb-3 font-bold">学生数量</span>
                         <div class="text-900 font-medium text-xl">1520</div>
                     </div>
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width:2.5rem;height:2.5rem">
-                        <i class="pi pi-user text-blue-500 text-xl"></i>
+                    <div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-user text-gray-500 text-xl"></i>
                     </div>
                 </div>
                 <span class="text-green-500 font-medium">24 new </span>
@@ -72,7 +72,7 @@
     </div>
 
 
-    <div style="float: left;margin-top: 20px;width: 390px;height: 410px;margin-left: 28px;font-weight: 700;padding: 20px;" class="bg-blue-50 border-round-2xl">
+    <div style="float: left;margin-top: 20px;width: 390px;height: 410px;margin-left: 28px;font-weight: 700;padding: 20px;" class="bg-gray-100 border-round-2xl">
       <el-calendar v-model="value" class="test">
       </el-calendar>
 

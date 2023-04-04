@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
+  <div class="bg-gray-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
     <div class="card ">
     <div class="surface-card p-4 shadow-2 border-round-left-2xl   box">
     <div class="text-center mb-5">
@@ -33,7 +33,7 @@
         </div>
        
 
-        <div class="flex align-items-center justify-content-between" style="margin-bottom: 45px;">
+        <div class="flex align-items-center justify-content-between" style="margin-bottom: 19px;">
             <div class="flex align-items-center">
                 <Checkbox id="rememberme1" :binary="true" v-model="checked" class="mr-2"></Checkbox>
                 <label for="rememberme1 font-bold">Remember me</label>
@@ -41,7 +41,7 @@
             <a class="font-medium no-underline ml-2 text-teal-500 text-right cursor-pointer font-bold">Forgot password?</a>
         </div>
 
-        <Button label="Sign In" icon="pi pi-user" @click="login" class="w-full"></Button>
+        <Button label="Sign In" icon="pi pi-user" @click="login" class="w-full p-button-sm"></Button>
     </div>
 
     </div>
@@ -54,8 +54,8 @@
             <br>
             <br>
             
-            <Button label="Learn More" type="button" class="mr-3 p-button-raised"></Button>
-            <Button label="Live Demo" type="button" class="p-button-outlined"></Button>
+            <Button label="Learn More" type="button" class="mr-3 p-button-raised p-button-sm"></Button>
+            <Button label="Live Demo" type="button" class="p-button-outlined p-button-sm"></Button>
         </section>
     </div>
   </div>

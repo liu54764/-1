@@ -1,6 +1,6 @@
 
 <template>
-  <div class="bg-blue-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
+  <div class="bg-gray-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
     <div class="card">
     <div class="surface-card p-4  shadow-2 border-round-left-2xl  box">
     <div class="text-center mb-5">
@@ -8,13 +8,13 @@
     </div>
     <div>
         <label for="email1" class="block text-800 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">用户名/学号</label>
-        <InputText  v-model="userName" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名或学号'" class="w-full mb-3"  maxlength="20"/>
+        <InputText  v-model="userName" id="email1" type="text" v-tooltip.bottom="'请输入您的用户名或学号'" class="w-full mb-3 p-inputtext-sm"  maxlength="20"/>
 
         <label for="password1" class="block text-800 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">密码</label>
-        <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3"  maxlength="20"/>
+        <InputText  v-model="password" id="password1" type="password" v-tooltip.bottom="'请输入您的密码'" class="w-full mb-3 p-inputtext-sm"  maxlength="20"/>
 
         <label for="password1" class="block text-800 font-medium mb-2 " style="text-align: left;font-weight: 300;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">确认密码</label>
-        <InputText  v-model="Repassword" id="password1" type="password" v-tooltip.bottom="'请确认您的密码'" class="w-full mb-3"  maxlength="20"/>
+        <InputText  v-model="Repassword" id="password1" type="password" v-tooltip.bottom="'请确认您的密码'" class="w-full mb-3 p-inputtext-sm"  maxlength="20"/>
 
         <div style="width: 300px;height: 40px;">
           <div style="width: 260px;height: 40px; float: left;" class="relative" >
@@ -32,11 +32,11 @@
             </div>
 
         </div>
-        <div class="flex align-items-center justify-content-between" style="margin-bottom: 24px;">
+        <div class="flex align-items-center justify-content-between" style="margin-bottom: 9px;">
             <a class="no-underline ml-2 text-teal-500 text-right cursor-pointer font-bold" @click="login">Go Back</a>
         </div>
 
-        <Button label="Register" icon="pi pi-user-plus" class="w-full" @click="register"></Button>
+        <Button label="Register" icon="pi pi-user-plus" class="w-full p-button-sm" @click="register"></Button>
     </div>
     </div>
     <div class="surface-card p-4  shadow-2 border-round-right-2xl box1">
@@ -48,8 +48,8 @@
             <br>
            
 
-            <Button label="Learn More" type="button" class="mr-3 p-button-raised"></Button>
-            <Button label="Live Demo" type="button" class="p-button-outlined"></Button>
+            <Button label="Learn More" type="button" class="mr-3 p-button-raised p-button-sm"></Button>
+            <Button label="Live Demo" type="button" class="p-button-outlined p-button-sm"></Button>
         </section>
     </div>
   </div>

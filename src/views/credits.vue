@@ -43,7 +43,7 @@
                     <Tag :value="slotProps.data.status" :severity="getStatusLabel(slotProps.data.status)" />
                 </template>
             </Column>
-            <Column :rowEditor="true" style="width: 100px;" bodyStyle="text-align:center" header="操作"></Column>
+            <!-- <Column :rowEditor="true" style="width: 100px;" bodyStyle="text-align:center" header="操作"></Column> -->
             <template #groupfooter="slotProps">
                 <td colspan="10">
                     <div class="flex justify-content-end font-bold">总共获得学分: {{ calculateCustomerTotal(slotProps.data.representative) }}</div>
