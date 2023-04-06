@@ -13,6 +13,7 @@ import 'primeflex/primeflex.css'
 import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// import locale from 'primevue/lang/zh-cn';
 
 
 const app = createApp(App)
@@ -21,14 +22,20 @@ const app = createApp(App)
 // }
 app.use(router).use(ToastService).use(ElementPlus).use(PrimeVue).use(PrimeVue,{ripple:true}).mount('#app'); // 设置为中文;
 app.directive('tooltip', Tooltip);
-app.use(PrimeVue, {
-  locale: {
-      accept: '接受',
-      reject: '拒绝',
-      matchAll:'全部匹配',
-      matchAny:'匹配任何',  
-  },
-   ripple: true,
-   inputStyle: "filled",
-});
+
+Vue.use(PrimeVue, { locale });
+
+new Vue({
+  render: (h) => h(App),
+}).$mount('#app');
+// app.use(PrimeVue, {
+//   locale: {
+//       accept: '接受',
+//       reject: '拒绝',
+//       matchAll:'全部匹配',
+//       matchAny:'匹配任何',  
+//   },
+//    ripple: true,
+//    inputStyle: "filled",
+// });
 

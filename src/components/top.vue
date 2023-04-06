@@ -44,16 +44,16 @@
       学分证明信用体制系统
     </div>
     <div style="height: auto;float: left;margin-top: 10px;width: 300px;margin-left: 500px;">
-      <Button v-if="role === '1'" icon="pi pi-user"
-        class=" p-button-rounded p-button-info p-button-text ml-3 p-button-sm" @click="visible1 = true" />
+      <Button v-if="role === '1'" icon="pi pi-user" class=" p-button-rounded p-button-info p-button-text ml-3 p-button-sm"
+        @click="visible1 = true" />
       <Button v-if="role === '2'" icon="pi pi-user-plus"
         class=" p-button-rounded p-button-info p-button-text ml-3 p-button-sm" @click="visible2 = true" />
       <Button v-if="role === '3'" icon="pi pi-users"
         class=" p-button-rounded p-button-info p-button-text ml-3 p-button-sm" @click="visible3 = true" />
 
-      <Button icon="pi pi-bell" class="p-button-rounded p-button-warning p-button-text ml-3 " disabled/>
-      <Button icon="pi pi-envelope" class=" p-button-rounded p-button-success p-button-text ml-3 " disabled/>
-      <Button icon="pi pi-spin pi-cog" class="p-button-rounded p-button-text p-button-help ml-3 p-button-sm " disabled/>
+      <Button icon="pi pi-bell" class="p-button-rounded p-button-warning p-button-text ml-3 " disabled />
+      <Button icon="pi pi-envelope" class=" p-button-rounded p-button-success p-button-text ml-3 " disabled />
+      <Button icon="pi pi-spin pi-cog" class="p-button-rounded p-button-text p-button-help ml-3 p-button-sm " disabled />
     </div>
     <div style="float: left;width: 60px;height: auto;margin-top: 10px;">
       <svg t="1678169263842" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@
       {{ username }}
     </div>
   </div>
-  <Dialog v-model:visible="visible1" modal header="个人信息" :style="{ width: '40vw' }">
+  <Dialog v-model:visible="visible1" modal header="学生信息" :style="{ width: '40vw' }">
     <div class="card">
       <div class="formgrid grid">
         <div class="field col-12 md:col-6">
@@ -146,10 +146,173 @@
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
-      <div class="card flex">
-        <Button class="p-button-secondary p-button-sm" label="取消" @click="visible1=false"/>
-        <Button class="p-button-secondary p-button-sm" label="保存" style="margin-left:420px;" @click="Save1"/>
+      <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible1=false" size="small" style="margin-left: 350px;"/>
+         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save1" />
     </div>
+  </Dialog>
+
+  <Dialog v-model:visible="visible2" modal header="教师信息" :style="{ width: '40vw' }">
+    <div class="card">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">用户名</label>
+          <InputText id="firstname6" type="text" v-model="username"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">密码</label>
+          <InputText id="lastname6" type="password" v-model="password"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">职工号</label>
+          <InputText id="firstname6" type="text" v-model="number"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">姓名</label>
+          <InputText id="lastname6" type="text" v-model="name"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="city">住址</label>
+          <InputText id="city" type="text" v-model="address"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-3">
+          <label for="state">职位</label>
+          <Select id="state" v-model="grade"
+            class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
+            style="appearance: auto">
+            <option>教授</option>
+            <option>副教授</option>
+            <option>讲师</option>
+            <option>助教</option>
+            <option>其他</option>
+          </Select>
+        </div>
+        <div class="field col-12 md:col-3">
+          <label for="zip">年龄</label>
+          <InputText id="zip" type="text" v-model="major"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">任职时间</label>
+          <Calendar id="firstname6" type="text" v-model="admission_date" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">离职时间</label>
+          <Calendar id="lastname6" type="password" v-model="graduation_date" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">电话</label>
+          <InputText id="firstname6" type="text" v-model="phone"
+            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">邮箱</label>
+          <InputText id="lastname6" type="text" v-model="email"
+            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12">
+          <label for="address">个人简介</label>
+          <textarea id="address" type="text" rows="3" v-model="info"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        </div>
+      </div>
+      <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible2=false" size="small" style="margin-left: 350px;"/>
+         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save2" />
+    </div>
+  </Dialog>
+
+  <Dialog v-model:visible="visible3" modal header="机构信息" :style="{ width: '40vw' }">
+    <div class="card">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">用户名</label>
+          <InputText id="firstname6" type="text" v-model="username"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">密码</label>
+          <InputText id="lastname6" type="password" v-model="password"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">机构名称</label>
+          <InputText id="firstname6" type="text" v-model="number"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">姓名</label>
+          <InputText id="lastname6" type="text" v-model="name"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="city">地址</label>
+          <InputText id="city" type="text" v-model="address"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-3">
+          <label for="state">机构类型</label>
+          <Select id="state" v-model="grade"
+            class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
+            style="appearance: auto">
+            <option>公司/企业</option>
+            <option>教育机构</option>
+            <option>其他</option>
+          </Select>
+        </div>
+        <!-- <div class="field col-12 md:col-3">
+          <label for="zip">上传材料</label>
+          <FileUpload mode="basic"  url="./upload" accept="image/*" :maxFileSize="1000000" @upload="onUpload"  label="选择"
+          chooseLabel="请选择"          class="p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          />
+         </div> -->
+
+        <div class="field col-12 md:col-6">
+          <label for="firstname6">电话</label>
+          <InputText id="firstname6" type="text" v-model="phone"
+            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">邮箱</label>
+          <InputText id="lastname6" type="text" v-model="email"
+            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div>
+
+        <div class="field col-12">
+          <Toast />
+          <FileUpload name="demo[]" url="./upload.php" @upload="onAdvancedUpload" :multiple="true" accept="image/*"
+            :maxFileSize="1000000" chooseLabel="请选择" uploadLabel="上传" cancelLabel="取消" class="p-fileupload " style="">
+            <template #empty>
+              <p>拖拽文件到此处上传</p>
+            </template>
+          </FileUpload>
+          <!-- <div v-if="uploadedFiles.length > 0">
+      <h3>已上传的文件：</h3>
+      <ul>
+        <li v-for="file in uploadedFiles" :key="file.name">
+          {{ file.name }}
+        </li>
+      </ul>
+    </div> -->
+        </div>
+        <div class="field col-12">
+          <label for="address">机构简介</label>
+          <textarea id="address" type="text" rows="5" v-model="info"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        </div>
+      </div>
+
+         <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible3=false" size="small" style="margin-left: 350px;"/>
+         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save3" />
+
     </div>
   </Dialog>
 </template>
@@ -161,13 +324,16 @@ import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
 import request from '@/utils/request';
+import FileUpload from 'primevue/fileupload';
+
 export default {
   name: "top",
   components: {
-    Button, Chip, Dialog, InputText, Calendar
+    Button, Chip, Dialog, InputText, Calendar, FileUpload
   },
   data() {
     return {
+      uploadedFiles: ["1.jpg"],
       id: "",
       visible1: false,
       visible2: false,
@@ -201,7 +367,7 @@ export default {
       this.password = userinfo.data.password
     },
     GetStudent() {
-      let url="/student/information"+"?id="+this.id
+      let url = "/student/information" + "?id=" + this.id
       request.get(url).then(res => {
         this.gender = res.data.data.gender
         this.birthday = res.data.data.birthday
@@ -215,15 +381,29 @@ export default {
         console.log(res)
       })
     },
-    Save1(){
-       this.visible1=false
+    Save1() {
+      this.visible1 = false
     },
-    Save3(){
-       this.visible2=false
+    Save2() {
+      this.visible2 = false
     },
-    Save2(){
-       this.visible3=false
-    }
+    Save3() {
+      this.visible3 = false
+    },
+    onAdvancedUpload(event) {
+      const uploadedFiles = event.files;
+      // 上传文件到服务器
+      axios.post('/upload', uploadedFiles)
+        .then(response => {
+          const uploadedFiles = response.data.files;
+          // 在页面上显示上传的文件
+          this.uploadedFiles = uploadedFiles;
+          this.$toast.add({ severity: 'info', summary: 'Success', detail: '文件已上传', life: 3000 });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
   },
 }
 </script>

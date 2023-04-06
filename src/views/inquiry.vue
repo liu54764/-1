@@ -6,7 +6,7 @@
             filterDisplay="menu" class="p-datatable-sm" scrollable scrollHeight="450px">
             <template #header>
                 <div class="flex justify-content-start">
-                    <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()"
+                    <Button type="button" icon="pi pi-filter-slash" label="清空" outlined @click="clearFilter()"
                         class="p-button-sm" />
 
                     <Button label="导出" icon="pi pi-upload" class="p-button-help p-button-sm font-bold"
@@ -275,15 +275,8 @@ export default {
 </script>
     
 <style scoped>
-.body {
-    margin-top: 20px;
-    margin-left: 240px;
-    height: 85vh;
-    width: 80%;
-    background-color: rgb(29, 27, 24);
-}
-
 .card {
+    
     margin-top: 20px;
     margin-left: 240px;
     height: 85vh;
@@ -294,4 +287,5 @@ export default {
     color: #6f5b1e;
     /* 更改星星的颜色 */
 }
+
 </style>

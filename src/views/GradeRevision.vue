@@ -11,7 +11,7 @@
             <div class="table-header flex flex-column md:flex-row md:justify-content-between">
                <span class="p-input-icon-left">
                   <i class="pi pi-search" />
-                  <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext" />
+                  <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext-sm" />
                </span>
             </div>
          </template>
@@ -25,42 +25,43 @@
 
       </Toolbar>
 
-      <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id" class="p-datatable-sm"
-         filterDisplay="menu" showGridlines :scrollable="true" scrollHeight="480px" :paginator="true" :rows="8"
-         v-model:filters="filters" 
+      <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" class="p-datatable-sm"
+         filterDisplay="menu" :paginator="true" :rows="8" v-model:editingRows="editingRows" editMode="row"
+         @row-edit-save="onRowEditSave" v-model:filters="filters" :scrollable="true" scrollHeight="450px"
          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
          :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
-         <Column selectionMode="multiple" headerStyle="min-width: 50px"></Column>
-         <Column field="code" header="学号" :sortable="true" sortField="code" style="min-width: 120px;">
+         <Column selectionMode="multiple" style="min-width: 40px;"></Column>
+         <Column field="code" header="学号" sortField="code" style="min-width: 90px;">
             <template #filter="{ filterModel }">
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
             </template>
          </Column>
-         <Column field="name" header="姓名" style="min-width: 120px;">
+         <Column field="name" header="姓名" style="min-width: 90px;">
             <template #filter="{ filterModel }">
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
             </template>
          </Column>
-         <Column field="code" header="课程号" style="min-width: 100px;"></Column>
-         <Column field="image" header="课程" style="min-width: 140px;"></Column>
-         <Column field="category" header="学分" :sortable="true" style="min-width: 70px;"></Column>
+         <Column field="code" header="班号" style="min-width: 90px;"></Column>
+         <Column field="code" header="课程号" style="min-width: 90px;"></Column>
+         <Column field="image" header="课程" style="min-width: 90px;"></Column>
+         <Column field="image" header="课程类型" style="min-width: 100px;"></Column>
+         <Column field="category" header="学分" :sortable="true" style="min-width: 100px;"></Column>
          <Column field="date" header="考试时间" :sortable="true" filterField="date" dataType="date" style="min-width: 150px;">
-            <!-- <template #body="{ data }">
-                    {{ formatDate(data.date) }}
-                </template> -->
             <template #filter="{ filterModel }">
                <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />
             </template>
          </Column>
-         <Column field="quantity" header="分数" :sortable="true" style="min-width: 70px;"></Column>
-         <Column field="description" header="绩点" :sortable="true" style="min-width: 70px;"></Column>
-         <Column field="image" header="上传时间" style="min-width: 140px;"></Column>
-         <Column :exportable="false" :styles="{ 'min-width': '8rem' }">
+
+         <Column field="quantity" header="分数" :sortable="true" style="min-width: 100px;"></Column>
+         <Column field="description" header="绩点" :sortable="true" style="min-width: 100px;"></Column>
+         <Column field="image" header="上传时间" style="min-width: 130px;"></Column>
+         <!-- <Column :rowEditor="true" style="min-width: 50px;" bodyStyle="text-align:center"></Column> -->
+         <Column style="min-width: 100px;">
             <template #body="slotProps">
-               <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+               <Button :rowEditor="true" icon="pi pi-pencil" class="p-button-success mr-2 p-button-rounded" style="height: 35px;width: 35px;"
                   @click="editProduct(slotProps.data)" />
-               <Button icon="pi pi-trash" class="p-button-rounded p-button-warning"
+               <Button icon="pi pi-trash" class="p-button-warning p-button-rounded" style="height: 35px;width: 35px;"
                   @click="confirmDeleteProduct(slotProps.data)" />
             </template>
          </Column>
@@ -115,8 +116,8 @@
          </div>
       </div>
       <template #footer>
-         <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="hideDialog" />
-         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="saveProduct" />
+         <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="hideDialog" size="small" />
+         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="saveProduct" size="small" />
       </template>
    </Dialog>
 
@@ -169,17 +170,17 @@ export default {
    name: 'GradeRevision',
    components: {
       top, side, mainout, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
-      , Toast, FilterOperator, Calendar,locale
+      , Toast, FilterOperator, Calendar, locale
    },
    data() {
       return {
+         editingRows: [],
          products: [
-            { "id": "1000", "code": "fg3", "name": "Bamatch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
-            { "id": "1000", "code": "223", "name": "Btch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
-            { "id": "1000", "code": "333", "name": "Bam", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
-            { "id": "1000", "code": "23", "name": "am", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "1000", "code": "4275", "name": "tch", "description": "Prodion", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "10", "code": "4275", "name": "tch", "description": "Protion", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+            { "id": "1010", "code": "4275", "name": "tch", "description": "Prion", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
 
-            { "id": "1000", "code": "4275", "name": "tch", "description": "Produscption", "image": "bamch.jpg", "date": '2015-09-13', "category": "Accessories", "quantity": 24, "inventoryStatus": "INSTOCK", "rating": 5 },
+
          ],
          product: null,
          productDialog: false,
@@ -199,6 +200,11 @@ export default {
       // this.productService.getProducts().then(data => this.products = data);
    },
    methods: {
+      onRowEditSave(event) {
+            let { newData, index } = event;
+
+            this.products[index] = newData;
+        },
       // formatDate(value) {
       //       return value.toLocaleDateString('zh', {
       //           day: '2-digit',

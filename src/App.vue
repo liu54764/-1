@@ -28,6 +28,7 @@ export default {
 
 <style>
 #app{
+
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
   color:rgb(87, 59, 23);

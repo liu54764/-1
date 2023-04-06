@@ -11,12 +11,12 @@
                 <span class="vertical-align-middle ml-2 font-bold line-height-3">{{ slotProps.data.representative}}</span>
             </template>
             <Column field="representative" header="representative"></Column>
-            <Column field="name" :header="major" style="width: 170px" class="text-purple-500 font-bold text-center" ></Column>
+            <Column field="name" :header="major" style="width: 170px" class="text-indigo-500 font-bold text-center" ></Column>
             <Column field="id" header="课程号" style="width: 100px" class="text-center text-green-500 font-bold"></Column>
             <Column field="date" header="修读时间" style="width: 150px" class="text-center text-yellow-500 font-bold">
-                <template #editor="{ data, field }">
+                <!-- <template #editor="{ data, field }">
                     <InputText v-model="data[field]" style="width: 150px"/>
-                </template>
+                </template> -->
             </Column>
             <Column field="credits" header="学分" style="width: 100px" class="text-center text-blue-500 font-bold"></Column>
             <Column field="time" header="学时" style="width: 100px" class="text-center font-bold"></Column>
@@ -27,18 +27,11 @@
             </template>
             </Column>
             <Column field="grades" header="绩点" style="width: 70px" class="text-center font-bold">
-                <template #editor="{ data, field }">
+                <!-- <template #editor="{ data, field }">
                     <InputText v-model="data[field]" style="width: 70px"/>
-                </template>
+                </template> -->
             </Column>
             <Column field="status" header="修读状态" style="width: 100px" class="text-center font-bold">
-                <template #editor="{ data, field }">
-                    <Dropdown v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status" class="font-bold">
-                        <template #option="slotProps">
-                            <Tag :value="slotProps.option.value" :severity="getStatusLabel(slotProps.option.value)" />
-                        </template>
-                    </Dropdown>
-                </template>
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.status" :severity="getStatusLabel(slotProps.data.status)" />
                 </template>

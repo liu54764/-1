@@ -3,14 +3,14 @@
    <side />
    <Toast style="font-weight: 600;"/>
    <div class="card">
-   <Toolbar class=" p-toolbar-sm mb-2">
+   <Toolbar class="mb-2">
        <template #start>
            <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
            <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
            <div class="table-header flex flex-column md:flex-row md:justify-content-between">
                <span class="p-input-icon-left">
                    <i class="pi pi-search" />
-                   <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext"/>
+                   <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext-sm"/>
                </span>
            </div> 
        </template>
@@ -23,25 +23,25 @@
    </Toolbar>
 
    <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id"
-   class="p-datatable-sm"  showGridlines 
-       :scrollable="true" scrollHeight="480px"
+   class="p-datatable-sm"  
+   :scrollable="true" scrollHeight="450px"
        :paginator="true" :rows="8" :filters="filters"
        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[8,15,20]"
        currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
-       <Column selectionMode="multiple" headerStyle="min-width: 50px"></Column>
-               <Column field="code" header="学号" :sortable="true" style="min-width: 140px;" class="text-center "></Column>
-               <Column field="name" header="用户名" style="min-width: 140px;"></Column>
-               <Column field="category" header="性别" style="min-width: 70px;"></Column>
+       <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
+               <Column field="code" header="学号" :sortable="true" style="min-width: 120px;" class="text-center "></Column>
+               <Column field="name" header="用户名" style="min-width: 130px;"></Column>
+               <Column field="category" header="性别" style="min-width: 100px;"></Column>
                <Column field="price" header="专业" style="min-width: 100px;"></Column>
                <Column field="quantity" header="年级" :sortable="true" style="min-width: 100px;"></Column>
-               <Column field="quantity" header="出生日期" :sortable="true" style="min-width: 140px;"></Column>
-               <Column field="quantity" header="邮箱" style="min-width: 150px;"></Column>
+               <Column field="quantity" header="出生日期" :sortable="true" style="min-width: 150px;"></Column>
+               <Column field="quantity" header="邮箱" style="min-width: 140px;"></Column>
                <Column field="description" header="电话" style="min-width: 140px;"></Column>
-               <Column field="image" header="住址" style="min-width: 150px;"></Column>
+               <Column field="image" header="住址" style="min-width: 160px;"></Column>
                <Column :exportable="false" :styles="{'min-width':'50px'}">
            <template #body="slotProps">
-               <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="confirmDeleteProduct(slotProps.data)" />
+               <Button icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm" style="height: 35px;width: 35px;" @click="confirmDeleteProduct(slotProps.data)" />
            </template>
                </Column> 
        </DataTable>
@@ -156,13 +156,13 @@
   data() {
        return {
             products:  [
-      {"id": "1000252782","code": "20070117","name": "李华","description": "Product Description","image": "bamboo-watch.jpg","price": 65,"category": "男","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
-      {"id": "1001","code": "nvklal433","name": "Black Watch","description": "Product Description","image": "black-watch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 4},
-      {"id": "1002","code": "zz21cz3c1","name": "Blue Band","description": "Product Description","image": "blue-band.jpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 3},
-      {"id": "1003","code": "244wgerg2","name": "Blue T-Shirt","description": "Product Description","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 5},
-      {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product Description","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 4},
-      {"id": "1005","code": "av2231fwg","name": "Brown Purse","description": "Product Description","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 4},
-      {"id": "1006","code": "bib36pfvm","name": "Chakra Bracelet","description": "Product Description","image": "chakra-bracelet.jpg","price": 32,"category": "Accessories","quantity": 5,"inventoryStatus": "LOWSTOCK","rating": 3},
+      {"id": "1000252782","code": "20070117","name": "李华","description": "Prodscription","image": "bamboo-w","price": 65,"category": "男","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
+      {"id": "1001","code": "nvklal433","name": "Black Watch","description": "Prodiption","image": "blacch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 4},
+      {"id": "1002","code": "zz21cz3c1","name": "Blue Band","description": "Pron","image": "blue-bpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 3},
+      {"id": "1003","code": "244wgerg2","name": "Blue T-Shirt","description": "Prodription","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 5},
+      {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product on","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 4},
+      {"id": "1005","code": "av2231fwg","name": "Brown Purse","description": "Proription","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 4},
+      {"id": "1006","code": "bib36pfvm","name": "Chakra Bracelet","description": "Proscription","image": "chakra-bracelet.jpg","price": 32,"category": "Accessories","quantity": 5,"inventoryStatus": "LOWSTOCK","rating": 3},
       {"id": "1007","code": "mbvjkgip5","name": "Galaxy Earrings","description": "Product Description","image": "galaxy-earrings.jpg","price": 34,"category": "Accessories","quantity": 23,"inventoryStatus": "INSTOCK","rating": 5},
       {"id": "1008","code": "vbb124btr","name": "Game Controller","description": "Product Description","image": "game-controller.jpg","price": 99,"category": "Electronics","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 4},
       {"id": "1009","code": "cm230f032","name": "Gaming Set","description": "Product Description","image": "gaming-set.jpg","price": 299,"category": "Electronics","quantity": 63,"inventoryStatus": "INSTOCK","rating": 3}

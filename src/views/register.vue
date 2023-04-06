@@ -1,6 +1,6 @@
 
 <template>
-  <div class="bg-gray-200 bg-repeat-round" style=" position: absolute;width: 100%;height: 100%;">
+  <div class="login-background">
     <div class="card">
     <div class="surface-card p-4  shadow-2 border-round-left-2xl  box">
     <div class="text-center mb-5">
@@ -129,8 +129,15 @@ export default{
 </script>
 
 <style scoped>
+.login-background {
+  background-color: #f5f5f5;
+  background-image: linear-gradient(10deg, #296938 0%, #5fbd75 50%, #548cc8 50%, #02438a 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .card{
-  margin-top:6rem;
   margin-left: auto;
   margin-right: auto;
   width:700px;
