@@ -26,10 +26,10 @@
             </Toolbar>
 
             <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id"
-                class="p-datatable-sm" :paginator="true" :rows="8" :filters="filters" :scrollable="true"
+                class="p-datatable-sm" :paginator="true" :rows="9" :filters="filters" :scrollable="true"
                 scrollHeight="450px"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} "
+                :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} "
                 responsiveLayout="scroll">
 
                 <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
@@ -49,7 +49,7 @@
             </DataTable>
         </div>
         <div style="float: left;width: 230px;height: 85vh;margin-top: 20px;margin-left: 20px;">
-            <Chart type="pie" :data="chartData" :options="chartOptions"  />
+            <Chart type="pie" :data="chartData" :options="chartOptions"    style="margin-top: 30px;"/>
             <Chart type="doughnut" :data="chartData1" :options="chartOptions"  style="margin-top: 40px;"/>
         </div>
   

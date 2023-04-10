@@ -70,7 +70,7 @@
 
    </div>
 
-   <Dialog :visible.sync="productDialog" :style="{ width: '450px' }" header="成绩信息" :modal="true" class="p-fluid">
+   <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="成绩信息"  modal class="p-fluid" >
       <img :src="'demo/images/product/' + product.image" :alt="product.image" class="product-image" v-if="product.image" />
       <div class="field">
          <label for="name">Name</label>
@@ -121,7 +121,7 @@
       </template>
    </Dialog>
 
-   <Dialog :visible.sync="deleteProductDialog" :styles="{ width: '450px' }" header="确认" :modal="true">
+   <Dialog v-model:visible="deleteProductDialog" :styles="{ width: '450px' }" header="确认" :modal="true">
       <div class="confirmation-content">
          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
          <span v-if="product">你 确 认 删 除 <b>{{ product.name }} </b> 吗?</span>
@@ -132,7 +132,7 @@
       </template>
    </Dialog>
 
-   <Dialog :visible.sync="deleteProductsDialog" :styles="{ width: '450px' }" header="确认" :modal="true">
+   <Dialog v-model:visible="deleteProductsDialog" :styles="{ width: '450px' }" header="确认" :modal="true" :closable="true">
       <div class="confirmation-content">
          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
          <span style="font-weight: 500; font-size: large;" v-if="product">你 确 认 删 除 吗?</span>
