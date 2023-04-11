@@ -146,9 +146,13 @@
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
-      <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible1=false" size="small" style="margin-left: 350px;"/>
-         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save1" />
     </div>
+    <template #footer>
+      <div class="p-d-flex p-jc-end">
+        <Button label="取消" class="mr-2 p-button-sm"  @click="visible1=false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save1" />
+      </div>
+    </template>
   </Dialog>
 
   <Dialog v-model:visible="visible2" modal header="教师信息" :style="{ width: '40vw' }">
@@ -224,9 +228,13 @@
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
-      <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible2=false" size="small" style="margin-left: 350px;"/>
-         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save2" />
     </div>
+    <template #footer>
+      <div class="p-d-flex p-jc-end">
+        <Button label="取消" class="mr-2 p-button-sm"  @click="visible2=false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save2" />
+      </div>
+    </template>
   </Dialog>
 
   <Dialog v-model:visible="visible3" modal header="机构信息" :style="{ width: '40vw' }">
@@ -309,11 +317,13 @@
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
-
-         <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="visible3=false" size="small" style="margin-left: 350px;"/>
-         <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="Save3" />
-
     </div>
+    <template #footer>
+      <div class="p-d-flex p-jc-end">
+        <Button label="取消" class="mr-2 p-button-sm"  @click="visible3=false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save3" />
+      </div>
+    </template>
   </Dialog>
 </template>
   

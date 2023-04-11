@@ -7,7 +7,6 @@
 <script>
 import { ElConfigProvider } from 'element-plus'
   import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-import { provide } from 'vue';
 export default {
   name: 'App',
   components:{
@@ -33,4 +32,7 @@ export default {
   text-align: center;
   color:rgb(87, 59, 23);
 }
+body {
+    font-family: (--font-family);
+} 
 </style>

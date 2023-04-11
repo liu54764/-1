@@ -22,10 +22,6 @@ const routes = [
         component:() => import('../views/home')
     }
     ,{
-        path:'/organization',
-        component:() => import('../views/organization')
-    }
-    ,{
         path:'/grade',
         component:() => import('../views/grade')
     },{

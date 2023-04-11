@@ -8,7 +8,9 @@
             <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
             <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold"
                @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
-            <div class="table-header flex flex-column md:flex-row md:justify-content-between">
+            <Button type="button" icon="pi pi-filter-slash" label="清空" outlined @click="clearFilter()"
+               class="p-button-sm" />
+            <div class="table-header flex flex-column md:flex-row md:justify-content-between ml-2">
                <span class="p-input-icon-left">
                   <i class="pi pi-search" />
                   <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext-sm" />
@@ -59,8 +61,8 @@
          <!-- <Column :rowEditor="true" style="min-width: 50px;" bodyStyle="text-align:center"></Column> -->
          <Column style="min-width: 100px;">
             <template #body="slotProps">
-               <Button :rowEditor="true" icon="pi pi-pencil" class="p-button-success mr-2 p-button-rounded" style="height: 35px;width: 35px;"
-                  @click="editProduct(slotProps.data)" />
+               <Button :rowEditor="true" icon="pi pi-pencil" class="p-button-success mr-2 p-button-rounded"
+                  style="height: 35px;width: 35px;" @click="editProduct(slotProps.data)" />
                <Button icon="pi pi-trash" class="p-button-warning p-button-rounded" style="height: 35px;width: 35px;"
                   @click="confirmDeleteProduct(slotProps.data)" />
             </template>
@@ -70,7 +72,7 @@
 
    </div>
 
-   <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="成绩信息"  modal class="p-fluid" >
+   <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="成绩信息" modal class="p-fluid">
       <img :src="'demo/images/product/' + product.image" :alt="product.image" class="product-image" v-if="product.image" />
       <div class="field">
          <label for="name">Name</label>
@@ -164,13 +166,12 @@ import DataTable from 'primevue/datatable';
 import Textarea from 'primevue/textarea';
 import Calendar from 'primevue/calendar';
 import Chart from 'primevue/chart';
-import { locale } from 'primevue/config';
 export default {
 
    name: 'GradeRevision',
    components: {
       top, side, mainout, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
-      , Toast, FilterOperator, Calendar, locale
+      , Toast, FilterOperator, Calendar, 
    },
    data() {
       return {
@@ -201,10 +202,10 @@ export default {
    },
    methods: {
       onRowEditSave(event) {
-            let { newData, index } = event;
+         let { newData, index } = event;
 
-            this.products[index] = newData;
-        },
+         this.products[index] = newData;
+      },
       // formatDate(value) {
       //       return value.toLocaleDateString('zh', {
       //           day: '2-digit',
@@ -299,7 +300,10 @@ export default {
 
          }
 
-      }
+      },
+      clearFilter() {
+            this.initFilters();
+        },
    }
 
 }
