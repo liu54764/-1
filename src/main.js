@@ -1,88 +1,94 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import './assets/style.css'
-import '@/filter/index.js'
-import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/lara-light-indigo/theme.css'       //theme
-import 'primevue/resources/primevue.min.css'                 //core css
-import 'primeicons/primeicons.css'
-import 'primeflex/primeflex.css'
-import Tooltip from 'primevue/tooltip';
-import ToastService from 'primevue/toastservice';
-// import Vue from 'vue'
-// import VueI18n from 'vue-i18n'
-// Vue.use(VueI18n)
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import "./assets/style.css";
+import "@/filter/index.js";
+import PrimeVue from "primevue/config";
+import "primevue/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primevue/resources/primevue.min.css"; //core css
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
+import Tooltip from "primevue/tooltip";
+import ToastService from "primevue/toastservice";
 
- 
-const app = createApp(App)
-// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-//   app.component(key, component)
-// }
-app.use(router).use(ToastService).use(ElementPlus).mount('#app'); // 设置为中文;
-app.directive('tooltip', Tooltip);
-// app.use(PrimeVue,{
-//   ripple: true,
-//   inputStyle: "filled" ,
-// })
+
+const app = createApp(App);
+
+app.use(router).use(ToastService).use(ElementPlus).mount("#app"); // 设置为中文;
+app.directive("tooltip", Tooltip);
 app.use(PrimeVue, {
+  ripple: true,
+  // inputStyle: "filled",
   locale: {
-    startsWith: 'Starts with',
-    contains: 'Contains',
-    notContains: 'Not contains',
-    endsWith: 'Ends with',
-    equals: 'Equals',
-    notEquals: 'Not equals',
-    noFilter: 'No Filter',
-    lt: 'Less than',
-    lte: 'Less than or equal to',
-    gt: 'Greater than',
-    gte: 'Greater than or equal to',
-    dateIs: 'Date is',
-    dateIsNot: 'Date is not',
-    dateBefore: 'Date is before',
-    dateAfter: 'Date is after',
-    clear: 'Cl',
-    apply: 'Apply',
-    matchAll: 'Match All',
-    matchAny: 'Match Any',
-    addRule: 'Add Rule',
-    removeRule: 'Remove Rule',
-    accept: 'Yes',
-    reject: 'No',
-    choose: 'Choose',
-    upload: 'Upload',
-    cancel: 'Cancel',
-    dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
-    monthNames: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-    monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    today: 'Today',
-    weekHeader: 'Wk',
+    startsWidth: "以……开始",
+    contains: "包含",
+    notContains: "不包含",
+    endsWith: "以……结尾",
+    equals: "等于",
+    notEquals: "不等于",
+    noFilter: "无过滤",
+    lt: "小于",
+    lte: "小于等于",
+    gt: "大于",
+    gte: "大于等于",
+    dateIs: "日期为",
+    dateIsNot: "日期不为",
+    dateBefore: "日期早于",
+    dateAfter: "日期晚于",
+    clear: "清空",
+    apply: "应用",
+    matchAll: "全部匹配",
+    matchAny: "任意匹配",
+    addRule: "添加规则",
+    removeRule: "删除规则",
+    accept: "是",
+    reject: "否",
+    choose: "选择",
+    upload: "上传",
+    cancel: "取消",
+    dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+    dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+    dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
+    monthNames: [
+      "一月",
+      "二月",
+      "三月",
+      "四月",
+      "五月",
+      "六月",
+      "七月",
+      "八月",
+      "九月",
+      "十月",
+      "十一月",
+      "十二月",
+    ],
+    monthNamesShort: [
+      "一月",
+      "二月",
+      "三月",
+      "四月",
+      "五月",
+      "六月",
+      "七月",
+      "八月",
+      "九月",
+      "十月",
+      "十一月",
+      "十二月",
+    ],
+    today: "今天",
+    weekHeader: "周",
     firstDayOfWeek: 0,
-    dateFormat: 'mm/dd/yy',
-    weak: 'Weak',
-    medium: 'Medium',
-    strong: 'Strong',
-    passwordPrompt: 'Enter a password',
-    emptyFilterMessage: 'No results found',
-    emptyMessage: 'No available options'
-  }
+    dateFormat: "mm/dd/yy",
+    weak: "弱",
+    medium: "中",
+    strong: "强",
+    passwordPrompt: "输入密码",
+    emptyFilterMessage: "没有找到符合条件的数据",
+    emptyMessage: "暂无可用选项",
+    empty: "空",
+  },
 });
-// new Vue({
-//   render: (h) => h(App),
-// }).$mount('#app');
-// app.use(PrimeVue, {
-//   locale: {
-//       accept: '接受',
-//       reject: '拒绝',
-//       matchAll:'全部匹配',
-//       matchAny:'匹配任何',  
-//   },
-//    ripple: true,
-//    inputStyle: "filled",
-// });
-

@@ -1,7 +1,7 @@
 import router from "@/router/index";
 
 router.beforeEach((to,from,next)=>{
-    console.info(to)
+    // console.info(to)
     let userinfo = JSON.parse(localStorage.getItem('userinfo'))
     if(userinfo)
     {

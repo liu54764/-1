@@ -169,7 +169,7 @@ export default {
             var newMyDate = new Date(milliseconds);
             var weekDay=newMyDate.getDay(); //获取当前星期X(0-6,0代表星期天)
            this.chartData.labels[i]=weekDayArr[weekDay];
-           console.log(weekDayArr[weekDay]);
+        //    console.log(weekDayArr[weekDay]);
            }	
 	},
       //   onRowSelect(event) {

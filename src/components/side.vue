@@ -59,7 +59,7 @@ export default {
     GetInformation() {
       let userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.role = userinfo.data.identity
-      console.log(userinfo.data.identity)
+      // console.log(userinfo.data.identity)
     },
   }
 }

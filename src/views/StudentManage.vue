@@ -1,275 +1,408 @@
 <template>
-   <top />
-   <side />
-   <Toast style="font-weight: 600;"/>
-   <div class="card">
-   <Toolbar class="mb-2">
-       <template #start>
-           <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
-           <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
-           <div class="table-header flex flex-column md:flex-row md:justify-content-between">
-               <span class="p-input-icon-left">
-                   <i class="pi pi-search" />
-                   <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext-sm"/>
-               </span>
-           </div> 
-       </template>
+    <top />
+    <side />
+    <Toast style="font-weight: 600;" />
+    <div class="card">
+        <Toolbar class="mb-2">
+            <template #start>
+                <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
+                <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold"
+                    @click="confirmDeleteSelected" :disabled="!selectedstudents || !selectedstudents.length" />
+                <div class="table-header flex flex-column md:flex-row md:justify-content-between">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value" placeholder="查找..." class="p-inputtext-sm" />
+                    </span>
+                </div>
+            </template>
 
-       <template #end>
-           <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="导入" chooseLabel="导入" class="mr-2 inline-block p-button-sm font-bold" />
-           <Button label="导出" icon="pi pi-upload" class="p-button-help p-button-sm font-bold" @click="exportCSV($event)"  />
-       </template>
+            <template #end>
+                <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="导入" chooseLabel="导入"
+                    class="mr-2 inline-block p-button-sm font-bold" /> -->
+                <Button label="导出" icon="pi pi-upload" class="p-button-help p-button-sm font-bold"
+                    @click="exportCSV($event)" />
+            </template>
 
-   </Toolbar>
+        </Toolbar>
 
-   <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id"
-   class="p-datatable-sm"  
-   :scrollable="true" scrollHeight="450px"
-       :paginator="true" :rows="8" :filters="filters"
-       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[8,15,20]"
-       currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
-
-       <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
-               <Column field="code" header="学号" :sortable="true" style="min-width: 120px;" class="text-center "></Column>
-               <Column field="name" header="用户名" style="min-width: 130px;"></Column>
-               <Column field="category" header="性别" style="min-width: 100px;"></Column>
-               <Column field="price" header="专业" style="min-width: 100px;"></Column>
-               <Column field="quantity" header="年级" :sortable="true" style="min-width: 100px;"></Column>
-               <Column field="quantity" header="出生日期" :sortable="true" style="min-width: 150px;"></Column>
-               <Column field="quantity" header="邮箱" style="min-width: 140px;"></Column>
-               <Column field="description" header="电话" style="min-width: 140px;"></Column>
-               <Column field="image" header="住址" style="min-width: 160px;"></Column>
-               <Column :exportable="false" :styles="{'min-width':'50px'}">
-           <template #body="slotProps">
-               <Button icon="pi pi-trash" class="p-button-rounded p-button-warning p-button-sm" style="height: 35px;width: 35px;" @click="confirmDeleteProduct(slotProps.data)" />
-           </template>
-               </Column> 
-       </DataTable>
-
-
-   </div>
-
-
-<Dialog :visible.sync="productDialog" :style="{width: '450px'}" header="成绩信息" :modal="true" class="p-fluid">
-   <img :src="'demo/images/product/' + product.image" :alt="product.image" class="product-image" v-if="product.image" />
-   <div class="field">
-       <label for="name">Name</label>
-       <InputText id="name" v-model.trim="product.name" required="true" autofocus :class="{'p-invalid': submitted && !product.name}" />
-       <small class="p-invalid" v-if="submitted && !product.name">Name is required.</small>
-   </div>
-   <div class="field">
-       <label for="description">Description</label>
-       <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
-   </div>
-
-   <div class="field">
-       <label class="mb-3">Category</label>
-       <div class="formgrid grid">
-           <div class="field-radiobutton col-6">
-               <RadioButton id="category1" name="category" value="Accessories" v-model="product.category" />
-               <label for="category1">Accessories</label>
-           </div>
-           <div class="field-radiobutton col-6">
-               <RadioButton id="category2" name="category" value="Clothing" v-model="product.category" />
-               <label for="category2">Clothing</label>
-           </div>
-           <div class="field-radiobutton col-6">
-               <RadioButton id="category3" name="category" value="Electronics" v-model="product.category" />
-               <label for="category3">Electronics</label>
-           </div>
-           <div class="field-radiobutton col-6">
-               <RadioButton id="category4" name="category" value="Fitness" v-model="product.category" />
-               <label for="category4">Fitness</label>
-           </div>
-       </div>
-   </div>
-
-   <div class="formgrid grid">
-       <div class="field col">
-           <label for="price">Price</label>
-           <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" />
-       </div>
-       <div class="field col">
-           <label for="quantity">Quantity</label>
-           <InputNumber id="quantity" v-model="product.quantity" integeronly />
-       </div>
-   </div>
-   <template #footer>
-       <Button label="取消" icon="pi pi-times" class="p-button-text font-bold" @click="hideDialog"/>
-       <Button label="保存" icon="pi pi-check" class="p-button-text font-bold" @click="saveProduct" />
-   </template>
-</Dialog>
-
-<Dialog :visible.sync="deleteProductDialog" :styles="{width: '450px'}" header="确认" :modal="true">
-   <div class="confirmation-content">
-       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-       <span v-if="product">你 确 认 删 除 <b>{{product.name}} </b> 吗?</span>
-   </div>
-   <template #footer>
-       <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
-       <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
-   </template>
-</Dialog>
-
-<Dialog :visible.sync="deleteProductsDialog" :styles="{width: '450px'}" header="确认" :modal="true">
-   <div class="confirmation-content">
-       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-       <span style="font-weight: 500; font-size: large;" v-if="product">你 确 认 删 除  吗?</span>
-   </div>
-   <template #footer>
-       <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
-       <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
-   </template>
-</Dialog>
+        <DataTable ref="dt" :value="students" v-model:selection.sync="selectedstudents" class="p-datatable-sm"
+            :scrollable="true" scrollHeight="450px" :paginator="true" :rows="8" v-model:filters="filters"
+            filter-display="menu"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
+            <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
+            <Column field="code" header="学号" style="min-width: 100px;" class="text-indigo-600  font-bold">
+                <template #filter="{ filterModel }">
+                    <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
+                </template>
+            </Column>
+            <Column field="name" header="姓名" style="min-width: 100px;" class="text-indigo-600 font-bold">
+                <template #filter="{ filterModel }">
+                    <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
+                </template>
+            </Column>
+            <Column field="gender" header="性别" style="min-width: 80px;" class="text-indigo-600  font-bold">
+                <template #filter="{ filterModel }">
+                    <Dropdown v-model="filterModel.value" :options="genderOptions" placeholder="选择性别"
+                        class="p-column-filter">
+                        <template #option="slotProps">
+                            <span v-if="slotProps.option === null">所有</span>
+                            <span v-else-if="slotProps.option === '男'">男</span>
+                            <span v-else-if="slotProps.option === '女'">女</span>
+                        </template>
+                    </Dropdown>
+                </template>
+            </Column>
+            <Column field="major" header="专业" style="min-width: 100px;" class="text-green-600  font-bold">
+                <template #filter="{ filterModel }">
+                    <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
+                </template>
+            </Column>
+            <Column field="grade" header="年级" style="min-width: 100px;">
+                <template #body="{ data }">
+                    <Tag :value="data.grade" :severity="getSeverity(data.grade)" />
+                </template>
+                <template #filter="{ filterModel }">
+                    <Dropdown v-model="filterModel.value" :options="statuses" placeholder="请选择" class="p-column-filter"
+                        showClear>
+                        <template #option="slotProps">
+                            <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)"/>
+                        </template>
+                    </Dropdown>
+                </template>
+            </Column>
+            <Column field="birt" header="出生日期" :sortable="true" style="min-width: 140px;"></Column>
+            <Column field="email" header="邮箱" style="min-width: 140px;"></Column>
+            <Column field="phone" header="电话" style="min-width: 140px;"></Column>
+            <Column field="address" header="住址" style="min-width: 160px;"></Column>
+            <Column :exportable="false" :styles="{ 'min-width': '50px' }">
+                <template #body="slotProps">
+                    <Button icon="pi pi-trash" outlined rounded severity="danger" style="height: 35px;width: 35px;" class="p-button-sm"
+                        @click="confirmDeletestudent(slotProps.data)" />
+                </template>
+            </Column>
+        </DataTable>
+    </div>
 
 
+    <Dialog v-model:visible.sync="studentDialog" :style="{ width: '400px' }" header="学生信息" :modal="true" class="p-fluid">
+        <div class="p-fluid">
+            <div class="p-field">
+                <label for="code">学号</label>
+                <InputText id="code" v-model="student.code" class="p-inputtext-sm"/>
+            </div>
+            <div class="p-field  mt-2">
+                <label for="name">用户名</label>
+                <InputText id="name" v-model="student.name" class="p-inputtext-sm"/>
+            </div>
+            <div class="p-field mt-2">
+                <label for="gender">性别</label>
+                <Dropdown id="gender" v-model="student.gender" :options="genderOptions" class="p-inputtext-sm"/>
+            </div>
+            <div class="p-field mt-2">
+                <label for="major">专业</label>
+                <InputText id="major" v-model="student.major" class="p-inputtext-sm"/>
+            </div>
+            <div class="p-field mt-2">
+                <label for="grade">年级</label>
+                <Dropdown id="grade" v-model="student.grade" :options="statuses" class="p-inputtext-sm">
+                    <template #option="slotProps">
+                            <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
+                        </template>
+                </Dropdown>
+            </div>
+        </div>
+        <template v-slot:footer>
+            <Button label="取消" class="mr-2 p-button-sm" @click="hideDialog" />
+            <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"   @click="savestudent" />
+        </template>
+
+    </Dialog>
+
+    <Dialog v-model:visible.sync="deletestudentDialog" :styles="{ width: '450px' }" header="确认" :modal="true">
+        <div class="confirmation-content">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+            <span v-if="student">你 确 认 删 除 <b>{{ student.name }} </b> 吗?</span>
+        </div>
+        <template #footer>
+            <Button label="否" icon="pi pi-times" class="p-button-text" @click="deletestudentDialog = false" />
+            <Button label="是" icon="pi pi-check" class="p-button-text" @click="deletestudent" />
+        </template>
+    </Dialog>
+
+    <Dialog v-model:visible.sync="deletestudentsDialog" :styles="{ width: '450px' }" header="确认" :modal="true">
+        <div class="confirmation-content">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+            <span style="font-weight: 500; font-size: large;" v-if="student">你 确 认 删 除 吗?</span>
+        </div>
+        <template #footer>
+            <Button label="否" icon="pi pi-times" class="p-button-text" @click="deletestudentsDialog = false" />
+            <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteSelectedstudents" />
+        </template>
+    </Dialog>
+</template>
 
 
- </template>
 
+<script>
+import Toast from 'primevue/toast';
+import top from '../components/top.vue'
+import side from '../components/side.vue'
+import mainout from '../components/main.vue'
+import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import InputNumber from 'primevue/inputnumber';
+import Toolbar from 'primevue/toolbar';
+import FileUpload from 'primevue/fileupload';
+import InputText from 'primevue/inputtext';
+import RadioButton from 'primevue/radiobutton';
+import Column from 'primevue/column';
+import DataTable from 'primevue/datatable';
+import Chart from 'primevue/chart';
+import Tag from 'primevue/tag';
+import Dropdown from 'primevue/dropdown';
 
+import Textarea from 'primevue/textarea';
+export default {
 
- <script>
- import Toast from 'primevue/toast';
- import top from '../components/top.vue'
- import side from '../components/side.vue'
- import mainout from '../components/main.vue'
- import {FilterMatchMode} from 'primevue/api';
- import Dialog from 'primevue/dialog';
- import Button from 'primevue/button';
- import InputNumber from 'primevue/inputnumber';
- import Toolbar from 'primevue/toolbar';
- import FileUpload from 'primevue/fileupload';
- import InputText  from 'primevue/inputtext';
- import RadioButton from 'primevue/radiobutton';
- import Column from 'primevue/column';
- import DataTable from 'primevue/datatable';
- import Textarea from 'primevue/textarea';
- import Chart from 'primevue/chart';
- export default {
-   
-   name:'StudentManage',
-  components:{
-   top,side,mainout,Dialog,Button,InputNumber,Toolbar,FileUpload,InputText,Column,RadioButton,DataTable,Textarea,Chart,FilterMatchMode
-,Toast
+    name: 'StudentManage',
+    components: {
+        top, side, mainout, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
+        , Toast, FilterOperator, Tag, Dropdown,
+    },
+    data() {
+        return {
+            genderOptions: ['男', '女'],
+            statuses: ['大一', '大二', '大三', '大四', '已毕业'],
+            students: [
+                {
+                    code: '001',
+                    name: '张三',
+                    gender: '男',
+                    major: '计算机科学与技术',
+                    grade: '大一',
+                    birt: '2000-01-01',
+                    email: 'zhangsan@example.com',
+                    phone: '12345678901',
+                    address: '中国广州市天河区'
+                },
+                {
+                    code: '002',
+                    name: '李四',
+                    gender: '女',
+                    major: '英语',
+                    grade: '大二',
+                    birt: '1999-02-01',
+                    email: 'lisi@example.com',
+                    phone: '12345678902',
+                    address: '中国江苏省南京市鼓楼区'
+                },
+                {
+                    code: '003',
+                    name: '王五',
+                    gender: '男',
+                    major: '人工智能',
+                    grade: '大三',
+                    birt: '1998-03-01',
+                    email: 'wangwu@example.com',
+                    phone: '12345678903',
+                    address: '中国北京市海淀区'
+                },
+                {
+                    code: '004',
+                    name: '赵六',
+                    gender: '女',
+                    major: '工商管理',
+                    grade: '大四',
+                    birt: '1997-04-01',
+                    email: 'zhaoliu@example.com',
+                    phone: '12345678904',
+                    address: '中国上海市浦东新区'
+                },
+                {
+                    code: '005',
+                    name: '钱七',
+                    gender: '男',
+                    major: '机械工程',
+                    grade: '已毕业',
+                    birt: '1996-05-01',
+                    email: 'qianqi@example.com',
+                    phone: '12345678905',
+                    address: '中国重庆市渝中区'
+                },
+                {
+                    code: '006',
+                    name: '孙八',
+                    gender: '女',
+                    major: '化学',
+                    grade: '已毕业',
+                    birt: '1995-06-01',
+                    email: 'sunba@example.com',
+                    phone: '12345678906',
+                    address: '中国湖南省长沙市岳麓区'
+                },
+                {
+                    code: '005',
+                    name: '钱七',
+                    gender: '男',
+                    major: '机械工程',
+                    grade: '已毕业',
+                    birt: '1996-05-01',
+                    email: 'qianqi@example.com',
+                    phone: '12345678905',
+                    address: '中国重庆市渝中区'
+                },
+                {
+                    code: '006',
+                    name: '孙八',
+                    gender: '女',
+                    major: '化学',
+                    grade: '已毕业',
+                    birt: '1995-06-01',
+                    email: 'sunba@example.com',
+                    phone: '12345678906',
+                    address: '中国湖南省长沙市岳麓区'
+                },
+
+            ],
+            student: null,
+            studentDialog: false,
+            deletestudentDialog: false,
+            deletestudentsDialog: false,
+            student: {},
+            selectedstudents: null,
+            filters: {},
+            submitted: false,
+        }
+    },
+    created() {
+        // this.studentService = new studentService();
+        this.initFilters();
+    },
+    mounted() {
+        // this.studentService.getstudents().then(data => this.students = data);
+    },
+    computed: {
   },
-  data() {
-       return {
-            products:  [
-      {"id": "1000252782","code": "20070117","name": "李华","description": "Prodscription","image": "bamboo-w","price": 65,"category": "男","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
-      {"id": "1001","code": "nvklal433","name": "Black Watch","description": "Prodiption","image": "blacch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 4},
-      {"id": "1002","code": "zz21cz3c1","name": "Blue Band","description": "Pron","image": "blue-bpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 3},
-      {"id": "1003","code": "244wgerg2","name": "Blue T-Shirt","description": "Prodription","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 5},
-      {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product on","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 4},
-      {"id": "1005","code": "av2231fwg","name": "Brown Purse","description": "Proription","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 4},
-      {"id": "1006","code": "bib36pfvm","name": "Chakra Bracelet","description": "Proscription","image": "chakra-bracelet.jpg","price": 32,"category": "Accessories","quantity": 5,"inventoryStatus": "LOWSTOCK","rating": 3},
-      {"id": "1007","code": "mbvjkgip5","name": "Galaxy Earrings","description": "Product Description","image": "galaxy-earrings.jpg","price": 34,"category": "Accessories","quantity": 23,"inventoryStatus": "INSTOCK","rating": 5},
-      {"id": "1008","code": "vbb124btr","name": "Game Controller","description": "Product Description","image": "game-controller.jpg","price": 99,"category": "Electronics","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 4},
-      {"id": "1009","code": "cm230f032","name": "Gaming Set","description": "Product Description","image": "gaming-set.jpg","price": 299,"category": "Electronics","quantity": 63,"inventoryStatus": "INSTOCK","rating": 3}
-  ],
-           product:null,
-           productDialog: false,
-           deleteProductDialog: false,
-           deleteProductsDialog: false,
-           product: {},
-           selectedProducts: null,
-           filters: {},
-           submitted: false,
-       }
-   },
-   created() {
-       // this.productService = new ProductService();
-       this.initFilters();
-   },
-   mounted() {
-       // this.productService.getProducts().then(data => this.products = data);
-   },
-   methods: {
-       openNew() {
-           this.product = {};
-           this.submitted = false;
-           this.productDialog = true;
-       },
-       hideDialog() {
-           this.productDialog = false;
-           this.submitted = false;
-       },
-       confirmDeleteProduct(product) {
-           this.product = product;
-           this.deleteProductDialog = true;
-       },
-       deleteProduct() {
-           this.products = this.products.filter(val => val.id !== this.product.id);
-           this.deleteProductDialog = false;
-           this.product = {};
-           this.$toast.add({severity:'success', summary: '成功', detail: '学生   删除', life: 3000});
-       },
-       exportCSV() {
-           this.$refs.dt.exportCSV();
-       },
-       confirmDeleteSelected() {
-           this.deleteProductsDialog = true;
-       },
-       deleteSelectedProducts() {
-           this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-           this.deleteProductsDialog = false;
-           this.selectedProducts = null;
-           this.$toast.add({severity:'success', summary: '成功', detail: '学生   删除', life: 3000});
-       },
-       initFilters() {
-           this.filters = {
-               'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-           }
-       }
-   }
+    methods: {
+        openNew() {
+            this.student = {};
+            this.submitted = false;
+            this.studentDialog = true;
+        },
+        hideDialog() {
+            this.studentDialog = false;
+            this.submitted = false;
+        },
+        confirmDeletestudent(student) {
+            this.student = student;
+            this.deletestudentDialog = true;
+        },
+        deletestudent() {
+            this.students = this.students.filter(val => val.code !== this.student.code);
+            this.deletestudentDialog = false;
+            this.student = {};
+            this.$toast.add({ severity: 'success', summary: '成功', detail: '学生   删除', life: 3000 });
+        },
+        exportCSV() {
+            this.$refs.dt.exportCSV();
+        },
+        confirmDeleteSelected() {
+            this.deletestudentsDialog = true;
+        },
+        deleteSelectedstudents() {
+            this.students = this.students.filter(val => !this.selectedstudents.includes(val));
+            this.deletestudentsDialog = false;
+            this.selectedstudents = null;
+            this.$toast.add({ severity: 'success', summary: '成功', detail: '学生   删除', life: 3000 });
+        },
+        savestudent() {
+            this.submitted = true;
+            this.students.push(this.student);
+            this.studentDialog = false;
+            this.student = {};
+           
+        },
+        initFilters() {
+            this.filters = {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                code: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                age: { value: null, matchMode: "equals" },
+                name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                grade: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                gender: { value: null, matchMode: FilterMatchMode.EQUALS },
+
+                major: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+            }
+        },
+        getSeverity(status) {
+            switch (status) {
+                case '大一':
+                    return 'danger';
+
+                case '大二':
+                    return 'secondary';
+
+                case '大三':
+                    return 'info';
+
+                case '大四':
+                    return 'warning';
+
+                case '已毕业':
+                    return 'success';
+            }
+        },
+    }
+
+}
+
+</script>
  
- }
- 
- </script>
- 
- <style  scoped> 
- .card{
-   margin-top: 20px;
+<style  scoped> .card {
+     margin-top: 20px;
      margin-left: 25px;
-     width:1270px;
+     width: 1270px;
      height: 85vh;
      float: left;
  }
+
  .table-header {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
 
-   @media screen and (max-width: 960px) {
-       align-items: start;
-  }
-}
+     @media screen and (max-width: 960px) {
+         align-items: start;
+     }
+ }
 
-.product-image {
-   width: 100px;
-   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
+ .student-image {
+     width: 100px;
+     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+ }
 
-.p-dialog .product-image {
-   width: 150px;
-   margin: 0 auto 2rem auto;
-   display: block;
-}
+ .p-dialog .student-image {
+     width: 150px;
+     margin: 0 auto 2rem auto;
+     display: block;
+ }
 
-.confirmation-content {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-}
+ .confirmation-content {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
 
-@media screen and (max-width: 960px) {
-  :deep(.p-toolbar) {
-     flex-wrap: wrap;
+ @media screen and (max-width: 960px) {
+     :deep(.p-toolbar) {
+         flex-wrap: wrap;
 
 
-  }
-}
-html {
-   font-size: 12px;
-}
-</style>
+     }
+ }
+
+ html {
+     font-size: 12px;
+ }</style>

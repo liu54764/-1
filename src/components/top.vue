@@ -388,7 +388,6 @@ export default {
         this.graduation_date = res.data.data.graduation_date
         this.major = res.data.data.major
         this.name = res.data.data.name
-        console.log(res)
       })
     },
     Save1() {
