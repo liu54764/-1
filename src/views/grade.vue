@@ -25,7 +25,7 @@
 
         </Toolbar>
 
-        <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" dataKey="id" class="p-datatable-sm"
+        <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" class="p-datatable-sm"
             :paginator="true" :rows="9" v-model:filters="filters" :scrollable="true" scrollHeight="450px" filter-display="menu"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
@@ -92,15 +92,17 @@ import DataTable from 'primevue/datatable';
 import Textarea from 'primevue/textarea';
 import Chart from 'primevue/chart';
 import Tag from 'primevue/tag';
+import Dropdown from 'primevue/dropdown';
 export default {
 
     name: 'grade',
     components: {
         top, side, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
-        , Toast, Tag, FilterOperator
+        , Toast, Tag, FilterOperator,Dropdown
     },
     data() {
         return {
+            courseOptions:['必修','选修'],
             products: [
                 {
 

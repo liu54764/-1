@@ -88,31 +88,30 @@
         </div>
         <div class="field col-12 md:col-6">
           <label for="firstname6">学号</label>
-          <InputText id="firstname6" type="text" v-model="number"
+          <InputText id="firstname6" type="text" v-model="snum"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <label for="lastname6">姓名</label>
           <InputText id="lastname6" type="text" v-model="name"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-
+        <div class="field col-12 md:col-3">
+          <label>性别</label>
+          <Dropdown v-model="gender" :options="genders" placeholder="请选择"
+            class="w-full p-inputtext-sm text-base text-color   outline-none focus:border-primary" />
+        </div>
         <div class="field col-12 md:col-6">
           <label for="city">住址</label>
           <InputText id="city" type="text" v-model="address"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
+
         <div class="field col-12 md:col-3">
           <label for="state">年级</label>
-          <Select id="state" v-model="grade"
-            class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
-            style="appearance: auto">
-            <option>大一</option>
-            <option>大二</option>
-            <option>大三</option>
-            <option>大四</option>
-            <option>已毕业</option>
-          </Select>
+
+          <Dropdown v-model="grade" :options="grades" placeholder="请选择"
+            class="w-full p-inputtext-sm text-base text-color   outline-none focus:border-primary" />
         </div>
         <div class="field col-12 md:col-3">
           <label for="zip">专业</label>
@@ -125,9 +124,14 @@
           <Calendar id="firstname6" type="text" v-model="admission_date" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-        <div class="field col-12 md:col-6">
+        <!-- <div class="field col-12 md:col-6">
           <label for="lastname6">毕业时间</label>
           <Calendar id="lastname6" type="password" v-model="graduation_date" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </div> -->
+        <div class="field col-12 md:col-6">
+          <label for="lastname6">出生日期</label>
+          <Calendar id="lastname6" type="text" v-model="birthday" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
@@ -142,15 +146,15 @@
         </div>
         <div class="field col-12">
           <label for="address">个人简介</label>
-          <textarea id="address" type="text" rows="3" v-model="info"
+          <textarea id="address" type="text" rows="3" v-model="introduction"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
     </div>
     <template #footer>
       <div class="p-d-flex p-jc-end">
-        <Button label="取消" class="mr-2 p-button-sm"  @click="visible1=false" />
-        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save1" />
+        <Button label="取消" class="mr-2 p-button-sm" @click="visible1 = false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="Save1" />
       </div>
     </template>
   </Dialog>
@@ -170,15 +174,19 @@
         </div>
         <div class="field col-12 md:col-6">
           <label for="firstname6">职工号</label>
-          <InputText id="firstname6" type="text" v-model="number"
+          <InputText id="firstname6" type="text" v-model="tnum"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <label for="lastname6">姓名</label>
           <InputText id="lastname6" type="text" v-model="name"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-
+        <div class="field col-12 md:col-3">
+          <label>性别</label>
+          <Dropdown v-model="gender" :options="genders" placeholder="请选择"
+            class="w-full p-inputtext-sm text-base text-color   outline-none focus:border-primary" />
+        </div>
         <div class="field col-12 md:col-6">
           <label for="city">住址</label>
           <InputText id="city" type="text" v-model="address"
@@ -186,57 +194,49 @@
         </div>
         <div class="field col-12 md:col-3">
           <label for="state">职位</label>
-          <Select id="state" v-model="grade"
-            class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
-            style="appearance: auto">
-            <option>教授</option>
-            <option>副教授</option>
-            <option>讲师</option>
-            <option>助教</option>
-            <option>其他</option>
-          </Select>
+          <Dropdown v-model="position" :options="teacher" placeholder="请选择"
+            class="w-full p-inputtext-sm text-base text-color   outline-none focus:border-primary" />
         </div>
         <div class="field col-12 md:col-3">
-          <label for="zip">年龄</label>
-          <InputText id="zip" type="text" v-model="major"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+          <label for="zip">出生日期</label>
+          <Calendar id="zip" type="text" v-model="birthday" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay p-inputtext-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
 
         <div class="field col-12 md:col-6">
           <label for="firstname6">任职时间</label>
-          <Calendar id="firstname6" type="text" v-model="admission_date" dateFormat="yy-mm-dd"
-            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+          <Calendar id="firstname6" v-model="appointment_time" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay p-inputtext-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
           <label for="lastname6">离职时间</label>
-          <Calendar id="lastname6" type="password" v-model="graduation_date" dateFormat="yy-mm-dd"
-            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+          <Calendar id="lastname6" v-model="leave_time" dateFormat="yy-mm-dd"
+            class="text-base text-color surface-overlay p-inputtext-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
           <label for="firstname6">电话</label>
           <InputText id="firstname6" type="text" v-model="phone"
-            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+            class="text-base text-color surface-overlay p-button-sm  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
           <label for="lastname6">邮箱</label>
           <InputText id="lastname6" type="text" v-model="email"
-            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+            class="text-base text-color surface-overlay  p-button-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12">
           <label for="address">个人简介</label>
-          <textarea id="address" type="text" rows="3" v-model="info"
+          <textarea id="address" type="text" rows="3" v-model="introduction"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
     </div>
     <template #footer>
       <div class="p-d-flex p-jc-end">
-        <Button label="取消" class="mr-2 p-button-sm"  @click="visible2=false" />
-        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save2" />
+        <Button label="取消" class="mr-2 p-button-sm" @click="visible2 = false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="Save2" />
       </div>
     </template>
   </Dialog>
-
   <Dialog v-model:visible="visible3" modal header="机构信息" :style="{ width: '40vw' }">
     <div class="card">
       <div class="formgrid grid">
@@ -252,46 +252,23 @@
         </div>
         <div class="field col-12 md:col-6">
           <label for="firstname6">机构名称</label>
-          <InputText id="firstname6" type="text" v-model="number"
+          <InputText id="firstname6" type="text" v-model="name"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-        <div class="field col-12 md:col-6">
-          <label for="lastname6">姓名</label>
-          <InputText id="lastname6" type="text" v-model="name"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
-        </div>
-
         <div class="field col-12 md:col-6">
           <label for="city">地址</label>
-          <InputText id="city" type="text" v-model="address"
+          <InputText id="firstname6" type="text" v-model="address"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
-        <div class="field col-12 md:col-3">
-          <label for="state">机构类型</label>
-          <Select id="state" v-model="grade"
-            class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary"
-            style="appearance: auto">
-            <option>公司/企业</option>
-            <option>教育机构</option>
-            <option>其他</option>
-          </Select>
-        </div>
-        <!-- <div class="field col-12 md:col-3">
-          <label for="zip">上传材料</label>
-          <FileUpload mode="basic"  url="./upload" accept="image/*" :maxFileSize="1000000" @upload="onUpload"  label="选择"
-          chooseLabel="请选择"          class="p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          />
-         </div> -->
-
         <div class="field col-12 md:col-6">
           <label for="firstname6">电话</label>
           <InputText id="firstname6" type="text" v-model="phone"
-            class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
           <label for="lastname6">邮箱</label>
-          <InputText id="lastname6" type="text" v-model="email"
-            class="text-base text-color surface-overlay  surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+          <InputText id="firstname6" type="text" v-model="email"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
 
         <div class="field col-12">
@@ -311,17 +288,21 @@
       </ul>
     </div> -->
         </div>
+        <div class="field col-12 md:col-3">
+          <label for="state">机构类型</label>
+          <Dropdown v-model="type" :options="institution" placeholder="请选择" class="w-full p-inputtext-sm md:w-14rem" />
+        </div>
         <div class="field col-12">
           <label for="address">机构简介</label>
-          <textarea id="address" type="text" rows="5" v-model="info"
+          <textarea id="address" type="text" rows="5" v-model="introduction"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
         </div>
       </div>
     </div>
     <template #footer>
       <div class="p-d-flex p-jc-end">
-        <Button label="取消" class="mr-2 p-button-sm"  @click="visible3=false" />
-        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"  @click="Save3" />
+        <Button label="取消" class="mr-2 p-button-sm" @click="visible3 = false" />
+        <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="Save3" />
       </div>
     </template>
   </Dialog>
@@ -335,14 +316,19 @@ import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
 import request from '@/utils/request';
 import FileUpload from 'primevue/fileupload';
+import Dropdown from 'primevue/dropdown';
 
 export default {
   name: "top",
   components: {
-    Button, Chip, Dialog, InputText, Calendar, FileUpload
+    Button, Chip, Dialog, InputText, Calendar, FileUpload, Dropdown
   },
   data() {
     return {
+      institution: ['公司', '教育机构', '其他'],
+      teacher: ['教授', '副教授', '讲师', '助教', '其他'],
+      grades: ['大一', '大二', '大三', '大四', '已毕业'],
+      genders: ['男', '女'],
       uploadedFiles: ["1.jpg"],
       id: "",
       visible1: false,
@@ -354,19 +340,26 @@ export default {
       birthday: "",
       phone: "",
       address: "",
-      admission_date: "",
       graduation_date: "",
       major: "",
       role: null,
       email: "",
-      info: "***********",
-      grade: "大二",
-
+      introduction: "***********",
+      grade: "",
+      type: "",
+      tnum: "",
+      snum: "",
+      position: "",
+      appointment_time: '2020-01-01',
+      leave_time: '2025-01-01',
     }
   },
   created() {
     this.GetInformation()
     this.GetStudent()
+    this.GetInstitution()
+    this.GetTeacher()
+
   },
   methods: {
     GetInformation() {
@@ -384,19 +377,130 @@ export default {
         this.phone = res.data.data.phone
         this.email = res.data.data.email
         this.address = res.data.data.address
-        this.admission_date = res.data.data.admission_date
         this.graduation_date = res.data.data.graduation_date
         this.major = res.data.data.major
         this.name = res.data.data.name
+        this.introduction = res.data.data.introduction
+        this.snum = res.data.data.snum
+        this.grade = res.data.data.grade
+      })
+    },
+    GetInstitution() {
+      let url = "/institution/information" + "?id=" + this.id
+      request.get(url).then(res => {
+        this.phone = res.data.data.phone
+        this.email = res.data.data.email
+        this.address = res.data.data.address
+        this.name = res.data.data.name
+        this.type = res.data.data.type
+        this.introduction = res.data.data.introduction
+
+      })
+    },
+    GetTeacher() {
+      let url = "/teacher/information" + "?id=" + this.id
+      request.get(url).then(res => {
+        this.phone = res.data.data.phone
+        this.email = res.data.data.email
+        this.address = res.data.data.address
+        this.name = res.data.data.name
+        this.position = res.data.data.position
+        this.introduction = res.data.data.introduction
+        this.tnum = res.data.data.tnum
+        this.birthday = res.data.data.birthday
+        this.appointment_time = res.data.data.appointment_time
+        this.leave_time = res.data.data.leave_time
+        this.gender = res.data.data.gender
       })
     },
     Save1() {
+      request.post("student/edit", {
+        id: this.id,
+        phone:this.phone ,
+        email:this.email ,
+        address:this.address ,
+        name:this.name ,
+        introduction:this.introduction ,
+        snum:this.snum ,
+        birthday:this.birthday,
+       gender: this.gender,
+       major:this.major,
+       grade:this.grade,
+       graduation_date :this.graduation_date ,
+
+      }).then(res => {
+        if (res.data.code === "0") {
+          this.$message({
+            type: "success",
+            message: "修改成功"
+          })
+        }
+        else {
+          this.$message({
+            type: "error",
+            message: "修改失败"
+          })
+        }
+      })
       this.visible1 = false
     },
     Save2() {
+      request.post("teacher/edit", {
+        id: this.id,
+        phnne: this.phone,
+        email: this.email,
+        address: this.address,
+        name: this.name,
+        position: this.position,
+        introduction: this.introduction,
+        tnum: this.tnum,
+        birthday: this.birthday,
+        appointment_time: this.appointment_time,
+        leave: this.leave_time,
+        username: this.username,
+        password: this.password,
+      }).then(res => {
+        if (res.data.code === "0") {
+          this.$message({
+            type: "success",
+            message: "修改成功"
+          })
+        }
+        else {
+          this.$message({
+            type: "error",
+            message: "修改失败"
+          })
+        }
+      })
       this.visible2 = false
     },
     Save3() {
+      request.post("institution/edit", {
+        id: this.id,
+        phone: this.phone,
+        email: this.email,
+        address: this.address,
+        name: this.name,
+        type: this.type,
+        introduction: this.introduction,
+        username: this.username,
+        password: this.password,
+      }).then(res => {
+        console.log(res.data.code)
+        if (res.data.code === "0") {
+          this.$message({
+            type: "success",
+            message: "修改成功"
+          })
+        }
+        else {
+          this.$message({
+            type: "error",
+            message: "修改失败"
+          })
+        }
+      })
       this.visible3 = false
     },
     onAdvancedUpload(event) {

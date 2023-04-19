@@ -264,6 +264,28 @@ export default {
                     phone: '12345678906',
                     address: '中国湖南省长沙市岳麓区'
                 },
+                {
+                    code: '001',
+                    name: '张三',
+                    gender: '男',
+                    major: '计算机科学与技术',
+                    grade: '大一',
+                    birt: '2000-01-01',
+                    email: 'zhangsan@example.com',
+                    phone: '12345678901',
+                    address: '中国广州市天河区'
+                },
+                {
+                    code: '002',
+                    name: '李四',
+                    gender: '女',
+                    major: '英语',
+                    grade: '大二',
+                    birt: '1999-02-01',
+                    email: 'lisi@example.com',
+                    phone: '12345678902',
+                    address: '中国江苏省南京市鼓楼区'
+                },
 
             ],
             student: null,
