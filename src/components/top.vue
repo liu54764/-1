@@ -120,8 +120,8 @@
         </div>
 
         <div class="field col-12 md:col-6">
-          <label for="firstname6">入学时间</label>
-          <Calendar id="firstname6" type="text" v-model="admission_date" dateFormat="yy-mm-dd"
+          <label for="firstname6">毕业时间</label>
+          <Calendar id="firstname6" type="text" v-model="graduation_date" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <!-- <div class="field col-12 md:col-6">
@@ -345,6 +345,7 @@ export default {
       role: null,
       email: "",
       introduction: "***********",
+      graduation_date:"",
       grade: "",
       type: "",
       tnum: "",
@@ -356,12 +357,20 @@ export default {
   },
   created() {
     this.GetInformation()
-    this.GetStudent()
-    this.GetInstitution()
-    this.GetTeacher()
+    this.Get()
 
   },
   methods: {
+    Get(){
+       if(this.role==1)
+       {
+        this.GetStudent()
+       }else if(this.role==2){
+       this.GetTeacher()
+       }else{
+          this.GetTeacher()
+       }
+    },
     GetInformation() {
       let userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.id = userinfo.data.id
@@ -383,6 +392,7 @@ export default {
         this.introduction = res.data.data.introduction
         this.snum = res.data.data.snum
         this.grade = res.data.data.grade
+        this.graduation_date = res.data.data.graduation_date
       })
     },
     GetInstitution() {

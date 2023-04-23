@@ -25,19 +25,19 @@
 
         </Toolbar>
 
-        <DataTable ref="dt" :value="products" v-model:selection.sync="selectedProducts" class="p-datatable-sm"
+        <DataTable ref="dt" :value="scores" v-model:selection.sync="selectedscores" class="p-datatable-sm"
             :paginator="true" :rows="9" v-model:filters="filters" :scrollable="true" scrollHeight="450px" filter-display="menu"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
             <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
-            <Column field="coursecode" header="课程号" style="min-width: 100px;"
+            <Column field="cid" header="课程号" style="min-width: 100px;"
                 class="text-indigo-600 font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="course" header="课程" style="min-width: 100px;" class="text-indigo-600 font-bold">
+            <Column field="name" header="课程" style="min-width: 100px;" class="text-indigo-600 font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -56,10 +56,10 @@
             </Column>
             <Column field="credit" header="学分" :sortable="true" style="min-width: 100px;" class="text-green-600 font-bold">
             </Column>
-            <Column field="date1" header="考试时间" :sortable="true" style="min-width: 130px;"></Column>
+            <Column field="time" header="考试时间" :sortable="true" style="min-width: 130px;"></Column>
             <!-- <Column field="quantity" header="考试类型" style="min-width: 100px;"></Column> -->
-            <Column field="Scores" header="分数" :sortable="true" style="min-width: 100px;"></Column>
-            <Column field="Score" header="绩点" :sortable="true" style="min-width: 10px;"></Column>
+            <Column field="score" header="分数" :sortable="true" style="min-width: 100px;"></Column>
+            <Column field="gpa" header="绩点" :sortable="true" style="min-width: 10px;"></Column>
             <Column field="status" header="状态" style="min-width: 100px;">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.status" :severity="getStatusLabel(slotProps.data.status)" />
@@ -93,6 +93,7 @@ import Textarea from 'primevue/textarea';
 import Chart from 'primevue/chart';
 import Tag from 'primevue/tag';
 import Dropdown from 'primevue/dropdown';
+import request from '@/utils/request';
 export default {
 
     name: 'grade',
@@ -102,45 +103,47 @@ export default {
     },
     data() {
         return {
+            id:null,
             courseOptions:['必修','选修'],
-            products: [
-                {
+            scores: [
+                // {
 
-                    coursecode: 'C001',
-                    course: '计算机基础',
-                    type: '必修',
-                    credit: 3,
-                    date1: ('2022-05-15'),
-                    Scores: 85,
-                    Score: 3.0,
-                    status: '优秀'
+                //     cid: 'C001',
+                //     course: '计算机基础',
+                //     type: '必修',
+                //     credit: 3,
+                //     date1: ('2022-05-15'),
+                //     Scores: 85,
+                //     Score: 3.0,
+                //     status: '优秀'
 
-                },
-                {
+                // },
+                // {
 
-                    coursecode: 'C001',
-                    major: '软件工程',
-                    course: '数据结构',
-                    type: '必修',
-                    credit: 4,
-                    date1: '2022-06-20',
-                    Scores: 90,
-                    Score: 3.3,
-                    status: '良好'
-                },
-                {
+                //     cid: 'C001',
+                //     major: '软件工程',
+                //     course: '数据结构',
+                //     type: '必修',
+                //     credit: 4,
+                //     date1: '2022-06-20',
+                //     Scores: 90,
+                //     Score: 3.3,
+                //     status: '良好'
+                // },
+                // {
 
-                    coursecode: 'C002',
-                    course: '软件工程',
-                    type: '必修',
-                    credit: 5,
-                    date1: ('2022-07-25'),
-                    Scores: 92,
-                    Score: 3.7,
-                    status: '不及格'
-                },],
-            product: {},
-            selectedProducts: null,
+                //     cid: 'C002',
+                //     course: '软件工程',
+                //     type: '必修',
+                //     credit: 5,
+                //     date1: ('2022-07-25'),
+                //     Scores: 92,
+                //     Score: 3.7,
+                //     status: '不及格'
+                // },
+            ],
+            score: {},
+            selectedscores: null,
             filters: {},
             submitted: false,
             chartData: {
@@ -194,30 +197,25 @@ export default {
         }
     },
     created() {
-        // this.productService = new ProductService();
+        this.GetInformation();
+       this.GetScores();
         this.initFilters();
     },
     mounted() {
-        // this.productService.getProducts().then(data => this.products = data);
+       
     },
     methods: {
         GetInformation() {
             let userinfo = JSON.parse(localStorage.getItem('userinfo'))
             this.id = userinfo.data.id
         },
-        GetStudent() {
+        GetScores() {
             let url = "/student/credit" + "?id=" + this.id
             request.get(url).then(res => {
-                this.gender = res.data.data.gender
-                this.birthday = res.data.data.birthday
-                this.phone = res.data.data.phone
-                this.email = res.data.data.email
-                this.address = res.data.data.address
-                this.admission_date = res.data.data.admission_date
-                this.graduation_date = res.data.data.graduation_date
-                this.major = res.data.data.major
-                this.name = res.data.data.name
-                // console.log(res)
+                if(res.data.code==0)
+                {
+                    this.scores=res.data.data
+                }
             })
         },
         exportCSV() {
@@ -226,8 +224,8 @@ export default {
         initFilters() {
             this.filters = {
                 'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
-                coursecode: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-                course: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                cid: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
                 //  Score: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
                 type: { value: null, matchMode: FilterMatchMode.EQUALS },
             }
@@ -276,12 +274,12 @@ export default {
      }
  }
 
- .product-image {
+ .score-image {
      width: 100px;
      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
  }
 
- .p-dialog .product-image {
+ .p-dialog .score-image {
      width: 150px;
      margin: 0 auto 2rem auto;
      display: block;
