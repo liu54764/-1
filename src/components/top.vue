@@ -121,7 +121,7 @@
 
         <div class="field col-12 md:col-6">
           <label for="firstname6">毕业时间</label>
-          <Calendar id="firstname6" type="text" v-model="graduation_date" dateFormat="yy-mm-dd"
+          <Calendar id="firstname6" type="text" v-model="graduationDate" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay   surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <!-- <div class="field col-12 md:col-6">
@@ -205,12 +205,12 @@
 
         <div class="field col-12 md:col-6">
           <label for="firstname6">任职时间</label>
-          <Calendar id="firstname6" v-model="appointment_time" dateFormat="yy-mm-dd"
+          <Calendar id="firstname6" v-model="appointmentTime" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay p-inputtext-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
           <label for="lastname6">离职时间</label>
-          <Calendar id="lastname6" v-model="leave_time" dateFormat="yy-mm-dd"
+          <Calendar id="lastname6" v-model="leaveTime" dateFormat="yy-mm-dd"
             class="text-base text-color surface-overlay p-inputtext-sm surface-border border-round appearance-none outline-none focus:border-primary w-full" />
         </div>
         <div class="field col-12 md:col-6">
@@ -340,19 +340,18 @@ export default {
       birthday: "",
       phone: "",
       address: "",
-      graduation_date: "",
+      graduationDate: "",
       major: "",
       role: null,
       email: "",
-      introduction: "***********",
-      graduation_date:"",
+      introduction: "",
       grade: "",
       type: "",
       tnum: "",
       snum: "",
       position: "",
-      appointment_time: '2020-01-01',
-      leave_time: '2025-01-01',
+      appointmentTime: '',
+      leaveTime: '',
     }
   },
   created() {
@@ -386,13 +385,14 @@ export default {
         this.phone = res.data.data.phone
         this.email = res.data.data.email
         this.address = res.data.data.address
-        this.graduation_date = res.data.data.graduation_date
+        this.graduationDate = res.data.data.graduationDate
         this.major = res.data.data.major
         this.name = res.data.data.name
         this.introduction = res.data.data.introduction
         this.snum = res.data.data.snum
         this.grade = res.data.data.grade
-        this.graduation_date = res.data.data.graduation_date
+        this.graduationDate = res.data.data.graduationDate
+    
       })
     },
     GetInstitution() {
@@ -418,8 +418,8 @@ export default {
         this.introduction = res.data.data.introduction
         this.tnum = res.data.data.tnum
         this.birthday = res.data.data.birthday
-        this.appointment_time = res.data.data.appointment_time
-        this.leave_time = res.data.data.leave_time
+        this.appointmentTime = res.data.data.appointmentTime
+        this.leaveTime = res.data.data.leaveTime
         this.gender = res.data.data.gender
       })
     },
@@ -436,7 +436,7 @@ export default {
        gender: this.gender,
        major:this.major,
        grade:this.grade,
-       graduation_date :this.graduation_date ,
+       graduationDate :this.graduationDate ,
 
       }).then(res => {
         if (res.data.code === "0") {
@@ -457,7 +457,7 @@ export default {
     Save2() {
       request.post("teacher/edit", {
         id: this.id,
-        phnne: this.phone,
+        phone: this.phone,
         email: this.email,
         address: this.address,
         name: this.name,
@@ -465,8 +465,8 @@ export default {
         introduction: this.introduction,
         tnum: this.tnum,
         birthday: this.birthday,
-        appointment_time: this.appointment_time,
-        leave: this.leave_time,
+        appointmentTime: this.appointmentTime,
+        leaveTime: this.leaveTime,
         username: this.username,
         password: this.password,
       }).then(res => {

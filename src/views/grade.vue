@@ -25,14 +25,13 @@
 
         </Toolbar>
 
-        <DataTable ref="dt" :value="scores" v-model:selection.sync="selectedscores" class="p-datatable-sm"
-            :paginator="true" :rows="9" v-model:filters="filters" :scrollable="true" scrollHeight="450px" filter-display="menu"
+        <DataTable ref="dt" :value="scores" v-model:selection.sync="selectedscores" class="p-datatable-sm" :paginator="true"
+            :rows="9" v-model:filters="filters" :scrollable="true" scrollHeight="450px" filter-display="menu"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
             <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
-            <Column field="cid" header="课程号" style="min-width: 100px;"
-                class="text-indigo-600 font-bold">
+            <Column field="cid" header="课程号" style="min-width: 100px;" class="text-indigo-600 font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -99,48 +98,13 @@ export default {
     name: 'grade',
     components: {
         top, side, Dialog, Button, InputNumber, Toolbar, FileUpload, InputText, Column, RadioButton, DataTable, Textarea, Chart, FilterMatchMode
-        , Toast, Tag, FilterOperator,Dropdown
+        , Toast, Tag, FilterOperator, Dropdown
     },
     data() {
         return {
-            id:null,
-            courseOptions:['必修','选修'],
+            id: null,
+            courseOptions: ['必修', '选修'],
             scores: [
-                // {
-
-                //     cid: 'C001',
-                //     course: '计算机基础',
-                //     type: '必修',
-                //     credit: 3,
-                //     date1: ('2022-05-15'),
-                //     Scores: 85,
-                //     Score: 3.0,
-                //     status: '优秀'
-
-                // },
-                // {
-
-                //     cid: 'C001',
-                //     major: '软件工程',
-                //     course: '数据结构',
-                //     type: '必修',
-                //     credit: 4,
-                //     date1: '2022-06-20',
-                //     Scores: 90,
-                //     Score: 3.3,
-                //     status: '良好'
-                // },
-                // {
-
-                //     cid: 'C002',
-                //     course: '软件工程',
-                //     type: '必修',
-                //     credit: 5,
-                //     date1: ('2022-07-25'),
-                //     Scores: 92,
-                //     Score: 3.7,
-                //     status: '不及格'
-                // },
             ],
             score: {},
             selectedscores: null,
@@ -198,11 +162,11 @@ export default {
     },
     created() {
         this.GetInformation();
-       this.GetScores();
+        this.GetScores();
         this.initFilters();
     },
     mounted() {
-       
+
     },
     methods: {
         GetInformation() {
@@ -212,9 +176,8 @@ export default {
         GetScores() {
             let url = "/student/credit" + "?id=" + this.id
             request.get(url).then(res => {
-                if(res.data.code==0)
-                {
-                    this.scores=res.data.data
+                if (res.data.code == 0) {
+                    this.scores = res.data.data
                 }
             })
         },
@@ -301,4 +264,5 @@ export default {
 
  html {
      font-size: 12px;
- }</style>
+ }
+</style>
