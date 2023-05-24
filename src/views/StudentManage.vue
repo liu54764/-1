@@ -8,6 +8,8 @@
                 <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
                 <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold"
                     @click="confirmDeleteSelected" :disabled="!selectedstudents || !selectedstudents.length" />
+                <Button type="button" icon="pi pi-filter-slash" label="清空" outlined @click="clearFilter()"
+                    class="p-button-sm"  style="margin-right:10px ;"/>
                 <div class="table-header flex flex-column md:flex-row md:justify-content-between">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
@@ -66,7 +68,7 @@
                     <Dropdown v-model="filterModel.value" :options="statuses" placeholder="请选择" class="p-column-filter"
                         showClear>
                         <template #option="slotProps">
-                            <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)"/>
+                            <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
                         </template>
                     </Dropdown>
                 </template>
@@ -77,8 +79,8 @@
             <Column field="address" header="住址" style="min-width: 160px;"></Column>
             <Column :exportable="false" :styles="{ 'min-width': '50px' }">
                 <template #body="slotProps">
-                    <Button icon="pi pi-trash" outlined rounded severity="danger" style="height: 35px;width: 35px;" class="p-button-sm"
-                        @click="confirmDeletestudent(slotProps.data)" />
+                    <Button icon="pi pi-trash" outlined rounded severity="danger" style="height: 35px;width: 35px;"
+                        class="p-button-sm" @click="confirmDeletestudent(slotProps.data)" />
                 </template>
             </Column>
         </DataTable>
@@ -89,32 +91,32 @@
         <div class="p-fluid">
             <div class="p-field">
                 <label for="code">学号</label>
-                <InputText id="code" v-model="student.code" class="p-inputtext-sm"/>
+                <InputText id="code" v-model="student.code" class="p-inputtext-sm" />
             </div>
             <div class="p-field  mt-2">
                 <label for="name">用户名</label>
-                <InputText id="name" v-model="student.name" class="p-inputtext-sm"/>
+                <InputText id="name" v-model="student.name" class="p-inputtext-sm" />
             </div>
             <div class="p-field mt-2">
                 <label for="gender">性别</label>
-                <Dropdown id="gender" v-model="student.gender" :options="genderOptions" class="p-inputtext-sm"/>
+                <Dropdown id="gender" v-model="student.gender" :options="genderOptions" class="p-inputtext-sm" />
             </div>
             <div class="p-field mt-2">
                 <label for="major">专业</label>
-                <InputText id="major" v-model="student.major" class="p-inputtext-sm"/>
+                <InputText id="major" v-model="student.major" class="p-inputtext-sm" />
             </div>
             <div class="p-field mt-2">
                 <label for="grade">年级</label>
                 <Dropdown id="grade" v-model="student.grade" :options="statuses" class="p-inputtext-sm">
                     <template #option="slotProps">
-                            <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
-                        </template>
+                        <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
+                    </template>
                 </Dropdown>
             </div>
         </div>
         <template v-slot:footer>
             <Button label="取消" class="mr-2 p-button-sm" @click="hideDialog" />
-            <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading"   @click="savestudent" />
+            <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="savestudent" />
         </template>
 
     </Dialog>
@@ -306,8 +308,11 @@ export default {
         // this.studentService.getstudents().then(data => this.students = data);
     },
     computed: {
-  },
+    },
     methods: {
+        clearFilter() {
+            this.initFilters();
+        },
         openNew() {
             this.student = {};
             this.submitted = false;
@@ -344,7 +349,7 @@ export default {
             this.students.push(this.student);
             this.studentDialog = false;
             this.student = {};
-           
+
         },
         initFilters() {
             this.filters = {
@@ -427,4 +432,5 @@ export default {
 
  html {
      font-size: 12px;
- }</style>
+ }
+</style>

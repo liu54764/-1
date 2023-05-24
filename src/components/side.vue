@@ -20,6 +20,8 @@
       @click="this.$router.push('/StudentManage')" />
     <Button v-if="role === '2'" label="成绩修改" icon="pi pi-pencil" class="p-button-text w-12 mt-3 font-bold"
       @click="this.$router.push('/GradeRevision')" />
+    <Button v-if="role === '2'" label="审核" icon="pi pi-check-circle" class="p-button-text w-12 mt-3 font-bold"
+      @click="this.$router.push('/review')" />
 
 
     <!-- <Button v-if="role" label="学业情况" icon="pi pi-user" class="p-button-text w-12 mt-2" />
@@ -72,4 +74,5 @@ export default {
   height: 85vh;
   width: 200px;
   float: left;
-}</style>
+}
+</style>

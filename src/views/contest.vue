@@ -12,7 +12,7 @@
       </template> -->
     </Toolbar>
     <div class="grid gap-3" style="margin-left: 0px;">
-      <div>
+      <div style="width: 600px;">
         <h2 class="text-2xl font-bold mb-1">实习经历</h2>
         <DataView v-if="refresh" :value="internship1" :paginator="true" :rows="2" class="w-full md:w-1/2">
           <template #list="slotProps">
@@ -20,12 +20,12 @@
               <div class="font-bold text-lg text-blue-500 text-left">实习名称： {{ slotProps.data.name }}</div>
               <div class="text-gray-500 font-bold text-left">开始时间：{{ slotProps.data.startTime }}</div>
               <div class="text-gray-500 font-bold text-left">结束时间：{{ slotProps.data.endTime }}</div>
-              <div class="font-bold text-gray-500 text-left" style="width: 265px;height: 70px;">描述：{{
+              <div class="font-bold text-gray-500 text-left" style="width: 250px;height: 70px;">描述：{{
                 slotProps.data.description }}</div>
 
               <div class="mt-4">
-                <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-full  rounded-lg shadow-md"
-                  style="height: 250px;">
+                <img v-if="slotProps.data.filename" :src="slotProps.data.filename" class="w-full  rounded-lg shadow-md"
+                  style="height: 150px;">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>
@@ -35,7 +35,7 @@
           </template>
         </DataView>
       </div>
-      <div>
+      <div style="width: 600px;">
         <h2 class="text-2xl font-bold mb-1">竞赛经历</h2>
         <DataView ref="dt" v-if="refresh" :value="internship2" :paginator="true" :rows="2" class="w-full md:w-1/2">
           <template #list="slotProps">
@@ -43,12 +43,12 @@
               <div class="font-bold text-lg text-blue-500 text-left">竞赛名称： {{ slotProps.data.name }}</div>
               <div class="text-gray-500 font-bold text-left">开始时间：{{ slotProps.data.startTime }}</div>
               <div class="text-gray-500 font-bold text-left">结束时间：{{ slotProps.data.endTime }}</div>
-              <div class="font-bold text-gray-500 text-left" style="width: 265px;height: 70px;">描述：{{
+              <div class="font-bold text-gray-500 text-left" style="width: 250px;height: 70px;">描述：{{
                 slotProps.data.description }}</div>
 
               <div class="mt-4">
-                <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-full  rounded-lg shadow-md"
-                  style="height: 250px;">
+                <img :src="slotProps.data.filename" class="w-full  rounded-lg shadow-md"
+                  style="height: 150px;">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>
@@ -59,6 +59,7 @@
         </DataView>
       </div>
     </div>
+
   </div>
   <Dialog v-model:visible="uploadDialogVisible" header="上传" :visible="uploadDialogVisible" :closable="true">
     <div class="p-fluid" style="width: 400px;">
@@ -95,7 +96,7 @@
         <div class="card">
           <Toast />
           <FileUpload name="file" url="http://localhost:9000/api/file/upload" @upload="onAdvancedUpload($event)"
-            :multiple="true" accept="image/*" :maxFileSize="1000000">
+            :multiple="true" accept="image/*" :maxFileSize="1000000" class="p-button-sm">
             <template #empty>
               <p>将文件拖放到此处进行上传</p>
             </template>
@@ -145,13 +146,13 @@ export default {
   },
   data() {
     return {
+      url:"http://localhost:9000/api/file/files/",
       refresh: true,
       uploadDialogVisible: false,
       uploadForm: {},
       internship1: [],
       internship2: [],
-      internships: [
-      ],
+      internships: [],
     };
   },
   created() {
@@ -210,6 +211,7 @@ export default {
     judge() {
       if (this.internships) {
         for (let internship of this.internships) {
+        internship.filename=this.url+internship.filename
           if (internship.type === "实习") {
             this.internship1.push(internship)
           }
@@ -237,15 +239,6 @@ export default {
           console.error('文件上传失败:', error);
         });
     },
-  },
-  onAdvancedUpload() {
-    this.$toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-  },
-  // clearUploadForm() {
-
-  // },
-  exportCSV() {
-    this.$refs.dt.exportCSV();
   },
 }
 </script>

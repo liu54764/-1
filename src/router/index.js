@@ -39,6 +39,9 @@ const routes = [
     },{
         path:'/GradeRevision',
         component:() => import('../views/GradeRevision')
+    },{
+        path:'/review',
+        component:() => import('../views/review')
     }
 
 
