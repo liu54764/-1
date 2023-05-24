@@ -273,20 +273,12 @@
 
         <div class="field col-12">
           <Toast />
-          <FileUpload name="demo[]" url="./upload.php" @upload="onAdvancedUpload" :multiple="true" accept="image/*"
-            :maxFileSize="1000000" chooseLabel="请选择" uploadLabel="上传" cancelLabel="取消" class="p-fileupload " style="">
+          <FileUpload name="file" url="http://localhost:9000/api/file/upload" @upload="onAdvancedUpload($event)"
+            :multiple="true"  :maxFileSize="1000000">
             <template #empty>
-              <p>拖拽文件到此处上传</p>
+              <p>将文件拖放到此处进行上传</p>
             </template>
           </FileUpload>
-          <!-- <div v-if="uploadedFiles.length > 0">
-      <h3>已上传的文件：</h3>
-      <ul>
-        <li v-for="file in uploadedFiles" :key="file.name">
-          {{ file.name }}
-        </li>
-      </ul>
-    </div> -->
         </div>
         <div class="field col-12 md:col-3">
           <label for="state">机构类型</label>
@@ -317,11 +309,11 @@ import Calendar from 'primevue/calendar';
 import request from '@/utils/request';
 import FileUpload from 'primevue/fileupload';
 import Dropdown from 'primevue/dropdown';
-
+import Toast from 'primevue/toast';
 export default {
   name: "top",
   components: {
-    Button, Chip, Dialog, InputText, Calendar, FileUpload, Dropdown
+    Button, Chip, Dialog, InputText, Calendar, FileUpload, Dropdown,Toast
   },
   data() {
     return {
@@ -360,15 +352,14 @@ export default {
 
   },
   methods: {
-    Get(){
-       if(this.role==1)
-       {
+    Get() {
+      if (this.role == 1) {
         this.GetStudent()
-       }else if(this.role==2){
-       this.GetTeacher()
-       }else{
-          this.GetTeacher()
-       }
+      } else if (this.role == 2) {
+        this.GetTeacher()
+      } else {
+        this.GetTeacher()
+      }
     },
     GetInformation() {
       let userinfo = JSON.parse(localStorage.getItem('userinfo'))
@@ -392,7 +383,7 @@ export default {
         this.snum = res.data.data.snum
         this.grade = res.data.data.grade
         this.graduationDate = res.data.data.graduationDate
-    
+
       })
     },
     GetInstitution() {
@@ -426,17 +417,17 @@ export default {
     Save1() {
       request.post("student/edit", {
         id: this.id,
-        phone:this.phone ,
-        email:this.email ,
-        address:this.address ,
-        name:this.name ,
-        introduction:this.introduction ,
-        snum:this.snum ,
-        birthday:this.birthday,
-       gender: this.gender,
-       major:this.major,
-       grade:this.grade,
-       graduationDate :this.graduationDate ,
+        phone: this.phone,
+        email: this.email,
+        address: this.address,
+        name: this.name,
+        introduction: this.introduction,
+        snum: this.snum,
+        birthday: this.birthday,
+        gender: this.gender,
+        major: this.major,
+        grade: this.grade,
+        graduationDate: this.graduationDate,
 
       }).then(res => {
         if (res.data.code === "0") {
@@ -514,18 +505,11 @@ export default {
       this.visible3 = false
     },
     onAdvancedUpload(event) {
-      const uploadedFiles = event.files;
-      // 上传文件到服务器
-      axios.post('/upload', uploadedFiles)
-        .then(response => {
-          const uploadedFiles = response.data.files;
-          // 在页面上显示上传的文件
-          this.uploadedFiles = uploadedFiles;
-          this.$toast.add({ severity: 'info', summary: 'Success', detail: '文件已上传', life: 3000 });
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      const files = event.files;
+      files.forEach((file) => {
+        const fileName = file.name;
+      });
+      this.$toast.add({ severity: 'success', summary: 'Success', detail: '文件上传成功', life: 3000 });
     },
   },
 }

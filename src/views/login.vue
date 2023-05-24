@@ -110,14 +110,12 @@ export default{
         password :this.password,
         identity:this.identity,
           }).then(res => {
-            console.log(res.data.code)
             if (res.data.code === "0") {
               this.$message({
                 type: "success",
                 message: "登录成功"
               })
               localStorage.setItem("userinfo", JSON.stringify(res.data))  // 缓存用户信息
-              console.log(res.data)
               setTimeout(()=>{
                 this.$router.push('/home');
               },300)

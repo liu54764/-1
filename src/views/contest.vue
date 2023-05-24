@@ -6,16 +6,17 @@
       <template #start>
         <Button label="新增" icon="pi pi-plus" class="mr-2 p-button-sm" @click="uploadDialogVisible = true" />
       </template>
-      <template #end>
+
+      <!-- <template #end>
         <Button label="导出" icon="pi pi-upload" class="p-button-help p-button-sm font-bold" @click="exportCSV($event)" />
-      </template>
+      </template> -->
     </Toolbar>
     <div class="grid gap-3" style="margin-left: 0px;">
       <div>
         <h2 class="text-2xl font-bold mb-1">实习经历</h2>
-        <DataView :value="internship1" :paginator="true" :rows="2" class="w-full md:w-1/2">
+        <DataView v-if="refresh" :value="internship1" :paginator="true" :rows="2" class="w-full md:w-1/2">
           <template #list="slotProps">
-            <div class="bg-gray-50 rounded-lg shadow-md p-4 mb-4">
+            <div class=" rounded-lg shadow-md p-4 mb-4">
               <div class="font-bold text-lg text-blue-500 text-left">实习名称： {{ slotProps.data.name }}</div>
               <div class="text-gray-500 font-bold text-left">开始时间：{{ slotProps.data.startTime }}</div>
               <div class="text-gray-500 font-bold text-left">结束时间：{{ slotProps.data.endTime }}</div>
@@ -24,7 +25,7 @@
 
               <div class="mt-4">
                 <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-full  rounded-lg shadow-md"
-                  style="height: 150px;">
+                  style="height: 250px;">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>
@@ -36,9 +37,9 @@
       </div>
       <div>
         <h2 class="text-2xl font-bold mb-1">竞赛经历</h2>
-        <DataView :value="internship2" :paginator="true" :rows="2" class="w-full md:w-1/2">
+        <DataView ref="dt" v-if="refresh" :value="internship2" :paginator="true" :rows="2" class="w-full md:w-1/2">
           <template #list="slotProps">
-            <div class="bg-gray-50 rounded-lg shadow-md p-4 mb-4">
+            <div class=" rounded-lg shadow-md p-4 mb-4">
               <div class="font-bold text-lg text-blue-500 text-left">竞赛名称： {{ slotProps.data.name }}</div>
               <div class="text-gray-500 font-bold text-left">开始时间：{{ slotProps.data.startTime }}</div>
               <div class="text-gray-500 font-bold text-left">结束时间：{{ slotProps.data.endTime }}</div>
@@ -47,7 +48,7 @@
 
               <div class="mt-4">
                 <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-full  rounded-lg shadow-md"
-                  style="height: 150px;">
+                  style="height: 250px;">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>
@@ -59,14 +60,13 @@
       </div>
     </div>
   </div>
-
   <Dialog v-model:visible="uploadDialogVisible" header="上传" :visible="uploadDialogVisible" :closable="true">
     <div class="p-fluid" style="width: 400px;">
       <div class="mb-2 mt-1">
         <label class="mr-2">类型:</label>
-        <RadioButton v-model="uploadForm.type" value="internship" label="实习" class="mr-2" />
+        <RadioButton v-model="uploadForm.type" value="实习" label="实习" class="mr-2" />
         <label class="mr-5">实习</label>
-        <RadioButton v-model="uploadForm.type" value="competition" label="竞赛" class="mr-2" />
+        <RadioButton v-model="uploadForm.type" value="竞赛" label="竞赛" class="mr-2" />
         <label>竞赛</label>
       </div>
       <div class="mb-2">
@@ -76,11 +76,13 @@
       <div class="mb-2">
         <div style="float: left;">
           <label class="mr-2">开始日期:</label>
-          <Calendar v-model="uploadForm.date" dateFormat="yy-mm-dd" class="p-inputtext-sm mt-2 " style="width: 190px;" />
+          <Calendar v-model="uploadForm.startdate" dateFormat="yy-mm-dd" class="p-inputtext-sm mt-2 "
+            style="width: 190px;" />
         </div>
         <div style="float: left; margin-left: 20px;">
           <label class="mr-2">结束日期:</label>
-          <Calendar v-model="uploadForm.date" dateFormat="yy-mm-dd" class="p-inputtext-sm mt-2 " style="width: 190px;" />
+          <Calendar v-model="uploadForm.enddate" dateFormat="yy-mm-dd" class="p-inputtext-sm mt-2 "
+            style="width: 190px;" />
         </div>
       </div>
       <div class="mb-3 mt-7">
@@ -90,28 +92,28 @@
       </div>
       <div class="mb-3">
         <label class="mr-2">证明:</label>
-        <FileUpload mode="basic" accept=".pdf,.png,.jpg,.jpeg" maxFileSize="1000000" @upload="handleUpload" class="mt-2"
-          chooseLabel="请选择">
-          <template #header>
-            <div class="p-d-flex p-ai-center">
-              <Button icon="pi pi-plus" class="p-button-rounded p-button-outlined p-mr-2 p-button-sm" />
-              <span>选择文件</span>
-            </div>
-          </template>
-        </FileUpload>
+        <div class="card">
+          <Toast />
+          <FileUpload name="file" url="http://localhost:9000/api/file/upload" @upload="onAdvancedUpload($event)"
+            :multiple="true" accept="image/*" :maxFileSize="1000000">
+            <template #empty>
+              <p>将文件拖放到此处进行上传</p>
+            </template>
+          </FileUpload>
+        </div>
       </div>
     </div>
     <template #footer>
       <div class="p-d-flex p-jc-end">
         <Button label="取消" class="mr-2 p-button-sm" @click="uploadDialogVisible = false" />
-        <Button label="上传" class="p-button-success p-button-sm" :disabled="uploading" @click="upload" />
+        <Button label="上传" class="p-button-success p-button-sm" @click="PutExper" />
       </div>
     </template>
   </Dialog>
 </template>
   
 <script>
-
+import Toast from 'primevue/toast';
 import top from '../components/top.vue'
 import side from '../components/side.vue'
 import Tag from 'primevue/tag';
@@ -138,92 +140,71 @@ export default {
     Toolbar,
     Calendar,
     RadioButton,
-    Textarea
+    Textarea,
+    Toast
   },
   data() {
     return {
+      refresh: true,
       uploadDialogVisible: false,
-      uploadForm: [],
+      uploadForm: {},
       internship1: [],
       internship2: [],
       internships: [
-        //   {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为氛围氛围氛围氛围服务而分为范围分为三个月的前端',
-        //     image: 'fwefewfef'
-        //   }
-        //   , {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   },
-        //   {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   }
-        //   , {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   },
-        //   {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   }
-        //   , {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   },
-        //   {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   }
-        //   , {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //     image: 'fwefewfef'
-        //   }
-        // ],
-        // competitions: [
-        //   {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //   }
-        //   , {
-        //     company: 'ABC公司',
-        //     date: '2022年1月-2022年4月',
-        //     description: '在ABC公司进行了为期三个月的前端',
-        //   }
       ],
     };
   },
   created() {
-     this.GetInformation()
-     this.GetExper()
+    this.GetInformation()
+    this.GetExper()
+  },
+  mounted() {
   },
   methods: {
+    onAdvancedUpload(event) {
+      const files = event.files;
+      files.forEach((file) => {
+        const fileName = file.name;
+        this.uploadForm.filename=fileName;
+      });
+      this.$toast.add({ severity: 'success', summary: 'Success', detail: '文件上传成功', life: 3000 });
+    },
     GetInformation() {
       let userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.id = userinfo.data.id
+      this.uploadForm.sid = userinfo.data.id
+
     },
     GetExper() {
       let url = "/experience/all" + "?sid=" + this.id
       request.get(url).then(res => {
         this.internships = res.data.data
         this.judge()
+      })
+    },
+    PutExper() {
+      console.log(this.uploadForm)
+      request.post("/experience/add", this.uploadForm).then(res => {
+        console.log(res)
+        this.uploadDialogVisible = false
+        if (res.data.code === "0") {
+          this.$message({
+            type: "success",
+            message: "上传成功"
+          })
+          setTimeout(() => {
+            this.refresh = false
+            this.$nextTick(() => {
+              this.refresh = true
+            })
+          }, 300)
+        }
+        else {
+          this.$message({
+            type: "error",
+            message: "上传失败"
+          })
+        }
       })
     },
     judge() {
@@ -237,23 +218,28 @@ export default {
           }
         }
       }
-      return total;
     },
-    upload(event) {
-      // const uploadedFiles = event.files;
-      // // 上传文件到服务器
-      // axios.post('/upload', uploadedFiles)
-      //   .then(response => {
-      //     const uploadedFiles = response.data.files;
-      //     // 在页面上显示上传的文件
-      //     this.uploadedFiles = uploadedFiles;
-      //     this.$toast.add({ severity: 'info', summary: 'Success', detail: '文件已上传', life: 3000 });
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
-      this.uploadDialogVisible = false;
+    handleUpload(event) {
+      const file = event.files[0];
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch(this.uploadUrl, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.text())
+        .then(result => {
+          console.log(result); // 处理上传结果
+        })
+        .catch(error => {
+          console.error('文件上传失败:', error);
+        });
     },
+  },
+  onAdvancedUpload() {
+    this.$toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
   },
   // clearUploadForm() {
 
@@ -269,8 +255,5 @@ export default {
    width: 1270px;
    height: 85vh;
    float: left;
-
-
-
  }
 </style>

@@ -2,7 +2,7 @@
     <top />
     <side />
     <div class="card">
-        <DataTable ref="dt" v-model:filters="filters" :value="customers" paginator :rows="10" dataKey="id"
+        <DataTable ref="dt" v-model:filters="filters" :value="students" paginator :rows="10" dataKey="id"
             :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " filterDisplay="menu"
             class="p-datatable-sm" scrollable scrollHeight="480px">
             <template #header>
@@ -17,7 +17,7 @@
                     </span>
                 </div>
             </template>
-            <Column field="code" header="学号" style="width:100px ;" class="text-indigo-600 text-center font-bold">
+            <Column field="snum" header="学号" style="width:100px ;" class="text-indigo-600 text-center font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -39,21 +39,21 @@
                     </Dropdown>
                 </template>
             </Column>
-            <Column field="age" header="年龄" style="width:60px ;" :sortable="true"
+            <Column field="birthday" header="年龄" style="width:60px ;" :sortable="true"
                 class="text-indigo-600 text-center font-bold"></Column>
             <Column field="major" header="专业" style="width:60px ;" class="text-green-600 text-center font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="grade" header="平均绩点" style="width:110px ;" dataType="numeric"
+            <Column field="gpa" header="平均绩点" style="width:110px ;" dataType="numeric"
                 class="text-green-600 text-center font-bold" :sortable="true">
                 <template #filter="{ filterModel }">
                     <InputNumber v-model="filterModel.value" type="text" class="p-column-filter" :minFractionDigits="2"
                         :maxFractionDigits="4" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="credits" header="获得学分" style="width:110px ;" dataType="numeric"
+            <Column field="credit" header="获得学分" style="width:110px ;" dataType="numeric"
                 class="text-green-600 text-center font-bold" :sortable="true">
                 <!-- <template #body="{ data }">
                     <Button class="p-button-link" :label="data.credits" @mouseover="toggle" style="width: 50px;" />
@@ -63,17 +63,17 @@
                         class="p-column-filter" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="contest" header="竞赛情况" style="width:100px ;" :sortable="true">
+            <Column field="competitionnum" header="竞赛情况" style="width:100px ;" :sortable="true">
                 <template #body="slotProps">
-                    <rating :modelValue="slotProps.data.contest" readonly :cancel="false" />
+                    <rating :modelValue="slotProps.data.competitionnum" readonly :cancel="false" />
                 </template>
             </Column>
-            <Column field="activity" header="实习情况" style="width:100px ;" :sortable="true">
+            <Column field="intershipnum" header="实习情况" style="width:100px ;" :sortable="true">
                 <template #body="slotProps">
-                    <rating :modelValue="slotProps.data.activity" readonly :cancel="false" />
+                    <rating :modelValue="slotProps.data.intershipnum" readonly :cancel="false" />
                 </template>
             </Column>
-            <Column field="status" header="年级" style="width:50px ;" class="text-center">
+            <Column field="grade" header="年级" style="width:50px ;" class="text-center">
                 <template #body="{ data }">
                     <Tag :value="data.status" :severity="getSeverity(data.status)" />
                 </template>
@@ -90,9 +90,9 @@
     </div>
 
 
-    <OverlayPanel ref="op">
+    <!-- <OverlayPanel ref="op">
         <img src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg" alt="Bamboo Watch" />
-    </OverlayPanel>
+    </OverlayPanel> -->
 </template>
     
 
@@ -114,8 +114,7 @@ import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Textarea from 'primevue/textarea';
 import Dropdown from 'primevue/dropdown';
-
-//   import MultiSelect from 'primevue/multiSelect';
+import request from '@/utils/request';
 export default {
     name: "inqury",
     components: {
@@ -125,133 +124,133 @@ export default {
     data() {
         return {
             value: 4,
-            customers: [
-                {
-                    code: 707,
-                    name: '李小明',
-                    gender: '男',
-                    grade: 4.555,
-                    age: 20,
-                    credits: 6,
-                    status: '大一',
-                    contest: 2,
-                    activity: 1,
-                    major: "计算机"
-                }, {
-                    code: 200,
-                    name: '李',
-                    gender: '女',
-                    grade: 5.555,
-                    age: 21,
-                    credits: 167,
-                    status: '已毕业',
-                    contest: 5,
-                    activity: 1,
-                    major: "计算机"
-                }, {
-                    code: 27,
-                    name: '小明',
-                    gender: '男',
-                    age: 19,
-                    grade: 4.00,
-                    credits: 76,
-                    status: '大二',
-                    contest: 2,
-                    activity: 5,
-                    major: "机械"
-                }, {
-                    code: 11,
-                    name: '小',
-                    gender: '男',
-                    age: 20,
-                    grade: 2.555,
-                    credits: 60,
-                    status: '大三',
-                    contest: 2,
-                    activity: 3,
-                    major: "人工智能"
-                },
-                {
-                    code: 207,
-                    name: '李明',
-                    gender: '男',
-                    age: 20,
-                    grade: 3.555,
-                    credits: 77,
-                    status: '大四',
-                    contest: 1,
-                    activity: 4,
-                    major: "自动化"
-                }, {
-                    code: 11,
-                    name: '小',
-                    gender: '男',
-                    age: 20,
-                    grade: 2.555,
-                    credits: 60,
-                    status: '大三',
-                    contest: 2,
-                    activity: 3,
-                    major: "人工智能"
-                },
-                {
-                    code: 207,
-                    name: '李明',
-                    gender: '男',
-                    age: 20,
-                    grade: 3.555,
-                    credits: 77,
-                    status: '大四',
-                    contest: 1,
-                    activity: 4,
-                    major: "自动化"
-                }, {
-                    code: 11,
-                    name: '小',
-                    gender: '男',
-                    age: 20,
-                    grade: 2.555,
-                    credits: 60,
-                    status: '大三',
-                    contest: 2,
-                    activity: 3,
-                    major: "人工智能"
-                },
-                {
-                    code: 207,
-                    name: '李明',
-                    gender: '男',
-                    age: 20,
-                    grade: 3.555,
-                    credits: 77,
-                    status: '大四',
-                    contest: 1,
-                    activity: 4,
-                    major: "自动化"
-                }, {
-                    code: 11,
-                    name: '小',
-                    gender: '男',
-                    age: 20,
-                    grade: 2.555,
-                    credits: 60,
-                    status: '大三',
-                    contest: 2,
-                    activity: 3,
-                    major: "人工智能"
-                },
-                {
-                    code: 207,
-                    name: '李明',
-                    gender: '男',
-                    age: 20,
-                    grade: 3.555,
-                    credits: 77,
-                    status: '大四',
-                    contest: 1,
-                    activity: 4,
-                    major: "自动化"
-                },
+            students: [
+                // {
+                //     code: 707,
+                //     name: '李小明',
+                //     gender: '男',
+                //     grade: 4.555,
+                //     age: 20,
+                //     credits: 6,
+                //     status: '大一',
+                //     contest: 2,
+                //     activity: 1,
+                //     major: "计算机"
+                // }, {
+                //     code: 200,
+                //     name: '李',
+                //     gender: '女',
+                //     grade: 5.555,
+                //     age: 21,
+                //     credits: 167,
+                //     status: '已毕业',
+                //     contest: 5,
+                //     activity: 1,
+                //     major: "计算机"
+                // }, {
+                //     code: 27,
+                //     name: '小明',
+                //     gender: '男',
+                //     age: 19,
+                //     grade: 4.00,
+                //     credits: 76,
+                //     status: '大二',
+                //     contest: 2,
+                //     activity: 5,
+                //     major: "机械"
+                // }, {
+                //     code: 11,
+                //     name: '小',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 2.555,
+                //     credits: 60,
+                //     status: '大三',
+                //     contest: 2,
+                //     activity: 3,
+                //     major: "人工智能"
+                // },
+                // {
+                //     code: 207,
+                //     name: '李明',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 3.555,
+                //     credits: 77,
+                //     status: '大四',
+                //     contest: 1,
+                //     activity: 4,
+                //     major: "自动化"
+                // }, {
+                //     code: 11,
+                //     name: '小',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 2.555,
+                //     credits: 60,
+                //     status: '大三',
+                //     contest: 2,
+                //     activity: 3,
+                //     major: "人工智能"
+                // },
+                // {
+                //     code: 207,
+                //     name: '李明',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 3.555,
+                //     credits: 77,
+                //     status: '大四',
+                //     contest: 1,
+                //     activity: 4,
+                //     major: "自动化"
+                // }, {
+                //     code: 11,
+                //     name: '小',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 2.555,
+                //     credits: 60,
+                //     status: '大三',
+                //     contest: 2,
+                //     activity: 3,
+                //     major: "人工智能"
+                // },
+                // {
+                //     code: 207,
+                //     name: '李明',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 3.555,
+                //     credits: 77,
+                //     status: '大四',
+                //     contest: 1,
+                //     activity: 4,
+                //     major: "自动化"
+                // }, {
+                //     code: 11,
+                //     name: '小',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 2.555,
+                //     credits: 60,
+                //     status: '大三',
+                //     contest: 2,
+                //     activity: 3,
+                //     major: "人工智能"
+                // },
+                // {
+                //     code: 207,
+                //     name: '李明',
+                //     gender: '男',
+                //     age: 20,
+                //     grade: 3.555,
+                //     credits: 77,
+                //     status: '大四',
+                //     contest: 1,
+                //     activity: 4,
+                //     major: "自动化"
+                // },
             ],
             filters: null,
             genderOptions: ['男', '女'],
@@ -260,14 +259,19 @@ export default {
     },
     created() {
         this.initFilters();
+        this.GetStudents()
     },
     mounted() {
-        // CustomerService.getCustomersMedium().then((data) => {
-        //     this.customers = this.getCustomers(data);
-        //     this.loading = false;
-        // });
+
     },
     methods: {
+        GetStudents() {
+            request.get("/student/studentInfo").then(res => {
+                if (res.data.code == 0) {
+                    this.students = res.data.data
+                }
+            })
+        },
         // formatDate(value) {
         //     return value.toLocaleDateString('en-US', {
         //         day: '2-digit',
@@ -284,10 +288,7 @@ export default {
         },
         initFilters() {
             this.filters = {
-
-
                 global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-
                 code: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
                 // name: { value: null, matchMode: "equals" },
                 age: { value: null, matchMode: "equals" },
@@ -299,10 +300,9 @@ export default {
                 major: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             };
         },
-        getCustomers(data) {
+        getstudents(data) {
             return [...(data || [])].map((d) => {
                 d.date = new Date(d.date);
-
                 return d;
             });
         },
@@ -333,15 +333,9 @@ export default {
     
 <style scoped>
 .card {
-
     margin-top: 20px;
     margin-left: 240px;
     height: 85vh;
     width: 1280px;
-}
-
-.p-rating .p-rating-icon {
-    color: #6f5b1e;
-    /* 更改星星的颜色 */
 }
 </style>
