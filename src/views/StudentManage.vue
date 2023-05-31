@@ -33,7 +33,7 @@
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
             <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
-            <Column field="code" header="学号" style="min-width: 100px;" class="text-indigo-600  font-bold">
+            <Column field="snum" header="学号" style="min-width: 100px;" class="text-indigo-600  font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -73,7 +73,7 @@
                     </Dropdown>
                 </template>
             </Column>
-            <Column field="birt" header="出生日期" :sortable="true" style="min-width: 140px;"></Column>
+            <Column field="birthday" header="出生日期" :sortable="true" style="min-width: 140px;"></Column>
             <Column field="email" header="邮箱" style="min-width: 140px;"></Column>
             <Column field="phone" header="电话" style="min-width: 140px;"></Column>
             <Column field="address" header="住址" style="min-width: 160px;"></Column>
@@ -90,8 +90,8 @@
     <Dialog v-model:visible.sync="studentDialog" :style="{ width: '400px' }" header="学生信息" :modal="true" class="p-fluid">
         <div class="p-fluid">
             <div class="p-field">
-                <label for="code">学号</label>
-                <InputText id="code" v-model="student.code" class="p-inputtext-sm" />
+                <label for="snum">学号</label>
+                <InputText id="snum" v-model="student.snum" class="p-inputtext-sm" />
             </div>
             <div class="p-field  mt-2">
                 <label for="name">用户名</label>
@@ -166,6 +166,7 @@ import Tag from 'primevue/tag';
 import Dropdown from 'primevue/dropdown';
 
 import Textarea from 'primevue/textarea';
+import request from "@/utils/request";
 export default {
 
     name: 'StudentManage',
@@ -178,119 +179,8 @@ export default {
             genderOptions: ['男', '女'],
             statuses: ['大一', '大二', '大三', '大四', '已毕业'],
             students: [
-                {
-                    code: '001',
-                    name: '张三',
-                    gender: '男',
-                    major: '计算机科学与技术',
-                    grade: '大一',
-                    birt: '2000-01-01',
-                    email: 'zhangsan@example.com',
-                    phone: '12345678901',
-                    address: '中国广州市天河区'
-                },
-                {
-                    code: '002',
-                    name: '李四',
-                    gender: '女',
-                    major: '英语',
-                    grade: '大二',
-                    birt: '1999-02-01',
-                    email: 'lisi@example.com',
-                    phone: '12345678902',
-                    address: '中国江苏省南京市鼓楼区'
-                },
-                {
-                    code: '003',
-                    name: '王五',
-                    gender: '男',
-                    major: '人工智能',
-                    grade: '大三',
-                    birt: '1998-03-01',
-                    email: 'wangwu@example.com',
-                    phone: '12345678903',
-                    address: '中国北京市海淀区'
-                },
-                {
-                    code: '004',
-                    name: '赵六',
-                    gender: '女',
-                    major: '工商管理',
-                    grade: '大四',
-                    birt: '1997-04-01',
-                    email: 'zhaoliu@example.com',
-                    phone: '12345678904',
-                    address: '中国上海市浦东新区'
-                },
-                {
-                    code: '005',
-                    name: '钱七',
-                    gender: '男',
-                    major: '机械工程',
-                    grade: '已毕业',
-                    birt: '1996-05-01',
-                    email: 'qianqi@example.com',
-                    phone: '12345678905',
-                    address: '中国重庆市渝中区'
-                },
-                {
-                    code: '006',
-                    name: '孙八',
-                    gender: '女',
-                    major: '化学',
-                    grade: '已毕业',
-                    birt: '1995-06-01',
-                    email: 'sunba@example.com',
-                    phone: '12345678906',
-                    address: '中国湖南省长沙市岳麓区'
-                },
-                {
-                    code: '005',
-                    name: '钱七',
-                    gender: '男',
-                    major: '机械工程',
-                    grade: '已毕业',
-                    birt: '1996-05-01',
-                    email: 'qianqi@example.com',
-                    phone: '12345678905',
-                    address: '中国重庆市渝中区'
-                },
-                {
-                    code: '006',
-                    name: '孙八',
-                    gender: '女',
-                    major: '化学',
-                    grade: '已毕业',
-                    birt: '1995-06-01',
-                    email: 'sunba@example.com',
-                    phone: '12345678906',
-                    address: '中国湖南省长沙市岳麓区'
-                },
-                {
-                    code: '001',
-                    name: '张三',
-                    gender: '男',
-                    major: '计算机科学与技术',
-                    grade: '大一',
-                    birt: '2000-01-01',
-                    email: 'zhangsan@example.com',
-                    phone: '12345678901',
-                    address: '中国广州市天河区'
-                },
-                {
-                    code: '002',
-                    name: '李四',
-                    gender: '女',
-                    major: '英语',
-                    grade: '大二',
-                    birt: '1999-02-01',
-                    email: 'lisi@example.com',
-                    phone: '12345678902',
-                    address: '中国江苏省南京市鼓楼区'
-                },
-
+               
             ],
-            student: null,
             studentDialog: false,
             deletestudentDialog: false,
             deletestudentsDialog: false,
@@ -301,7 +191,7 @@ export default {
         }
     },
     created() {
-        // this.studentService = new studentService();
+        this.GetStudents();
         this.initFilters();
     },
     mounted() {
@@ -310,6 +200,14 @@ export default {
     computed: {
     },
     methods: {
+        GetStudents() {
+            let url = "/student/allStudentInfo" 
+            request.get(url).then(res => {
+                if (res.data.code == 0) {
+                    this.students = res.data.data
+                }
+            })
+        },
         clearFilter() {
             this.initFilters();
         },
@@ -327,10 +225,10 @@ export default {
             this.deletestudentDialog = true;
         },
         deletestudent() {
-            this.students = this.students.filter(val => val.code !== this.student.code);
+            this.students = this.students.filter(val => val.snum !== this.student.snum);
             this.deletestudentDialog = false;
             this.student = {};
-            this.$toast.add({ severity: 'success', summary: '成功', detail: '学生   删除', life: 3000 });
+            this.$toast.add({ severity: 'success', summary: 'Successful', detail: '学 生 成 功 删 除', life: 3000 });
         },
         exportCSV() {
             this.$refs.dt.exportCSV();
@@ -342,19 +240,24 @@ export default {
             this.students = this.students.filter(val => !this.selectedstudents.includes(val));
             this.deletestudentsDialog = false;
             this.selectedstudents = null;
-            this.$toast.add({ severity: 'success', summary: '成功', detail: '学生   删除', life: 3000 });
+            this.$toast.add({ severity: 'success', summary: 'Successful', detail: '学 生 成 功 删 除', life: 3000 });
         },
         savestudent() {
             this.submitted = true;
             this.students.push(this.student);
-            this.studentDialog = false;
-            this.student = {};
-
+               let url = "/student/addStudent" 
+            request.post(url,this.student).then(res => {
+                if (res.data.code === "0") {
+                    this.studentDialog = false;
+                    this.student = {};
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: '用 户 创 建 成 功', life: 3000 });
+                }
+            })
         },
         initFilters() {
             this.filters = {
                 global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-                code: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                snum: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
                 age: { value: null, matchMode: "equals" },
                 name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
                 grade: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },

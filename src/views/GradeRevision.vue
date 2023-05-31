@@ -7,7 +7,7 @@
          <template #start>
             <Button label="新增" icon="pi pi-plus" class="p-button-sm mr-2 font-bold" @click="openNew" />
             <Button label="删除" icon="pi pi-trash" class="p-button-danger p-button-sm mr-2 font-bold"
-               @click="confirmDeleteSelected" :disabled="!selectedScores || !selectedScores.length" />
+               @click="confirmDeleteSelected" :disabled="!selectedscore || !selectedscore.length" />
             <Button type="button" icon="pi pi-filter-slash" label="清空" outlined @click="clearFilter()"
                class="p-button-sm" />
             <div class="table-header flex flex-column md:flex-row md:justify-content-between ml-2">
@@ -27,14 +27,14 @@
 
       </Toolbar>
 
-      <DataTable ref="dt" v-model:value="Scores" v-model:selection.sync="selectedScores" class="p-datatable-sm"
+      <DataTable ref="dt" v-model:value="Scores" v-model:selection.sync="selectedscore" class="p-datatable-sm"
          filterDisplay="menu" :paginator="true" :rows="8" v-model:editingRows="editingRows" editMode="row"
          v-model:filters="filters" :scrollable="true" scrollHeight="450px"
          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
          :rowsPerPageOptions="[8, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
          <Column selectionMode="multiple" style="min-width: 40px;"></Column>
-         <Column field="code" header="学号" sortField="code" style="min-width: 80px;"
+         <Column field="snum" header="学号" sortField="snum" style="min-width: 80px;"
             class="text-indigo-600 text-center font-bold">
             <template #filter="{ filterModel }">
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
@@ -50,13 +50,13 @@
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
             </template>
          </Column>
-         <Column field="coursecode" header="课程号" style="min-width: 100px;" class="text-green-600  font-bold">
+         <Column field="cid" header="课程号" style="min-width: 100px;" class="text-green-600  font-bold">
             <template #filter="{ filterModel }">
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
             </template>
          </Column>
 
-         <Column field="course" header="课程" style="min-width: 120px;" class="text-green-600  font-bold">
+         <Column field="cname" header="课程" style="min-width: 120px;" class="text-green-600  font-bold">
             <template #filter="{ filterModel }">
                <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
             </template>
@@ -64,7 +64,7 @@
 
          <Column field="type" header="课程类型" style="min-width: 120px;" class="text-orange-600  text-center font-bold">
             <template #filter="{ filterModel }">
-               <Dropdown v-model="filterModel.value" :options="courseOptions" placeholder="选择课程类型" class="p-column-filter">
+               <Dropdown v-model="filterModel.value" :options="cnameOptions" placeholder="选择课程类型" class="p-column-filter">
                   <template #option="slotProps">
                      <span v-if="slotProps.option === null">所有</span>
                      <span v-else-if="slotProps.option === '选修'">选修</span>
@@ -74,12 +74,12 @@
             </template>
          </Column>
          <Column field="credit" header="学分" :sortable="true" style="min-width: 80px;" class="text-center"></Column>
-         <Column field="date1" header="考试时间" :sortable="true" style="min-width: 120px;" class="text-center">
+         <Column field="time" header="考试时间" :sortable="true" style="min-width: 120px;" class="text-center">
          </Column>
-         <Column field="Scores" header="分数" :sortable="true" style="min-width: 90px;" class="text-center"></Column>
-         <Column field="Score" header="绩点" :sortable="true" style="min-width: 90px;" class="text-center"></Column>
-         <Column field="data2" header="上传时间" data-type="date" style="min-width: 120px;" :sortable="true"
-            class="text-center"></Column>
+         <Column field="score" header="分数" :sortable="true" style="min-width: 90px;" class="text-center"></Column>
+         <Column field="gpa" header="绩点" :sortable="true" style="min-width: 90px;" class="text-center"></Column>
+         <!-- <Column field="data2" header="上传时间" data-type="date" style="min-width: 120px;" :sortable="true"
+            class="text-center"></Column> -->
          <!-- <Column :rowEditor="true" style="min-width: 50px;" bodyStyle="text-align:center"></Column> -->
          <Column style="min-width: 100px;">
             <template #body="slotProps">
@@ -96,11 +96,11 @@
 
    <Dialog v-model:visible="ScoreDialog" :style="{ width: '450px' }" header="成绩信息" modal class="p-fluid">
       <div class="p-field">
-         <label for="code">学号</label>
-         <InputText v-model="Score.code" class="p-inputtext-sm mt-1" />
+         <label for="snum">学号</label>
+         <InputText v-model="Score.snum" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field">
-         <label for="coursecode">姓名</label>
+         <label for="cid">姓名</label>
          <InputText v-model="Score.name" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;">
@@ -108,16 +108,16 @@
          <InputText v-model="Score.major" id="major" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left; margin-left: 20px;">
-         <label for="coursecode">课程号</label>
-         <InputText v-model="Score.coursecode" id="coursecode" class="p-inputtext-sm mt-1" />
+         <label for="cid">课程号</label>
+         <InputText v-model="Score.cid" id="cid" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;">
-         <label for="course">课程</label>
-         <InputText v-model="Score.course" id="course" class="p-inputtext-sm mt-1" />
+         <label for="cname">课程</label>
+         <InputText v-model="Score.cname" id="cname" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;margin-left: 20px;">
          <label for="type">课程类型</label>
-         <Dropdown v-model="Score.type" :options="courseOptions" placeholder="选择课程类型" id="type"
+         <Dropdown v-model="Score.type" :options="cnameOptions" placeholder="选择课程类型" id="type"
             class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;">
@@ -125,23 +125,23 @@
          <InputText v-model="Score.credit" id="credit" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;margin-left: 20px;">
-         <label for="date1">考试时间</label>
-         <Calendar v-model="Score.date1" id="date1" date-format="yy-mm-dd" class="p-inputtext-sm mt-1" />
+         <label for="time">考试时间</label>
+         <Calendar v-model="Score.time" id="time" date-format="yy-mm-dd" class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;">
-         <label for="Scores">分数</label>
-         <InputNumber v-model="Score.Scores" id="Scores" :minFractionDigits="1" :maxFractionDigits="3"
+         <label for="score">分数</label>
+         <InputNumber v-model="Score.score" id="score" :minFractionDigits="1" :maxFractionDigits="3"
             class="p-inputtext-sm mt-1" />
       </div>
       <div class="p-field mt-1" style="width: 190px;float: left;margin-left: 20px;">
          <label for="Score">绩点</label>
-         <InputNumber v-model="Score.Score" id="Score" :minFractionDigits="2" :maxFractionDigits="4"
+         <InputNumber v-model="Score.gpa" id="Score" :minFractionDigits="2" :maxFractionDigits="4"
             class="p-inputtext-sm mt-1" />
       </div>
       <!-- 其他输入框 -->
       <template #footer>
          <Button label="取消" class="mr-2 p-button-sm" @click="hideDialog" />
-         <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="saveScore" />
+         <Button label="保存" class="p-button-success p-button-sm" :disabled="uploading" @click="saveScore()" />
       </template>
    </Dialog>
 
@@ -156,14 +156,14 @@
       </template>
    </Dialog>
 
-   <Dialog v-model:visible="deleteScoresDialog" :styles="{ width: '450px' }" header="确认" :modal="true" :closable="true">
+   <Dialog v-model:visible="deletescoreDialog" :styles="{ width: '450px' }" header="确认" :modal="true" :closable="true">
       <div class="confirmation-content">
          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
          <span style="font-weight: 500; font-size: large;" v-if="Score">你 确 认 删 除 吗?</span>
       </div>
       <template #footer>
-         <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteScoresDialog = false" />
-         <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteSelectedScores" />
+         <Button label="否" icon="pi pi-times" class="p-button-text" @click="deletescoreDialog = false" />
+         <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteSelectedscore" />
       </template>
    </Dialog>
 </template>
@@ -189,6 +189,7 @@ import Textarea from 'primevue/textarea';
 import Calendar from 'primevue/calendar';
 import Chart from 'primevue/chart';
 import Dropdown from 'primevue/dropdown';
+import request from "@/utils/request";
 export default {
 
    name: 'ScoreRevision',
@@ -198,96 +199,34 @@ export default {
    },
    data() {
       return {
-         courseOptions: ['选修', '必修'],
+         cnameOptions: ['选修', '必修'],
          Scores: [
-            {
-               code: '20210101',
-               name: '张三',
-               coursecode: 'C001',
-               major: '计算机科学与技术',
-               course: '计算机基础',
-               type: '必修',
-               credit: 3,
-               date1: ('2022-05-15'),
-               Scores: 85,
-               Score: 3.0,
-               data2: ('2022-05-16')
-            },
-            {
-               code: '20210102',
-               name: '李四',
-               coursecode: 'C001',
-               major: '软件工程',
-               course: '数据结构',
-               type: '必修',
-               credit: 4,
-               date1: '2022-06-20',
-               Scores: 90,
-               Score: 3.3,
-               data2: ('2022-06-21')
-            },
-            {
-               code: '20210103',
-               name: '王五',
-               coursecode: 'C002',
-               major: '网络安全',
-               course: '软件工程',
-               type: '必修',
-               credit: 5,
-               date1: ('2022-07-25'),
-               Scores: 92,
-               Score: 3.7,
-               data2: ('2022-07-26')
-            },
-            {
-               code: '20210104',
-               name: '赵六',
-               coursecode: 'C002',
-               major: '智能科学与技术',
-               course: '人工智能',
-               type: '选修',
-               credit: 3,
-               date1: ('2022-08-10'),
-               Scores: 88,
-               Score: 3.3,
-               data2: ('2022-08-11')
-            },
-            {
-               code: '20210105',
-               name: '钱七',
-               coursecode: 'C003',
-               major: '数据处理',
-               course: '数据库',
-               type: '选修',
-               credit: 4,
-               date1: ('2022-09-05'),
-               Scores: 85,
-               Score: 3.0,
-               data2: ('2022-09-06')
-            }
          ],
          ScoreDialog: false,
          deleteScoreDialog: false,
-         deleteScoresDialog: false,
+         deletescoreDialog: false,
          Score: {},
-         selectedScores: null,
+         selectedscore: null,
          filters: {},
          submitted: false,
       }
    },
    created() {
-      // this.ScoreService = new ScoreService();
+      this.GetScores();
       this.initFilters();
    },
    mounted() {
-      // this.ScoreService.getScores().then(data => this.Scores = data);
+      // this.scoreervice.getscore().then(data => this.score = data);
    },
    methods: {
-      // onRowEditSave(event) {
-      //    let { newData, index } = event;
-
-      //    this.Scores[index] = newData;
-      // },
+      GetScores() {
+            let url = "/student/scoreInfo" 
+            request.get(url).then(res => {
+                if (res.data.code == 0) {
+                    this.Scores = res.data.data
+                }
+            })
+        },
       openNew() {
 
          this.Score = {};
@@ -300,18 +239,42 @@ export default {
       },
       saveScore() {
          this.submitted = true;
-         if (this.Score.code) {
-            this.Scores[this.findIndexById(this.Score.code)] = this.Score;
-            this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成绩  更新成功', life: 3000 });
+         if (this.Score.id) {
+            this.Scores[this.findIndexById(this.Score.snum)] = this.Score;
+            this.ScoreDialog = false;
+            this.Score = {};
+            this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成 绩 更 新 成 功', life: 3000 });
          }
          else {
-            this.Score.date1 = this.Score.date1.toLocaleDateString();
+            // this.Score.time = this.Score.time.toLocaleDateString();
             this.Scores.push(this.Score);
-            this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成绩  创建成功', life: 3000 });
+            let url = "/student/addScore"
+            request.post(url, this.Score).then(res => {
+               if (res.data.code === "0") {
+                  console.log(this.Score)
+                  this.ScoreDialog = false;
+                  this.Score = {};
+                  this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成 绩 创 建 成 功', life: 3000 });
+               }
+            })
+
          }
-         this.ScoreDialog = false;
-         // console.log(this.Score.date1);
-         this.Score = {};
+
+      },
+      addScore() {
+         let url = "/student/addScore"
+         request.post(url, this.student).then(res => {
+            console.log(res)
+            if (res.data.code === "0") {
+               this.studentDialog = false;
+               this.student = {};
+               this.$message({
+                  type: "success",
+                  message: "新增成功"
+               })
+            }
+         })
+         // console.log(this.student)
       },
       editScore(Score) {
          this.Score = { ...Score };
@@ -322,46 +285,45 @@ export default {
          this.deleteScoreDialog = true;
       },
       deleteScore() {
-         this.Scores = this.Scores.filter(val => val.code !== this.Score.code);
+         this.Scores = this.Scores.filter(val => val.id !== this.Score.id);
          this.deleteScoreDialog = false;
          this.Score = {};
-         this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成绩   删除成功', life: 3000 });
+         this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成 绩 删 除 成 功', life: 3000 });
       },
       exportCSV() {
          this.$refs.dt.exportCSV();
       },
       confirmDeleteSelected() {
-         this.deleteScoresDialog = true;
+         this.deletescoreDialog = true;
       },
-      deleteSelectedScores() {
-         this.Scores = this.Scores.filter(val => !this.selectedScores.includes(val));
-         this.deleteScoresDialog = false;
-         this.selectedScores = null;
-         this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成绩   删除', life: 3000 });
+      deleteSelectedscore() {
+         this.Scores = this.Scores.filter(val => !this.selectedscore.includes(val));
+         this.deletescoreDialog = false;
+         this.selectedscore = null;
+         this.$toast.add({ severity: 'success', summary: 'Successful', detail: '成 绩 删 除 成 功', life: 3000 });
       },
       initFilters() {
          this.filters = {
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            code: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            coursecode: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+            snum: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+            cid: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             major: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            course: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+            cname: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             //  Score: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             type: { value: null, matchMode: FilterMatchMode.EQUALS },
-            //  major: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
          }
       },
-      findIndexById(code) {
-            let index = -1;
-            for (let i = 0; i < this.Scores.length; i++) {
-                if (this.Scores[i].code === code) {
-                    index = i;
-                    break;
-                }
+      findIndexById(snum) {
+         let index = -1;
+         for (let i = 0; i < this.Scores.length; i++) {
+            if (this.Scores[i].snum === snum) {
+               index = i;
+               break;
             }
-            return index;
-        },
+         }
+         return index;
+      },
       clearFilter() {
          this.initFilters();
       },
