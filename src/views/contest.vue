@@ -25,7 +25,7 @@
 
               <div class="mt-4">
                 <img v-if="slotProps.data.filename" :src="slotProps.data.filename" class="w-full  rounded-lg shadow-md"
-                  style="height: 150px;">
+                  style="height: 150px;width:50px">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>
@@ -48,7 +48,7 @@
 
               <div class="mt-4">
                 <img :src="slotProps.data.filename" class="w-full  rounded-lg shadow-md"
-                  style="height: 150px;">
+                  style="height: 150px;width:50px">
               </div>
               <div class="mt-4">
                 <Tag v-if="slotProps.data.status === '已批阅'" value="已批阅" severity="success"></Tag>

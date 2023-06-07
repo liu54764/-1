@@ -2,9 +2,9 @@
     <top />
     <side />
     <div class="card">
-        <DataTable ref="dt" v-model:filters="filters" :value="students" paginator :rows="10" dataKey="id"
-            :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " filterDisplay="menu"
-            class="p-datatable-sm" scrollable scrollHeight="480px">
+        <DataTable ref="dt" v-model:filters="filters" :value="students" paginator :rows="12" dataKey="id"
+            :rowsPerPageOptions="[12, 18, 25]" currentPageReportTemplate=" {first}  至  {last} " filterDisplay="menu"
+            class="p-datatable-sm" scrollable scrollHeight="520px">
             <template #header>
                 <div class="flex justify-content-start">
                     <Button type="button" icon="pi pi-filter-slash" label="清空" outlined @click="clearFilter()"
@@ -22,12 +22,12 @@
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="name" header="姓名" style="width:100px ;" class="text-indigo-600 text-center font-bold">
+            <Column field="name" header="姓名" style="width:80px ;" class="text-indigo-600 text-center font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
             </Column>
-            <Column field="gender" header="性别" style="width:50px ;" class="text-indigo-600 text-center font-bold">
+            <Column field="gender" header="性别" style="width:60px ;" class="text-indigo-600 text-center font-bold">
                 <template #filter="{ filterModel }">
                     <Dropdown v-model="filterModel.value" :options="genderOptions" placeholder="选择性别"
                         class="p-column-filter">
@@ -39,9 +39,9 @@
                     </Dropdown>
                 </template>
             </Column>
-            <Column field="birthday" header="年龄" style="width:60px ;" :sortable="true"
+            <Column field="birthday" header="年龄" style="width:70px ;" :sortable="true"
                 class="text-indigo-600 text-center font-bold"></Column>
-            <Column field="major" header="专业" style="width:60px ;" class="text-green-600 text-center font-bold">
+            <Column field="major" header="专业" style="width:70px ;" class="text-green-600 text-center font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -75,7 +75,7 @@
             </Column>
             <Column field="grade" header="年级" style="width:50px ;" class="text-center">
                 <template #body="{ data }">
-                    <Tag :value="data.status" :severity="getSeverity(data.status)" />
+                    <Tag :value="data.grade" :severity="getSeverity(data.grade)" />
                 </template>
                 <template #filter="{ filterModel }">
                     <Dropdown v-model="filterModel.value" :options="statuses" placeholder="请选择" class="p-column-filter"

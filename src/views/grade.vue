@@ -31,7 +31,7 @@
             :rowsPerPageOptions="[10, 15, 20]" currentPageReportTemplate=" {first}  至  {last} " responsiveLayout="scroll">
 
             <Column selectionMode="multiple" headerStyle="min-width: 40px"></Column>
-            <Column field="cid" header="课程号" style="min-width: 100px;" class="text-indigo-600 font-bold">
+            <Column field="id" header="课程号" style="min-width: 100px;" class="text-indigo-600 font-bold">
                 <template #filter="{ filterModel }">
                     <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="关键字" />
                 </template>
@@ -114,7 +114,7 @@ export default {
                 labels: ['优秀', '良好', '及格', '不及格'],
                 datasets: [
                     {
-                        data: [300, 50, 100, 40],
+                        data: [5, 5, 1, 2],
                         backgroundColor: [
                             "#66BB6A",
                             "#2196f3",
@@ -135,7 +135,7 @@ export default {
                 labels: ['通过', '重修', '未通过'],
                 datasets: [
                     {
-                        data: [300, 50, 100],
+                        data: [7, 1, 1],
                         backgroundColor: [
                             "#FF6384",
                             "#36A2EB",
@@ -174,7 +174,7 @@ export default {
             this.id = userinfo.data.id
         },
         GetScores() {
-            let url = "/student/credit" + "?id=" + this.id
+            let url = "/student/studentScore" + "?id=" + this.id
             request.get(url).then(res => {
                 if (res.data.code == 0) {
                     this.scores = res.data.data
@@ -198,7 +198,7 @@ export default {
         },
         getStatusLabel(status) {
             switch (status) {
-                case '优秀':
+                case '通过':
                     return 'success';
 
                 case '良好':
@@ -207,7 +207,7 @@ export default {
                 case '及格':
                     return 'warning';
 
-                case '不及格':
+                case '未通过':
                     return 'danger';
                 default:
                     return null;

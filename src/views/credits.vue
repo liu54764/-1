@@ -72,8 +72,8 @@ export default {
     },
     data() {
         return {
+            major:'',
             id:null,
-            major:"",
             editingRows: [],
             Courses: [
 
@@ -84,10 +84,10 @@ export default {
     created() {
         this.GetInformation()
         this.GetStudent()
-        this.GetCourses()
+        // this.GetCourses()
     },
     mounted() {
-        // CourseService.getCoursesMedium().then((data) => (this.Courses = data));
+      
     },
     methods: {
         GetInformation() {
@@ -98,12 +98,13 @@ export default {
             let url = "/student/information" + "?id=" + this.id
             request.get(url).then(res => {
                 this.major = res.data.data.major
-                console.log(res)
+                this.GetCourses()
+               
             })
         },
         GetCourses() {
-            // let url = "/student/totalCourse?major=机械"
-            let url = "/student/credit"+ "?id=" + this.id + "&major=" + this.major
+            let url = "/student/credit?id="+this.id+"&major="+this.major
+            console.log(url)
             request.get(url).then(res => {
                 this.Courses = res.data.data
                 console.log(res)
@@ -142,6 +143,7 @@ export default {
 
                 case '未通过':
                     return 'danger';
+
 
                 default:
                     return null;
